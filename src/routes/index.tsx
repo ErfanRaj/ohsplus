@@ -43,12 +43,37 @@ export const Route = createFileRoute("/")({
 });
 
 const CATEGORIES = [
-  { title: "ارزیابی ریسک", desc: "JSA، FMEA، HAZOP و William Fine", icon: ClipboardCheck },
-  { title: "بهداشت حرفه‌ای", desc: "اندازه‌گیری عوامل زیان‌آور محیط کار", icon: Activity },
-  { title: "ایمنی صنعتی", desc: "چک‌لیست بازرسی و پرمیت کار", icon: HardHat },
-  { title: "ارگونومی", desc: "REBA، RULA، NIOSH و QEC", icon: Users },
-  { title: "تهویه صنعتی", desc: "طراحی هود و محاسبات جریان هوا", icon: Wind },
-  { title: "آموزش و مستندات", desc: "پاورپوینت، دستورالعمل و رویه‌ها", icon: BookOpen },
+  {
+    title: "ارزیابی ریسک",
+    desc: "JSA، FMEA، HAZOP و William Fine",
+    icon: ClipboardCheck,
+    slug: "risk-assessment",
+  },
+  {
+    title: "بهداشت حرفه‌ای",
+    desc: "اندازه‌گیری عوامل زیان‌آور محیط کار",
+    icon: Activity,
+    slug: "occupational-health",
+  },
+  {
+    title: "ایمنی صنعتی",
+    desc: "چک‌لیست بازرسی و پرمیت کار",
+    icon: HardHat,
+    slug: "industrial-safety",
+  },
+  { title: "ارگونومی", desc: "REBA، RULA، NIOSH و QEC", icon: Users, slug: "ergonomics" },
+  {
+    title: "تهویه صنعتی",
+    desc: "طراحی هود و محاسبات جریان هوا",
+    icon: Wind,
+    slug: "ventilation",
+  },
+  {
+    title: "آموزش و مستندات",
+    desc: "پاورپوینت، دستورالعمل و رویه‌ها",
+    icon: BookOpen,
+    slug: "training",
+  },
 ];
 
 const PRODUCTS = [
@@ -58,6 +83,7 @@ const PRODUCTS = [
     price: "۲۹۰٬۰۰۰",
     rating: "۴٫۹",
     badge: "پرفروش",
+    slug: "william-fine-risk-package",
   },
   {
     title: "مجموعه چک‌لیست‌های بازرسی ایمنی کارگاه",
@@ -65,6 +91,7 @@ const PRODUCTS = [
     price: "۱۹۰٬۰۰۰",
     rating: "۴٫۸",
     badge: "به‌روزرسانی ۱۴۰۴",
+    slug: "safety-inspection-checklists",
   },
   {
     title: "نرم‌افزار اکسل محاسبات ارگونومی REBA و RULA",
@@ -72,6 +99,7 @@ const PRODUCTS = [
     price: "۲۴۰٬۰۰۰",
     rating: "۵٫۰",
     badge: "جدید",
+    slug: "reba-rula-excel-tool",
   },
 ];
 
@@ -87,18 +115,22 @@ const ARTICLES = [
     title: "راهنمای گام‌به‌گام تدوین برنامه ارزیابی ریسک در صنایع فرآیندی",
     category: "ارزیابی ریسک",
     read: "۹ دقیقه مطالعه",
+    slug: "risk-assessment-program-guide",
   },
   {
     title: "حدود مجاز مواجهه شغلی؛ آنچه هر کارشناس بهداشت حرفه‌ای باید بداند",
     category: "بهداشت حرفه‌ای",
     read: "۷ دقیقه مطالعه",
+    slug: "oel-guide",
   },
   {
     title: "کاهش اختلالات اسکلتی-عضلانی با مداخلات ارگونومیک کم‌هزینه",
     category: "ارگونومی",
     read: "۶ دقیقه مطالعه",
+    slug: "msd-low-cost-interventions",
   },
 ];
+
 
 function HomePage() {
   return (
