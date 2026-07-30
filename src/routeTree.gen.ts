@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
+import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
@@ -47,6 +48,11 @@ const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
   path: '/articles/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
+  id: '/articles/$slug',
+  path: '/articles/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/articles/': typeof ArticlesIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/articles': typeof ArticlesIndexRoute
   '/products': typeof ProductsIndexRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/articles/': typeof ArticlesIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/dashboard'
+    | '/articles/$slug'
     | '/products/$slug'
     | '/articles/'
     | '/products/'
@@ -103,6 +113,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/dashboard'
+    | '/articles/$slug'
     | '/products/$slug'
     | '/articles'
     | '/products'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/dashboard'
+    | '/articles/$slug'
     | '/products/$slug'
     | '/articles/'
     | '/products/'
@@ -123,6 +135,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ArticlesSlugRoute: typeof ArticlesSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ArticlesIndexRoute: typeof ArticlesIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles/$slug': {
+      id: '/articles/$slug'
+      path: '/articles/$slug'
+      fullPath: '/articles/$slug'
+      preLoaderRoute: typeof ArticlesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/': {
       id: '/products/'
       path: '/products'
@@ -205,6 +225,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ArticlesSlugRoute: ArticlesSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ArticlesIndexRoute: ArticlesIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
