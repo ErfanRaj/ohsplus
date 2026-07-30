@@ -14,33 +14,56 @@ export type NavGroup = {
 export const NAVIGATION: NavGroup[] = [
   {
     label: "فروشگاه",
-    href: "/",
+    href: "/products",
     children: [
       {
         label: "ارزیابی ریسک",
         description: "JSA، FMEA، HAZOP و William Fine",
-        href: "/",
+        href: "/products?category=risk-assessment",
       },
       {
         label: "بهداشت حرفه‌ای",
         description: "اندازه‌گیری عوامل زیان‌آور محیط کار",
-        href: "/",
+        href: "/products?category=occupational-health",
       },
-      { label: "ایمنی صنعتی", description: "چک‌لیست بازرسی و پرمیت کار", href: "/" },
-      { label: "ارگونومی", description: "REBA، RULA، NIOSH و QEC", href: "/" },
-      { label: "تهویه صنعتی", description: "طراحی هود و محاسبات جریان هوا", href: "/" },
-      { label: "آموزش و مستندات", description: "پاورپوینت، دستورالعمل و رویه‌ها", href: "/" },
+      {
+        label: "ایمنی صنعتی",
+        description: "چک‌لیست بازرسی و پرمیت کار",
+        href: "/products?category=industrial-safety",
+      },
+      {
+        label: "ارگونومی",
+        description: "REBA، RULA، NIOSH و QEC",
+        href: "/products?category=ergonomics",
+      },
+      {
+        label: "تهویه صنعتی",
+        description: "طراحی هود و محاسبات جریان هوا",
+        href: "/products?category=ventilation",
+      },
+      {
+        label: "آموزش و مستندات",
+        description: "پاورپوینت، دستورالعمل و رویه‌ها",
+        href: "/products?category=training",
+      },
     ],
   },
   {
     label: "دانشنامه",
-    href: "/",
+    href: "/articles",
     children: [
-      { label: "آخرین مقالات", description: "تازه‌ترین محتوای تخصصی", href: "/" },
-      { label: "استانداردها", description: "مرور الزامات ملی و بین‌المللی", href: "/" },
-      { label: "راهنماهای کاربردی", description: "آموزش گام‌به‌گام اجرای الزامات", href: "/" },
+      { label: "آخرین مقالات", description: "تازه‌ترین محتوای تخصصی", href: "/articles" },
+      {
+        label: "ارزیابی ریسک",
+        description: "راهنمای اجرای برنامه‌های ارزیابی ریسک",
+        href: "/articles?category=risk-assessment",
+      },
+      {
+        label: "بهداشت حرفه‌ای",
+        description: "حدود مجاز مواجهه و پایش عوامل زیان‌آور",
+        href: "/articles?category=occupational-health",
+      },
     ],
   },
-  { label: "درباره ما", href: "/" },
-  { label: "تماس", href: "/" },
+  { label: "دسته‌بندی‌ها", href: "/categories" },
 ];
