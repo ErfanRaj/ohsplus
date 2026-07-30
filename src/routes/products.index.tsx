@@ -19,7 +19,7 @@ import { categoriesQuery, productsQuery, toFa } from "@/lib/catalog";
 
 type ProductSearch = { q: string; category: string; sort: string };
 
-export const Route = createFileRoute("/products")({
+export const Route = createFileRoute("/products/")({
   validateSearch: (search: Record<string, unknown>): ProductSearch => ({
     q: typeof search.q === "string" ? search.q : "",
     category: typeof search.category === "string" ? search.category : "",
@@ -98,7 +98,7 @@ function ProductsPage() {
               <li>
                 <Link
                   to="/products"
-                  search={(prev) => ({ ...prev, category: "" })}
+                  search={(prev: ProductSearch) => ({ ...prev, category: "" })}
                   className={`block rounded-md px-3 py-2 transition-colors hover:bg-muted ${
                     search.category === "" ? "bg-primary/10 font-bold text-primary" : ""
                   }`}
@@ -110,7 +110,7 @@ function ProductsPage() {
                 <li key={cat.id}>
                   <Link
                     to="/products"
-                    search={(prev) => ({ ...prev, category: cat.slug })}
+                    search={(prev: ProductSearch) => ({ ...prev, category: cat.slug })}
                     className={`block rounded-md px-3 py-2 transition-colors hover:bg-muted ${
                       search.category === cat.slug ? "bg-primary/10 font-bold text-primary" : ""
                     }`}
@@ -133,7 +133,7 @@ function ProductsPage() {
                   value={search.q}
                   onChange={(event) =>
                     navigate({
-                      search: (prev) => ({ ...prev, q: event.target.value }),
+                      search: (prev: ProductSearch) => ({ ...prev, q: event.target.value }),
                       replace: true,
                     })
                   }
@@ -145,7 +145,7 @@ function ProductsPage() {
               <Select
                 value={search.sort}
                 onValueChange={(value) =>
-                  navigate({ search: (prev) => ({ ...prev, sort: value }) })
+                  navigate({ search: (prev: ProductSearch) => ({ ...prev, sort: value }) })
                 }
               >
                 <SelectTrigger className="w-44" aria-label="ترتیب نمایش">
