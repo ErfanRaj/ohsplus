@@ -180,7 +180,7 @@ function HomePage() {
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" className="gap-2 font-bold" asChild>
-                  <Link to="/">
+                  <Link to="/products" search={{ q: "", category: "", sort: "newest" }}>
                     مشاهده منابع
                     <ArrowLeft className="size-4" aria-hidden="true" />
                   </Link>
@@ -213,7 +213,7 @@ function HomePage() {
               </p>
             </div>
             <Link
-              to="/"
+              to="/categories"
               className="text-sm font-semibold text-accent underline-offset-4 hover:underline"
             >
               مشاهده همه دسته‌ها
@@ -223,7 +223,11 @@ function HomePage() {
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CATEGORIES.map((cat) => (
               <li key={cat.title}>
-                <Link to="/" className="block h-full">
+                <Link
+                  to="/products"
+                  search={{ q: "", category: cat.slug, sort: "newest" }}
+                  className="block h-full"
+                >
                   <Card className="h-full border-border/70 shadow-none transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-soft">
                     <CardContent className="flex items-start gap-4">
                       <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-secondary text-accent">
@@ -254,7 +258,8 @@ function HomePage() {
                 </p>
               </div>
               <Link
-                to="/"
+                to="/products"
+                search={{ q: "", category: "", sort: "newest" }}
                 className="text-sm font-semibold text-accent underline-offset-4 hover:underline"
               >
                 فروشگاه کامل
@@ -290,9 +295,11 @@ function HomePage() {
                             تومان
                           </span>
                         </span>
-                        <Button size="sm" className="gap-1.5 font-bold">
-                          <Download className="size-4" aria-hidden="true" />
-                          خرید و دانلود
+                        <Button size="sm" className="gap-1.5 font-bold" asChild>
+                          <Link to="/products/$slug" params={{ slug: product.slug }}>
+                            <Download className="size-4" aria-hidden="true" />
+                            خرید و دانلود
+                          </Link>
                         </Button>
                       </div>
                     </CardContent>
@@ -315,7 +322,8 @@ function HomePage() {
               </p>
             </div>
             <Link
-              to="/"
+              to="/articles"
+              search={{ q: "", category: "" }}
               className="text-sm font-semibold text-accent underline-offset-4 hover:underline"
             >
               همه مقالات
@@ -325,7 +333,11 @@ function HomePage() {
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {ARTICLES.map((article) => (
               <li key={article.title}>
-                <Link to="/" className="group block h-full">
+                <Link
+                  to="/articles/$slug"
+                  params={{ slug: article.slug }}
+                  className="group block h-full"
+                >
                   <article className="flex h-full flex-col rounded-lg border border-border/70 bg-card p-6 transition-colors hover:border-primary">
                     <span className="text-xs font-bold text-accent">{article.category}</span>
                     <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
@@ -350,7 +362,7 @@ function HomePage() {
               دسترسی خواهید داشت.
             </p>
             <Button size="lg" className="mt-8 gap-2 font-bold" asChild>
-              <Link to="/">
+              <Link to="/auth">
                 ساخت حساب کاربری
                 <ArrowLeft className="size-4" aria-hidden="true" />
               </Link>
