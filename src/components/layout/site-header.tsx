@@ -202,6 +202,14 @@ export function SiteHeader() {
                     پیشخوان من
                   </Link>
                 </DropdownMenuItem>
+                {isStaff ? (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="gap-2">
+                      <ShieldCheck className="size-4" aria-hidden="true" />
+                      پنل مدیریت
+                    </Link>
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={handleSignOut} className="gap-2">
                   <LogOut className="size-4" aria-hidden="true" />
