@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { isStaffQuery } from "@/lib/admin";
+
 import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, ShieldCheck, User } from "lucide-react";
 import { useState } from "react";
 
@@ -42,6 +45,11 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, loading } = useAuth();
+  const { data: isStaff } = useQuery({
+    ...isStaffQuery(user?.id ?? ""),
+    enabled: Boolean(user?.id),
+  });
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -202,6 +210,14 @@ export function SiteHeader() {
                     پیشخوان من
                   </Link>
                 </DropdownMenuItem>
+                {isStaff ? (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="gap-2">
+                      <ShieldCheck className="size-4" aria-hidden="true" />
+                      پنل مدیریت
+                    </Link>
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={handleSignOut} className="gap-2">
                   <LogOut className="size-4" aria-hidden="true" />
