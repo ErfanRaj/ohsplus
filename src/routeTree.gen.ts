@@ -22,6 +22,7 @@ import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminArticlesRouteImport } from './routes/_authenticated/admin/articles'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
 
 const IndexRoute = IndexRouteImport.update({
@@ -89,6 +90,12 @@ const AuthenticatedAdminArticlesRoute =
     path: '/articles',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminProductsRoute =
   AuthenticatedAdminProductsRouteImport.update({
     id: '/products',
@@ -108,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/categories/': typeof CategoriesIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -122,6 +130,7 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesIndexRoute
   '/products': typeof ProductsIndexRoute
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -139,6 +148,7 @@ export interface FileRoutesById {
   '/categories/': typeof CategoriesIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/_authenticated/admin/articles': typeof AuthenticatedAdminArticlesRoute
+  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/categories/'
     | '/products/'
     | '/admin/articles'
+    | '/admin/categories'
     | '/admin/products'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/products'
     | '/admin/articles'
+    | '/admin/categories'
     | '/admin/products'
     | '/admin'
   id:
@@ -186,6 +198,7 @@ export interface FileRouteTypes {
     | '/categories/'
     | '/products/'
     | '/_authenticated/admin/articles'
+    | '/_authenticated/admin/categories'
     | '/_authenticated/admin/products'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -295,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminArticlesRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/categories': {
+      id: '/_authenticated/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/products': {
       id: '/_authenticated/admin/products'
       path: '/products'
@@ -307,6 +327,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminArticlesRoute: typeof AuthenticatedAdminArticlesRoute
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -314,6 +335,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
     AuthenticatedAdminArticlesRoute: AuthenticatedAdminArticlesRoute,
+    AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
