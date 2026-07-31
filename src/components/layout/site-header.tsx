@@ -42,6 +42,11 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, loading } = useAuth();
+  const { data: isStaff } = useQuery({
+    ...isStaffQuery(user?.id ?? ""),
+    enabled: Boolean(user?.id),
+  });
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
