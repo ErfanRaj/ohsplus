@@ -24,6 +24,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminArticlesRouteImport } from './routes/_authenticated/admin/articles'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
+import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authenticated/admin/reviews'
 import { Route as AuthenticatedAdminTagsRouteImport } from './routes/_authenticated/admin/tags'
 
 const IndexRoute = IndexRouteImport.update({
@@ -103,6 +104,12 @@ const AuthenticatedAdminProductsRoute =
     path: '/products',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminReviewsRoute =
+  AuthenticatedAdminReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminTagsRoute = AuthenticatedAdminTagsRouteImport.update({
   id: '/tags',
   path: '/tags',
@@ -123,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/tags': typeof AuthenticatedAdminTagsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -139,6 +147,7 @@ export interface FileRoutesByTo {
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/tags': typeof AuthenticatedAdminTagsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -158,6 +167,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/_authenticated/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/_authenticated/admin/tags': typeof AuthenticatedAdminTagsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/categories'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/tags'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/categories'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/tags'
     | '/admin'
   id:
@@ -211,6 +223,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/articles'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/products'
+    | '/_authenticated/admin/reviews'
     | '/_authenticated/admin/tags'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -334,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProductsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/reviews': {
+      id: '/_authenticated/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AuthenticatedAdminReviewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/tags': {
       id: '/_authenticated/admin/tags'
       path: '/tags'
@@ -348,6 +368,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminArticlesRoute: typeof AuthenticatedAdminArticlesRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
+  AuthenticatedAdminReviewsRoute: typeof AuthenticatedAdminReviewsRoute
   AuthenticatedAdminTagsRoute: typeof AuthenticatedAdminTagsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -357,6 +378,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminArticlesRoute: AuthenticatedAdminArticlesRoute,
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
+    AuthenticatedAdminReviewsRoute: AuthenticatedAdminReviewsRoute,
     AuthenticatedAdminTagsRoute: AuthenticatedAdminTagsRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
