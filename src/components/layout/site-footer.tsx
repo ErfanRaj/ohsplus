@@ -56,12 +56,13 @@ export function SiteFooter() {
             <h2 className="text-sm font-bold text-ink-foreground">{group.title}</h2>
             <ul className="mt-4 space-y-3 text-sm text-ink-muted">
               {group.items.map((item) => (
-                <li key={item}>
-                  <Link to="/" className="transition-colors hover:text-primary">
-                    {item}
+                <li key={item.label}>
+                  <Link to={item.href} className="transition-colors hover:text-primary">
+                    {item.label}
                   </Link>
                 </li>
               ))}
+
             </ul>
           </nav>
         ))}
