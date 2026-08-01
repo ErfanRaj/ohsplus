@@ -66,4 +66,7 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
   { label: "دسته‌بندی‌ها", href: "/categories" },
+  { label: "درباره ما", href: "/about" },
+  { label: "تماس با ما", href: "/contact" },
 ];
+

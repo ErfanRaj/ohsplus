@@ -1,16 +1,27 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, ShieldCheck } from "lucide-react";
 
-const FOOTER_LINKS: { title: string; items: string[] }[] = [
+const FOOTER_LINKS: { title: string; items: { label: string; href: string }[] }[] = [
   {
     title: "منابع",
-    items: ["ارزیابی ریسک", "بهداشت حرفه‌ای", "ارگونومی", "آموزش ایمنی"],
+    items: [
+      { label: "ارزیابی ریسک", href: "/products?category=risk-assessment" },
+      { label: "بهداشت حرفه‌ای", href: "/products?category=occupational-health" },
+      { label: "ارگونومی", href: "/products?category=ergonomics" },
+      { label: "آموزش ایمنی", href: "/products?category=training" },
+    ],
   },
   {
     title: "پشتیبانی",
-    items: ["راهنمای خرید", "سوالات متداول", "قوانین و مقررات", "تماس با ما"],
+    items: [
+      { label: "درباره ما", href: "/about" },
+      { label: "سوالات متداول", href: "/faq" },
+      { label: "قوانین و مقررات", href: "/terms" },
+      { label: "تماس با ما", href: "/contact" },
+    ],
   },
 ];
+
 
 export function SiteFooter() {
   return (
@@ -45,12 +56,13 @@ export function SiteFooter() {
             <h2 className="text-sm font-bold text-ink-foreground">{group.title}</h2>
             <ul className="mt-4 space-y-3 text-sm text-ink-muted">
               {group.items.map((item) => (
-                <li key={item}>
-                  <Link to="/" className="transition-colors hover:text-primary">
-                    {item}
+                <li key={item.label}>
+                  <Link to={item.href} className="transition-colors hover:text-primary">
+                    {item.label}
                   </Link>
                 </li>
               ))}
+
             </ul>
           </nav>
         ))}
