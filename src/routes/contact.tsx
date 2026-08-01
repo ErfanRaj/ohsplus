@@ -142,11 +142,35 @@ function ContactPage() {
                   onChange={(event) => setValues((v) => ({ ...v, message: event.target.value }))}
                 />
               </div>
-              <Button type="submit" className="mt-6 gap-2 font-bold" disabled={busy}>
-                <Send className="size-4" aria-hidden="true" />
-                ارسال پیام
-              </Button>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Button type="submit" className="gap-2 font-bold" disabled={busy}>
+                  <Send className="size-4" aria-hidden="true" />
+                  {busy ? "در حال ارسال…" : "ارسال پیام"}
+                </Button>
+                <Button asChild variant="outline" className="gap-2 font-semibold">
+                  <a
+                    href={
+                      schema.safeParse(values).success
+                        ? mailtoHref(schema.parse(values))
+                        : `mailto:${CONTACT_EMAIL}`
+                    }
+                  >
+                    <Mail className="size-4" aria-hidden="true" />
+                    ارسال مستقیم با ایمیل
+                  </a>
+                </Button>
+              </div>
+              {sent ? (
+                <p
+                  role="status"
+                  className="mt-4 rounded-lg border border-primary/30 bg-primary/10 p-3 text-sm font-semibold text-foreground"
+                >
+                  پیام شما با موفقیت ثبت شد و در پنل مدیریت قابل مشاهده است. پاسخ به ایمیل{" "}
+                  <span dir="ltr">{values.email}</span> ارسال خواهد شد.
+                </p>
+              ) : null}
             </form>
+
 
             <aside className="space-y-3">
               {CHANNELS.map((channel) => (
