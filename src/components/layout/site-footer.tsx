@@ -40,9 +40,9 @@ export function SiteFooter() {
             ارگونومی برای کارشناسان HSE ایران.
           </p>
           <div className="mt-6 flex flex-col gap-2 text-sm text-ink-muted">
-            <a href="mailto:info@ohshub.ir" className="flex items-center gap-2 hover:text-primary">
+            <a href="mailto:erfann.rag@gmail.com" className="flex items-center gap-2 hover:text-primary">
               <Mail className="size-4" aria-hidden="true" />
-              info@ohshub.ir
+              erfann.rag@gmail.com
             </a>
             <a href="tel:+982100000000" className="flex items-center gap-2 hover:text-primary">
               <Phone className="size-4" aria-hidden="true" />

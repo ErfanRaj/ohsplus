@@ -37,8 +37,10 @@ const schema = z.object({
   message: z.string().trim().min(10, { message: "متن پیام حداقل ۱۰ کاراکتر باشد" }).max(2000),
 });
 
+const CONTACT_EMAIL = "erfann.rag@gmail.com";
+
 const CHANNELS = [
-  { icon: Mail, label: "ایمیل", value: "info@ohshub.ir", href: "mailto:info@ohshub.ir" },
+  { icon: Mail, label: "ایمیل", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: Phone, label: "تلفن", value: "۰۲۱-۰۰۰۰۰۰۰۰", href: "tel:+982100000000" },
   { icon: Clock, label: "ساعات پاسخ‌گویی", value: "شنبه تا چهارشنبه، ۹ تا ۱۷" },
   { icon: MapPin, label: "نشانی", value: "تهران، ایران" },
@@ -47,8 +49,14 @@ const CHANNELS = [
 function ContactPage() {
   const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
   const [busy, setBusy] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const mailtoHref = (data: z.infer<typeof schema>) =>
+    `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      data.subject,
+    )}&body=${encodeURIComponent(`${data.message}\n\n${data.name} — ${data.email}`)}`;
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const parsed = schema.safeParse(values);
     if (!parsed.success) {
@@ -56,12 +64,21 @@ function ContactPage() {
       return;
     }
     setBusy(true);
-    window.location.href = `mailto:info@ohshub.ir?subject=${encodeURIComponent(
-      parsed.data.subject,
-    )}&body=${encodeURIComponent(`${parsed.data.message}\n\n${parsed.data.name} — ${parsed.data.email}`)}`;
+    const { error } = await supabase.from("contact_messages").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      subject: parsed.data.subject,
+      message: parsed.data.message,
+    });
     setBusy(false);
-    toast.success("پیام شما آماده ارسال شد.");
+    if (error) {
+      toast.error("ثبت پیام ناموفق بود؛ لطفاً دوباره تلاش کنید.");
+      return;
+    }
+    setSent(true);
+    toast.success("پیام شما ثبت شد؛ به‌زودی پاسخ می‌دهیم.");
   };
+
 
   return (
     <div className="flex min-h-dvh flex-col">
