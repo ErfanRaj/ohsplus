@@ -7,7 +7,6 @@ import {
   FileSpreadsheet,
   HardHat,
   Activity,
-  ShieldCheck,
   Star,
   Wind,
   Users,
@@ -158,11 +157,7 @@ function HomePage() {
           <HeroSlideshow />
           <div className="container-page relative py-20 md:py-32">
             <div className="max-w-2xl">
-              <Badge className="gap-1.5 bg-primary/15 text-primary hover:bg-primary/20">
-                <ShieldCheck className="size-3.5" aria-hidden="true" />
-                مرجع تخصصی HSE
-              </Badge>
-              <h1 className="rise-in mt-6 text-3xl leading-[1.5] font-extrabold sm:text-4xl md:text-5xl md:leading-[1.45]">
+              <h1 className="rise-in text-3xl leading-[1.5] font-extrabold sm:text-4xl md:text-5xl md:leading-[1.45]">
                 همه چیز برای یک <span className="glow-text">کار ایمن</span>
               </h1>
               <p
@@ -186,12 +181,11 @@ function HomePage() {
 
               <dl className="mt-12 grid max-w-lg grid-cols-2 gap-6 sm:grid-cols-4">
                 {STATS.map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="sr-only">{stat.label}</dt>
+                  <div key={stat.label} className="flex flex-col">
                     <dd className="font-display text-2xl font-extrabold text-primary">
                       {stat.value}
                     </dd>
-                    <p className="mt-1 text-xs text-ink-muted">{stat.label}</p>
+                    <dt className="mt-1 text-xs text-ink-muted">{stat.label}</dt>
                   </div>
                 ))}
               </dl>

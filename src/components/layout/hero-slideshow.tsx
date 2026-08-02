@@ -31,8 +31,10 @@ export function HeroSlideshow() {
           key={slide.src}
           src={slide.src}
           alt={index === active ? slide.alt : ""}
-          width={1600}
-          height={1104}
+          width={1400}
+          height={966}
+          decoding="async"
+          fetchPriority={index === 0 ? "high" : "low"}
           loading={index === 0 ? "eager" : "lazy"}
           className={`absolute inset-0 size-full object-cover object-left transition-opacity duration-[1500ms] ease-in-out ${
             index === active ? "opacity-60" : "opacity-0"
