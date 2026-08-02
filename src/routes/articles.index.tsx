@@ -24,13 +24,13 @@ export const Route = createFileRoute("/articles/")({
   },
   head: () => ({
     meta: [
-      { title: "دانشنامه HSE | OHS Hub" },
+      { title: "دانشنامه HSE | OHS Plus" },
       {
         name: "description",
         content:
           "مقالات کاربردی ایمنی، بهداشت حرفه‌ای و ارگونومی؛ راهنماهای گام‌به‌گام برای کارشناسان HSE.",
       },
-      { property: "og:title", content: "دانشنامه HSE | OHS Hub" },
+      { property: "og:title", content: "دانشنامه HSE | OHS Plus" },
       {
         property: "og:description",
         content: "مقالات و راهنماهای تخصصی ایمنی و بهداشت حرفه‌ای.",

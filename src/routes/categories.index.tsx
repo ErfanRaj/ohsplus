@@ -14,13 +14,13 @@ export const Route = createFileRoute("/categories/")({
   },
   head: () => ({
     meta: [
-      { title: "دسته‌بندی منابع HSE | OHS Hub" },
+      { title: "دسته‌بندی منابع HSE | OHS Plus" },
       {
         name: "description",
         content:
           "همه دسته‌بندی‌های منابع ایمنی و بهداشت حرفه‌ای: ارزیابی ریسک، ارگونومی، تهویه صنعتی و آموزش.",
       },
-      { property: "og:title", content: "دسته‌بندی منابع HSE | OHS Hub" },
+      { property: "og:title", content: "دسته‌بندی منابع HSE | OHS Plus" },
       { property: "og:description", content: "مرور دسته‌بندی‌های تخصصی منابع HSE." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

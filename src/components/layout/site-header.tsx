@@ -121,13 +121,13 @@ export function SiteHeader() {
         <Link
           to="/"
           className="flex min-w-0 items-center gap-2"
-          aria-label="OHS Hub، صفحه اصلی"
+          aria-label="OHS Plus، صفحه اصلی"
         >
           <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-ink text-primary">
             <ShieldCheck className="size-5" aria-hidden="true" />
           </span>
           <span className="flex min-w-0 flex-col leading-none">
-            <span className="font-display text-base font-extrabold tracking-tight">OHS Hub</span>
+            <span className="font-display text-base font-extrabold tracking-tight">OHS Plus</span>
             <span className="mt-1 truncate text-[11px] text-muted-foreground">
               مرجع تخصصی ایمنی
             </span>

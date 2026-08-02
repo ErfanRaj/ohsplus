@@ -6,10 +6,10 @@ import { formatDateFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/tags")({
   head: () => ({
     meta: [
-      { title: "مدیریت برچسب‌ها | OHS Hub" },
+      { title: "مدیریت برچسب‌ها | OHS Plus" },
       { name: "description", content: "مدیریت برچسب‌های موضوعی محصولات و مقالات." },
-      { property: "og:title", content: "مدیریت برچسب‌ها | OHS Hub" },
-      { property: "og:description", content: "مدیریت برچسب‌های محتوایی OHS Hub." },
+      { property: "og:title", content: "مدیریت برچسب‌ها | OHS Plus" },
+      { property: "og:description", content: "مدیریت برچسب‌های محتوایی OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

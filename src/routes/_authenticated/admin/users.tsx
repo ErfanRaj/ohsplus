@@ -18,10 +18,10 @@ import { formatDateFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/users")({
   head: () => ({
     meta: [
-      { title: "مدیریت کاربران | OHS Hub" },
+      { title: "مدیریت کاربران | OHS Plus" },
       { name: "description", content: "فهرست کاربران ثبت‌نام‌شده و نقش‌های دسترسی آن‌ها." },
-      { property: "og:title", content: "مدیریت کاربران | OHS Hub" },
-      { property: "og:description", content: "مشاهده کاربران و نقش‌های OHS Hub." },
+      { property: "og:title", content: "مدیریت کاربران | OHS Plus" },
+      { property: "og:description", content: "مشاهده کاربران و نقش‌های OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

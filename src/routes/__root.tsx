@@ -86,13 +86,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OHS Hub | همه چیز برای یک کار ایمن" },
+      { title: "OHS Plus | همه چیز برای یک کار ایمن" },
       {
         name: "description",
         content:
           "مرجع تخصصی منابع دیجیتال بهداشت حرفه‌ای، HSE، ارزیابی ریسک و ارگونومی برای کارشناسان ایمنی.",
       },
-      { property: "og:site_name", content: "OHS Hub" },
+      { property: "og:site_name", content: "OHS Plus" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "fa_IR" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -113,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "OHS Hub",
+          name: "OHS Plus",
           slogan: "همه چیز برای یک کار ایمن",
           url: "/",
         }),

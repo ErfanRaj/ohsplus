@@ -8,10 +8,10 @@ import { formatDateFa, toFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/articles")({
   head: () => ({
     meta: [
-      { title: "مدیریت مقالات | OHS Hub" },
+      { title: "مدیریت مقالات | OHS Plus" },
       { name: "description", content: "نگارش و انتشار مقالات دانشنامه ایمنی و بهداشت کار." },
-      { property: "og:title", content: "مدیریت مقالات | OHS Hub" },
-      { property: "og:description", content: "مدیریت محتوای دانشنامه OHS Hub." },
+      { property: "og:title", content: "مدیریت مقالات | OHS Plus" },
+      { property: "og:description", content: "مدیریت محتوای دانشنامه OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

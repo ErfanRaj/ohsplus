@@ -34,9 +34,10 @@ export function HeroSlideshow() {
           width={1600}
           height={1104}
           loading={index === 0 ? "eager" : "lazy"}
-          className={`absolute inset-0 size-full object-cover object-left transition-opacity duration-1500 ease-in-out ${
+          className={`absolute inset-0 size-full object-cover object-left transition-opacity duration-[1500ms] ease-in-out ${
             index === active ? "opacity-60" : "opacity-0"
           }`}
+
         />
       ))}
       <div

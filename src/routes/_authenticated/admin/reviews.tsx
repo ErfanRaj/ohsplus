@@ -20,10 +20,10 @@ import { formatDateFa, toFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/reviews")({
   head: () => ({
     meta: [
-      { title: "مدیریت دیدگاه‌ها | OHS Hub" },
+      { title: "مدیریت دیدگاه‌ها | OHS Plus" },
       { name: "description", content: "بررسی و تایید دیدگاه‌های کاربران درباره محصولات HSE." },
-      { property: "og:title", content: "مدیریت دیدگاه‌ها | OHS Hub" },
-      { property: "og:description", content: "تایید یا رد دیدگاه‌های کاربران OHS Hub." },
+      { property: "og:title", content: "مدیریت دیدگاه‌ها | OHS Plus" },
+      { property: "og:description", content: "تایید یا رد دیدگاه‌های کاربران OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

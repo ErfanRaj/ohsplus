@@ -40,13 +40,13 @@ const FAQS = [
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "سوالات متداول | OHS Hub" },
+      { title: "سوالات متداول | OHS Plus" },
       {
         name: "description",
         content:
-          "پاسخ پرسش‌های رایج درباره خرید، تحویل، فرمت و به‌روزرسانی منابع دیجیتال HSE در OHS Hub.",
+          "پاسخ پرسش‌های رایج درباره خرید، تحویل، فرمت و به‌روزرسانی منابع دیجیتال HSE در OHS Plus.",
       },
-      { property: "og:title", content: "سوالات متداول | OHS Hub" },
+      { property: "og:title", content: "سوالات متداول | OHS Plus" },
       { property: "og:description", content: "راهنمای خرید و پشتیبانی منابع تخصصی ایمنی." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -79,7 +79,7 @@ function FaqPage() {
           <header className="mt-6 max-w-2xl">
             <h1 className="font-display text-3xl font-extrabold sm:text-4xl">سوالات متداول</h1>
             <p className="mt-3 text-sm leading-8 text-muted-foreground">
-              پاسخ رایج‌ترین پرسش‌ها درباره خرید و استفاده از منابع OHS Hub.
+              پاسخ رایج‌ترین پرسش‌ها درباره خرید و استفاده از منابع OHS Plus.
             </p>
           </header>
 

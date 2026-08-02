@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 const SECTIONS = [
   {
     title: "۱. پذیرش قوانین",
-    body: "استفاده از وب‌سایت OHS Hub و خرید منابع دیجیتال آن به معنای پذیرش کامل این قوانین است. در صورت عدم موافقت، لطفاً از خدمات سایت استفاده نکنید.",
+    body: "استفاده از وب‌سایت OHS Plus و خرید منابع دیجیتال آن به معنای پذیرش کامل این قوانین است. در صورت عدم موافقت، لطفاً از خدمات سایت استفاده نکنید.",
   },
   {
     title: "۲. حساب کاربری",
@@ -15,7 +15,7 @@ const SECTIONS = [
   },
   {
     title: "۳. مالکیت فکری و مجوز استفاده",
-    body: "تمامی فایل‌ها، متون و طرح‌های سایت متعلق به OHS Hub یا پدیدآورندگان همکار است. خرید هر محصول یک مجوز استفاده داخلی و غیرقابل انتقال ایجاد می‌کند؛ بازفروش، انتشار عمومی یا اشتراک‌گذاری فایل‌ها ممنوع است.",
+    body: "تمامی فایل‌ها، متون و طرح‌های سایت متعلق به OHS Plus یا پدیدآورندگان همکار است. خرید هر محصول یک مجوز استفاده داخلی و غیرقابل انتقال ایجاد می‌کند؛ بازفروش، انتشار عمومی یا اشتراک‌گذاری فایل‌ها ممنوع است.",
   },
   {
     title: "۴. پرداخت و تحویل",
@@ -35,21 +35,21 @@ const SECTIONS = [
   },
   {
     title: "۸. تغییر قوانین",
-    body: "OHS Hub می‌تواند این قوانین را به‌روزرسانی کند. نسخه معتبر همواره آخرین نسخه منتشرشده در همین صفحه است.",
+    body: "OHS Plus می‌تواند این قوانین را به‌روزرسانی کند. نسخه معتبر همواره آخرین نسخه منتشرشده در همین صفحه است.",
   },
 ];
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "قوانین و مقررات | OHS Hub" },
+      { title: "قوانین و مقررات | OHS Plus" },
       {
         name: "description",
         content:
-          "قوانین استفاده، مجوز محصولات دیجیتال، شرایط پرداخت، بازگشت وجه و حریم خصوصی در OHS Hub.",
+          "قوانین استفاده، مجوز محصولات دیجیتال، شرایط پرداخت، بازگشت وجه و حریم خصوصی در OHS Plus.",
       },
-      { property: "og:title", content: "قوانین و مقررات | OHS Hub" },
-      { property: "og:description", content: "شرایط استفاده از خدمات و منابع دیجیتال OHS Hub." },
+      { property: "og:title", content: "قوانین و مقررات | OHS Plus" },
+      { property: "og:description", content: "شرایط استفاده از خدمات و منابع دیجیتال OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -67,7 +67,7 @@ function TermsPage() {
           <header className="mt-6 max-w-2xl">
             <h1 className="font-display text-3xl font-extrabold sm:text-4xl">قوانین و مقررات</h1>
             <p className="mt-3 text-sm leading-8 text-muted-foreground">
-              شرایط استفاده از وب‌سایت و منابع دیجیتال OHS Hub.
+              شرایط استفاده از وب‌سایت و منابع دیجیتال OHS Plus.
             </p>
           </header>
 

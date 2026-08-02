@@ -6,10 +6,10 @@ import { formatDateFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/messages")({
   head: () => ({
     meta: [
-      { title: "پیام‌های تماس | OHS Hub" },
+      { title: "پیام‌های تماس | OHS Plus" },
       { name: "description", content: "مدیریت پیام‌های دریافتی از فرم تماس با ما." },
-      { property: "og:title", content: "پیام‌های تماس | OHS Hub" },
-      { property: "og:description", content: "صندوق پیام‌های فرم تماس OHS Hub." },
+      { property: "og:title", content: "پیام‌های تماس | OHS Plus" },
+      { property: "og:description", content: "صندوق پیام‌های فرم تماس OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

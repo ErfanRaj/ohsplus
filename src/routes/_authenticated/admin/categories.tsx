@@ -8,10 +8,10 @@ import { toFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/categories")({
   head: () => ({
     meta: [
-      { title: "مدیریت دسته‌بندی‌ها | OHS Hub" },
+      { title: "مدیریت دسته‌بندی‌ها | OHS Plus" },
       { name: "description", content: "ساختاردهی دسته‌بندی‌های محصولات و مقالات HSE." },
-      { property: "og:title", content: "مدیریت دسته‌بندی‌ها | OHS Hub" },
-      { property: "og:description", content: "مدیریت درخت دسته‌بندی‌های OHS Hub." },
+      { property: "og:title", content: "مدیریت دسته‌بندی‌ها | OHS Plus" },
+      { property: "og:description", content: "مدیریت درخت دسته‌بندی‌های OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

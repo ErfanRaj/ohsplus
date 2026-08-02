@@ -33,7 +33,7 @@ export function SiteFooter() {
             <span className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <ShieldCheck className="size-5" aria-hidden="true" />
             </span>
-            <span className="font-display text-lg font-extrabold">OHS Hub</span>
+            <span className="font-display text-lg font-extrabold">OHS Plus</span>
           </div>
           <p className="mt-4 max-w-md text-sm leading-7 text-ink-muted">
             همه چیز برای یک کار ایمن؛ مرجع دیجیتال منابع تخصصی بهداشت حرفه‌ای، ایمنی، ارزیابی ریسک و
@@ -69,7 +69,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10">
         <div className="container-page py-6 text-xs text-ink-muted">
-          © {new Date().getFullYear()} OHS Hub — تمامی حقوق محفوظ است.
+          © {new Date().getFullYear()} OHS Plus — تمامی حقوق محفوظ است.
         </div>
       </div>
     </footer>

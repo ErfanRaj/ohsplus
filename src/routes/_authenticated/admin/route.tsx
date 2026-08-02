@@ -30,7 +30,7 @@ function AdminLayout() {
             <ShieldAlert className="size-10 text-destructive" aria-hidden="true" />
             <h1 className="text-2xl font-extrabold">دسترسی محدود</h1>
             <p className="max-w-md text-sm text-muted-foreground">
-              این بخش تنها برای اعضای تیم محتوا و مدیران OHS Hub در دسترس است.
+              این بخش تنها برای اعضای تیم محتوا و مدیران OHS Plus در دسترس است.
             </p>
             <Button asChild className="font-semibold">
               <Link to="/dashboard">بازگشت به پیشخوان</Link>

@@ -23,13 +23,13 @@ import { Card, CardContent } from "@/components/ui/card";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "OHS Hub | مرجع منابع تخصصی HSE و بهداشت حرفه‌ای" },
+      { title: "OHS Plus | مرجع منابع تخصصی HSE و بهداشت حرفه‌ای" },
       {
         name: "description",
         content:
           "دانلود چک‌لیست، فرم ارزیابی ریسک، فایل‌های اکسل و مستندات تخصصی بهداشت حرفه‌ای، ایمنی و ارگونومی؛ آماده استفاده در صنعت.",
       },
-      { property: "og:title", content: "OHS Hub | همه چیز برای یک کار ایمن" },
+      { property: "og:title", content: "OHS Plus | همه چیز برای یک کار ایمن" },
       {
         property: "og:description",
         content:
