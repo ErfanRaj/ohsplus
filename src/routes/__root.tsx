@@ -86,12 +86,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OHS Plus | Where OHS Professionals Connect" },
+      { title: "OHS Plus | مرجع تخصصی منابع HSE و بهداشت حرفه‌ای" },
       {
         name: "description",
         content:
-          "مرجع تخصصی منابع دیجیتال بهداشت حرفه‌ای، HSE، ارزیابی ریسک و ارگونومی برای کارشناسان ایمنی.",
+          "OHS Plus؛ مرجع منابع دیجیتال بهداشت حرفه‌ای، HSE، ارزیابی ریسک و ارگونومی برای کارشناسان ایمنی. Where OHS Professionals Connect.",
       },
+      { name: "author", content: "OHS Plus" },
+      { name: "robots", content: "index, follow" },
       { property: "og:site_name", content: "OHS Plus" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "fa_IR" },
@@ -105,7 +107,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap",
       },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
     ],
     scripts: [
       {
@@ -116,6 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "OHS Plus",
           slogan: "Where OHS Professionals Connect",
           url: "/",
+          logo: "/favicon.png",
         }),
       },
     ],
