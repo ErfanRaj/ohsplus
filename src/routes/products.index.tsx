@@ -32,13 +32,13 @@ export const Route = createFileRoute("/products/")({
   },
   head: () => ({
     meta: [
-      { title: "فروشگاه منابع HSE | OHS Hub" },
+      { title: "فروشگاه منابع HSE | OHS Plus" },
       {
         name: "description",
         content:
           "خرید و دانلود چک‌لیست، فرم ارزیابی ریسک، فایل اکسل محاسباتی و مستندات تخصصی ایمنی و بهداشت حرفه‌ای.",
       },
-      { property: "og:title", content: "فروشگاه منابع HSE | OHS Hub" },
+      { property: "og:title", content: "فروشگاه منابع HSE | OHS Plus" },
       {
         property: "og:description",
         content: "مجموعه کامل منابع دیجیتال آماده استفاده برای کارشناسان HSE.",

@@ -9,14 +9,14 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "درباره OHS Hub | مرجع تخصصی منابع HSE" },
+      { title: "درباره OHS Plus | مرجع تخصصی منابع HSE" },
       {
         name: "description",
         content:
-          "با OHS Hub آشنا شوید؛ پلتفرم تخصصی منابع دیجیتال بهداشت حرفه‌ای، ایمنی صنعتی، ارزیابی ریسک و ارگونومی برای کارشناسان HSE.",
+          "با OHS Plus آشنا شوید؛ پلتفرم تخصصی منابع دیجیتال بهداشت حرفه‌ای، ایمنی صنعتی، ارزیابی ریسک و ارگونومی برای کارشناسان HSE.",
       },
-      { property: "og:title", content: "درباره OHS Hub" },
-      { property: "og:description", content: "مأموریت، ارزش‌ها و تیم پشت مرجع تخصصی OHS Hub." },
+      { property: "og:title", content: "درباره OHS Plus" },
+      { property: "og:description", content: "مأموریت، ارزش‌ها و تیم پشت مرجع تخصصی OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -56,9 +56,9 @@ function AboutPage() {
           <PageBreadcrumb items={[{ label: "درباره ما" }]} />
 
           <header className="mt-6 max-w-3xl">
-            <h1 className="font-display text-3xl font-extrabold sm:text-4xl">درباره OHS Hub</h1>
+            <h1 className="font-display text-3xl font-extrabold sm:text-4xl">درباره OHS Plus</h1>
             <p className="mt-4 text-base leading-8 text-muted-foreground">
-              OHS Hub با یک هدف ساده ساخته شد: کارشناس ایمنی نباید ساعت‌ها وقت خود را صرف ساختن
+              OHS Plus با یک هدف ساده ساخته شد: کارشناس ایمنی نباید ساعت‌ها وقت خود را صرف ساختن
               چک‌لیست، فرم ارزیابی ریسک یا محاسبه‌گر از صفر کند. ما منابع دیجیتال دقیق، استاندارد و
               آماده‌ی استفاده را در یک جا جمع کرده‌ایم تا تمرکز شما روی چیزی بماند که واقعاً اهمیت
               دارد: بازگشت ایمن همکاران به خانه.

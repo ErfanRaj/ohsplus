@@ -8,10 +8,10 @@ import { formatToman, toFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/products")({
   head: () => ({
     meta: [
-      { title: "مدیریت محصولات | OHS Hub" },
+      { title: "مدیریت محصولات | OHS Plus" },
       { name: "description", content: "افزودن، ویرایش و انتشار محصولات دیجیتال HSE." },
-      { property: "og:title", content: "مدیریت محصولات | OHS Hub" },
-      { property: "og:description", content: "مدیریت کامل محصولات فروشگاه OHS Hub." },
+      { property: "og:title", content: "مدیریت محصولات | OHS Plus" },
+      { property: "og:description", content: "مدیریت کامل محصولات فروشگاه OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

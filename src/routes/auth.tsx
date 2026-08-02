@@ -20,12 +20,12 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "ورود و ثبت‌نام | OHS Hub" },
+      { title: "ورود و ثبت‌نام | OHS Plus" },
       {
         name: "description",
-        content: "به حساب کاربری OHS Hub وارد شوید یا حساب تازه بسازید تا به منابع تخصصی HSE دسترسی داشته باشید.",
+        content: "به حساب کاربری OHS Plus وارد شوید یا حساب تازه بسازید تا به منابع تخصصی HSE دسترسی داشته باشید.",
       },
-      { property: "og:title", content: "ورود و ثبت‌نام | OHS Hub" },
+      { property: "og:title", content: "ورود و ثبت‌نام | OHS Plus" },
       { property: "og:description", content: "دسترسی به پیشخوان، خریدها و دانلودهای شما." },
       { property: "og:url", content: "/auth" },
       { name: "robots", content: "noindex" },
@@ -150,7 +150,7 @@ function AuthPage() {
         <span className="flex size-10 items-center justify-center rounded-md bg-ink text-primary">
           <ShieldCheck className="size-5" aria-hidden="true" />
         </span>
-        <span className="font-display text-lg font-extrabold">OHS Hub</span>
+        <span className="font-display text-lg font-extrabold">OHS Plus</span>
       </Link>
 
       <div className="w-full max-w-md rounded-xl border bg-card p-6 shadow-soft sm:p-8">

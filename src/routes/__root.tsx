@@ -86,13 +86,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OHS Hub | همه چیز برای یک کار ایمن" },
+      { title: "OHS Plus | Where OHS Professionals Connect" },
       {
         name: "description",
         content:
           "مرجع تخصصی منابع دیجیتال بهداشت حرفه‌ای، HSE، ارزیابی ریسک و ارگونومی برای کارشناسان ایمنی.",
       },
-      { property: "og:site_name", content: "OHS Hub" },
+      { property: "og:site_name", content: "OHS Plus" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "fa_IR" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -105,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
     scripts: [
       {
@@ -113,8 +113,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "OHS Hub",
-          slogan: "همه چیز برای یک کار ایمن",
+          name: "OHS Plus",
+          slogan: "Where OHS Professionals Connect",
           url: "/",
         }),
       },

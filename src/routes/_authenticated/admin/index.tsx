@@ -9,10 +9,10 @@ import { toFa } from "@/lib/catalog";
 export const Route = createFileRoute("/_authenticated/admin/")({
   head: () => ({
     meta: [
-      { title: "پنل مدیریت | OHS Hub" },
-      { name: "description", content: "مدیریت محصولات، مقالات، دسته‌بندی‌ها و دیدگاه‌های OHS Hub." },
-      { property: "og:title", content: "پنل مدیریت | OHS Hub" },
-      { property: "og:description", content: "مدیریت کامل محتوای پلتفرم OHS Hub." },
+      { title: "پنل مدیریت | OHS Plus" },
+      { name: "description", content: "مدیریت محصولات، مقالات، دسته‌بندی‌ها و دیدگاه‌های OHS Plus." },
+      { property: "og:title", content: "پنل مدیریت | OHS Plus" },
+      { property: "og:description", content: "مدیریت کامل محتوای پلتفرم OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

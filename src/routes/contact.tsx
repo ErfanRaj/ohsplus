@@ -16,14 +16,14 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "تماس با ما | OHS Hub" },
+      { title: "تماس با ما | OHS Plus" },
       {
         name: "description",
         content:
-          "با تیم OHS Hub تماس بگیرید؛ پشتیبانی خرید، درخواست منابع اختصاصی HSE و همکاری سازمانی.",
+          "با تیم OHS Plus تماس بگیرید؛ پشتیبانی خرید، درخواست منابع اختصاصی HSE و همکاری سازمانی.",
       },
-      { property: "og:title", content: "تماس با ما | OHS Hub" },
-      { property: "og:description", content: "راه‌های ارتباطی و فرم پیام تیم OHS Hub." },
+      { property: "og:title", content: "تماس با ما | OHS Plus" },
+      { property: "og:description", content: "راه‌های ارتباطی و فرم پیام تیم OHS Plus." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

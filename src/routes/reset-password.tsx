@@ -13,10 +13,10 @@ export const Route = createFileRoute("/reset-password")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "تعیین رمز عبور جدید | OHS Hub" },
+      { title: "تعیین رمز عبور جدید | OHS Plus" },
       { name: "description", content: "رمز عبور تازه‌ای برای حساب کاربری خود انتخاب کنید." },
-      { property: "og:title", content: "تعیین رمز عبور جدید | OHS Hub" },
-      { property: "og:description", content: "بازیابی دسترسی به حساب کاربری OHS Hub." },
+      { property: "og:title", content: "تعیین رمز عبور جدید | OHS Plus" },
+      { property: "og:description", content: "بازیابی دسترسی به حساب کاربری OHS Plus." },
       { property: "og:url", content: "/reset-password" },
       { name: "robots", content: "noindex" },
     ],

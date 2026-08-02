@@ -12,9 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "پیشخوان من | OHS Hub" },
-      { name: "description", content: "مدیریت حساب کاربری، خریدها و دانلودهای شما در OHS Hub." },
-      { property: "og:title", content: "پیشخوان من | OHS Hub" },
+      { title: "پیشخوان من | OHS Plus" },
+      { name: "description", content: "مدیریت حساب کاربری، خریدها و دانلودهای شما در OHS Plus." },
+      { property: "og:title", content: "پیشخوان من | OHS Plus" },
       { property: "og:description", content: "دسترسی سریع به خریدها و فایل‌های دانلودی." },
       { property: "og:url", content: "/dashboard" },
       { name: "robots", content: "noindex" },

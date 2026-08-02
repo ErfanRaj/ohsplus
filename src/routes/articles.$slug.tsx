@@ -16,15 +16,15 @@ export const Route = createFileRoute("/articles/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "مقاله یافت نشد | OHS Hub" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "مقاله یافت نشد | OHS Plus" }, { name: "robots", content: "noindex" }],
       };
     }
     const description = loaderData.description.slice(0, 155);
     return {
       meta: [
-        { title: `${loaderData.title} | OHS Hub` },
+        { title: `${loaderData.title} | OHS Plus` },
         { name: "description", content: description },
-        { property: "og:title", content: `${loaderData.title} | OHS Hub` },
+        { property: "og:title", content: `${loaderData.title} | OHS Plus` },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
