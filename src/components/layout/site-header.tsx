@@ -233,7 +233,7 @@ export function SiteHeader() {
             </DropdownMenu>
           ) : (
             <Button variant="outline" className="gap-2 font-semibold" asChild>
-              <Link to="/auth">
+              <Link to="/auth" aria-label="ورود یا ثبت‌نام">
                 <User className="size-4" aria-hidden="true" />
                 <span className="hidden sm:inline">ورود / ثبت‌نام</span>
               </Link>
