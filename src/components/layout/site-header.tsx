@@ -128,9 +128,9 @@ export function SiteHeader() {
           <img
             src={logoAsset.url}
             alt="لوگوی OHS Plus"
-            width={132}
-            height={40}
-            className="h-9 w-auto shrink-0 object-contain"
+            width={254}
+            height={129}
+            className="h-12 w-auto shrink-0 object-contain sm:h-14"
           />
           <span className="hidden min-w-0 flex-col leading-none sm:flex">
             <span className="truncate text-[11px] text-muted-foreground" dir="ltr">

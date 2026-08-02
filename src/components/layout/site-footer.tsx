@@ -33,16 +33,14 @@ export function SiteFooter() {
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
-            <span className="flex items-center rounded-md bg-white px-3 py-2">
-              <img
-                src={logoAsset.url}
-                alt="لوگوی OHS Plus"
-                width={132}
-                height={40}
-                loading="lazy"
-                className="h-8 w-auto object-contain"
-              />
-            </span>
+            <img
+              src={logoAsset.url}
+              alt="لوگوی OHS Plus"
+              width={254}
+              height={129}
+              loading="lazy"
+              className="h-14 w-auto object-contain brightness-0 invert"
+            />
             <span className="text-sm font-semibold text-primary" dir="ltr">
               Where OHS Professionals Connect
             </span>
