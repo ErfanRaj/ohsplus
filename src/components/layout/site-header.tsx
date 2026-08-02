@@ -36,7 +36,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
 import { SearchDialog } from "@/components/layout/search-dialog";
+
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { NAVIGATION } from "@/lib/navigation";
@@ -123,16 +125,20 @@ export function SiteHeader() {
           className="flex min-w-0 items-center gap-2"
           aria-label="OHS Plus، صفحه اصلی"
         >
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-ink text-primary">
-            <ShieldCheck className="size-5" aria-hidden="true" />
-          </span>
-          <span className="flex min-w-0 flex-col leading-none">
-            <span className="font-display text-base font-extrabold tracking-tight">OHS Plus</span>
-            <span className="mt-1 truncate text-[11px] text-muted-foreground">
-              مرجع تخصصی ایمنی
+          <img
+            src={logoAsset.url}
+            alt="لوگوی OHS Plus"
+            width={132}
+            height={40}
+            className="h-9 w-auto shrink-0 object-contain"
+          />
+          <span className="hidden min-w-0 flex-col leading-none sm:flex">
+            <span className="truncate text-[11px] text-muted-foreground" dir="ltr">
+              Where OHS Professionals Connect
             </span>
           </span>
         </Link>
+
 
         <NavigationMenu className="hidden lg:flex" dir="rtl">
           <NavigationMenuList>

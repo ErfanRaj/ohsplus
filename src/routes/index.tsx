@@ -13,8 +13,9 @@ import {
   Users,
 } from "lucide-react";
 
-import heroImage from "@/assets/hero-hse.jpg";
+import { HeroSlideshow } from "@/components/layout/hero-slideshow";
 import { SiteFooter } from "@/components/layout/site-footer";
+
 import { SiteHeader } from "@/components/layout/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -154,26 +155,22 @@ function HomePage() {
       <main id="main" className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden bg-ink text-ink-foreground">
-          <img
-            src={heroImage}
-            alt="کارشناس ایمنی با کلاه ایمنی و جلیقه شبرنگ در محیط صنعتی"
-            width={1600}
-            height={1104}
-            className="absolute inset-0 size-full object-cover object-left opacity-60"
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-l from-ink via-ink/85 to-ink/20"
-            aria-hidden="true"
-          />
+          <HeroSlideshow />
           <div className="container-page relative py-20 md:py-32">
             <div className="max-w-2xl">
               <Badge className="gap-1.5 bg-primary/15 text-primary hover:bg-primary/20">
                 <ShieldCheck className="size-3.5" aria-hidden="true" />
                 مرجع تخصصی HSE
               </Badge>
-              <h1 className="mt-6 text-3xl leading-[1.5] font-extrabold sm:text-4xl md:text-5xl md:leading-[1.45]">
-                همه چیز برای یک <span className="text-primary">کار ایمن</span>
+              <h1 className="rise-in mt-6 text-3xl leading-[1.5] font-extrabold sm:text-4xl md:text-5xl md:leading-[1.45]">
+                همه چیز برای یک <span className="glow-text">کار ایمن</span>
               </h1>
+              <p
+                dir="ltr"
+                className="shimmer-text mt-4 text-start font-display text-lg font-extrabold tracking-tight sm:text-xl"
+              >
+                Where OHS Professionals Connect
+              </p>
               <p className="mt-5 max-w-xl text-base leading-8 text-ink-muted sm:text-lg">
                 مستندات، چک‌لیست‌ها و ابزارهای محاسباتی آماده برای کارشناسان بهداشت حرفه‌ای، ایمنی و
                 ارگونومی. دانلود فوری، به‌روزرسانی دائمی، قابل استفاده در ممیزی و بازرسی.
@@ -186,6 +183,7 @@ function HomePage() {
                   </Link>
                 </Button>
               </div>
+
               <dl className="mt-12 grid max-w-lg grid-cols-2 gap-6 sm:grid-cols-4">
                 {STATS.map((stat) => (
                   <div key={stat.label}>

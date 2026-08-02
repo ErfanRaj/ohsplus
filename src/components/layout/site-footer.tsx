@@ -1,5 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, ShieldCheck } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+
+import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
+
 
 const FOOTER_LINKS: { title: string; items: { label: string; href: string }[] }[] = [
   {
@@ -29,16 +32,26 @@ export function SiteFooter() {
       <div aria-hidden="true" className="hazard-stripes h-2 w-full" />
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <span className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <ShieldCheck className="size-5" aria-hidden="true" />
+          <div className="flex items-center gap-3">
+            <span className="flex items-center rounded-md bg-white px-3 py-2">
+              <img
+                src={logoAsset.url}
+                alt="لوگوی OHS Plus"
+                width={132}
+                height={40}
+                loading="lazy"
+                className="h-8 w-auto object-contain"
+              />
             </span>
-            <span className="font-display text-lg font-extrabold">OHS Plus</span>
+            <span className="text-sm font-semibold text-primary" dir="ltr">
+              Where OHS Professionals Connect
+            </span>
           </div>
           <p className="mt-4 max-w-md text-sm leading-7 text-ink-muted">
             همه چیز برای یک کار ایمن؛ مرجع دیجیتال منابع تخصصی بهداشت حرفه‌ای، ایمنی، ارزیابی ریسک و
             ارگونومی برای کارشناسان HSE ایران.
           </p>
+
           <div className="mt-6 flex flex-col gap-2 text-sm text-ink-muted">
             <a href="mailto:erfann.rag@gmail.com" className="flex items-center gap-2 hover:text-primary">
               <Mail className="size-4" aria-hidden="true" />
