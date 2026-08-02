@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
         content:
           "دانلود چک‌لیست، فرم ارزیابی ریسک، فایل‌های اکسل و مستندات تخصصی بهداشت حرفه‌ای، ایمنی و ارگونومی؛ آماده استفاده در صنعت.",
       },
-      { property: "og:title", content: "OHS Plus | همه چیز برای یک کار ایمن" },
+      { property: "og:title", content: "OHS Plus | Where OHS Professionals Connect" },
       {
         property: "og:description",
         content:
