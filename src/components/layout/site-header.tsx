@@ -54,6 +54,17 @@ export function SiteHeader() {
     enabled: Boolean(user?.id),
   });
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
