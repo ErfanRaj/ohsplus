@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isStaffQuery } from "@/lib/admin";
 
 import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, ShieldCheck, User } from "lucide-react";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +37,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
-import { SearchDialog } from "@/components/layout/search-dialog";
+const SearchDialog = lazy(() =>
+  import("@/components/layout/search-dialog").then((m) => ({ default: m.SearchDialog })),
+);
 
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
@@ -242,7 +244,11 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      {searchOpen ? (
+        <Suspense fallback={null}>
+          <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+        </Suspense>
+      ) : null}
     </header>
   );
 }
