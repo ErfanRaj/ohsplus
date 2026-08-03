@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 
 import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
 
@@ -11,9 +11,10 @@ const FOOTER_LINKS: { title: string; items: { label: string; href: string }[] }[
       { label: "ارزیابی ریسک", href: "/products?category=risk-assessment" },
       { label: "بهداشت حرفه‌ای", href: "/products?category=occupational-health" },
       { label: "ارگونومی", href: "/products?category=ergonomics" },
-      { label: "آموزش ایمنی", href: "/products?category=training" },
+      { label: "ایمنی صنعتی", href: "/products?category=industrial-safety" },
     ],
   },
+
   {
     title: "پشتیبانی",
     items: [
@@ -55,11 +56,8 @@ export function SiteFooter() {
               <Mail className="size-4" aria-hidden="true" />
               erfann.rag@gmail.com
             </a>
-            <a href="tel:+982100000000" className="flex items-center gap-2 hover:text-primary">
-              <Phone className="size-4" aria-hidden="true" />
-              ۰۲۱-۰۰۰۰۰۰۰۰
-            </a>
           </div>
+
         </div>
 
         {FOOTER_LINKS.map((group) => (

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Download, FileSpreadsheet, Star } from "lucide-react";
 
+import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatToman, toFa, type ProductRow } from "@/lib/catalog";
@@ -14,12 +15,12 @@ export function ProductCard({ product }: { product: ProductRow }) {
             <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <FileSpreadsheet className="size-5" aria-hidden="true" />
             </span>
-            {product.badge ? (
-              <Badge variant="secondary" className="shrink-0">
-                {product.badge}
-              </Badge>
-            ) : null}
+            <div className="flex shrink-0 items-center gap-2">
+              {product.badge ? <Badge variant="secondary">{product.badge}</Badge> : null}
+              <FavoriteButton productId={product.id} />
+            </div>
           </div>
+
 
           <div className="space-y-2">
             <h3 className="text-base leading-7 font-bold">{product.title}</h3>
