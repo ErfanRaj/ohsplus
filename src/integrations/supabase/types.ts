@@ -201,6 +201,35 @@ export type Database = {
         }
         Relationships: []
       }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_files: {
         Row: {
           created_at: string
@@ -404,7 +433,9 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_character: string | null
           avatar_url: string | null
+          bio: string | null
           company: string | null
           created_at: string
           deleted_at: string | null
@@ -415,7 +446,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_character?: string | null
           avatar_url?: string | null
+          bio?: string | null
           company?: string | null
           created_at?: string
           deleted_at?: string | null
@@ -426,7 +459,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_character?: string | null
           avatar_url?: string | null
+          bio?: string | null
           company?: string | null
           created_at?: string
           deleted_at?: string | null
