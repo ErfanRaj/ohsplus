@@ -99,7 +99,11 @@ function ProductDetailPage() {
                   </Link>
                 ) : null}
               </div>
-              <h1 className="text-2xl leading-10 font-extrabold sm:text-3xl">{product.title}</h1>
+              <div className="flex items-start justify-between gap-3">
+                <h1 className="text-2xl leading-10 font-extrabold sm:text-3xl">{product.title}</h1>
+                <FavoriteButton productId={product.id} size="lg" className="mt-1" />
+              </div>
+
               {product.subtitle ? (
                 <p className="text-sm leading-8 text-muted-foreground">{product.subtitle}</p>
               ) : null}
