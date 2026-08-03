@@ -175,6 +175,12 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    background-image: repeating-conic-gradient(
+      color-mix(in oklab, var(--color-foreground) 3.5%, transparent) 0% 25%,
+      transparent 0% 50%
+    );
+    background-size: 64px 64px;
+    background-attachment: scroll;
     font-family: var(--font-body);
     font-feature-settings: "ss02";
   }

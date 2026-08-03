@@ -162,7 +162,7 @@ function HomePage() {
               </h1>
               <p
                 dir="ltr"
-                className="shimmer-text mt-4 text-start font-display text-lg font-extrabold tracking-tight sm:text-xl"
+                className="shimmer-text mt-4 text-start font-display text-xl font-extrabold tracking-tight sm:text-2xl md:text-3xl"
               >
                 Where OHS Professionals Connect
               </p>
