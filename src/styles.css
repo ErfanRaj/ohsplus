@@ -176,7 +176,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     background-image: repeating-conic-gradient(
-      color-mix(in oklab, var(--color-foreground) 3.5%, transparent) 0% 25%,
+      color-mix(in oklab, var(--color-foreground) 2.5%, transparent) 0% 25%,
       transparent 0% 50%
     );
     background-size: 64px 64px;
