@@ -12,6 +12,9 @@ import {
   Users,
 } from "lucide-react";
 
+import { useQuery } from "@tanstack/react-query";
+
+import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { HeroSlideshow } from "@/components/layout/hero-slideshow";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -19,6 +22,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -132,7 +136,24 @@ const ARTICLES = [
 ];
 
 
+function useProductIds(slugs: string[]) {
+  return useQuery({
+    queryKey: ["home-product-ids", slugs],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("products").select("id, slug").in("slug", slugs);
+      if (error) throw error;
+      return Object.fromEntries((data ?? []).map((row) => [row.slug, row.id])) as Record<
+        string,
+        string
+      >;
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
 function HomePage() {
+  const { data: productIds } = useProductIds(PRODUCTS.map((p) => p.slug));
+
   return (
     <div className="flex min-h-dvh flex-col">
       <a
@@ -162,7 +183,7 @@ function HomePage() {
               </h1>
               <p
                 dir="ltr"
-                className="shimmer-text mt-4 text-start font-display text-lg font-extrabold tracking-tight sm:text-xl"
+                className="shimmer-text mt-4 text-start font-display text-xl font-extrabold tracking-tight sm:text-2xl md:text-3xl"
               >
                 Where OHS Professionals Connect
               </p>
@@ -267,9 +288,14 @@ function HomePage() {
                     </div>
                     <CardContent className="flex h-full flex-col">
                       <div className="flex items-center justify-between gap-2">
-                        <Badge variant="secondary" className="font-semibold">
-                          {product.badge}
-                        </Badge>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="secondary" className="font-semibold">
+                            {product.badge}
+                          </Badge>
+                          {productIds?.[product.slug] ? (
+                            <FavoriteButton productId={productIds[product.slug]} />
+                          ) : null}
+                        </div>
                         <span className="flex items-center gap-1 text-xs text-muted-foreground">
                           <Star
                             className="size-3.5 fill-primary text-primary"

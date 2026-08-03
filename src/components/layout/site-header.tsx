@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isStaffQuery } from "@/lib/admin";
 
 import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, ShieldCheck, User } from "lucide-react";
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +37,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
-import { SearchDialog } from "@/components/layout/search-dialog";
+const SearchDialog = lazy(() =>
+  import("@/components/layout/search-dialog").then((m) => ({ default: m.SearchDialog })),
+);
 
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
@@ -51,6 +53,17 @@ export function SiteHeader() {
     ...isStaffQuery(user?.id ?? ""),
     enabled: Boolean(user?.id),
   });
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -242,7 +255,11 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      {searchOpen ? (
+        <Suspense fallback={null}>
+          <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+        </Suspense>
+      ) : null}
     </header>
   );
 }

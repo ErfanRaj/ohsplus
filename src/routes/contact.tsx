@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Clock, Mail, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -42,7 +42,6 @@ const CONTACT_EMAIL = "erfann.rag@gmail.com";
 
 const CHANNELS = [
   { icon: Mail, label: "ایمیل", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: Phone, label: "تلفن", value: "۰۲۱-۰۰۰۰۰۰۰۰", href: "tel:+982100000000" },
   { icon: Clock, label: "ساعات پاسخ‌گویی", value: "شنبه تا چهارشنبه، ۹ تا ۱۷" },
   { icon: MapPin, label: "نشانی", value: "تهران، ایران" },
 ];
