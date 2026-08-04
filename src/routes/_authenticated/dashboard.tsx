@@ -240,7 +240,7 @@ function DashboardPage() {
 
           <div className="mt-5">
             <p className="text-sm font-semibold">شخصیت پروفایل</p>
-            <div className="mt-3 flex flex-wrap gap-3">
+            <div className="mt-3 flex flex-wrap gap-4">
               {CHARACTERS.map((character) => (
                 <button
                   key={character.key}
@@ -248,18 +248,32 @@ function DashboardPage() {
                   aria-pressed={form.avatar_character === character.key}
                   title={character.label}
                   onClick={() => setForm((prev) => ({ ...prev, avatar_character: character.key }))}
-                  className={cn(
-                    "flex size-14 items-center justify-center rounded-full border-2 transition-colors",
-                    form.avatar_character === character.key
-                      ? "border-primary bg-primary/15 text-primary"
-                      : "border-border text-muted-foreground hover:border-primary/50",
-                  )}
+                  className="flex w-20 flex-col items-center gap-1.5"
                 >
-                  <character.icon className="size-6" aria-hidden="true" />
-                  <span className="sr-only">{character.label}</span>
+                  <span
+                    className={cn(
+                      "flex size-14 items-center justify-center rounded-full border-2 transition-colors",
+                      form.avatar_character === character.key
+                        ? "border-primary bg-primary/15 text-primary"
+                        : "border-border text-muted-foreground hover:border-primary/50",
+                    )}
+                  >
+                    <character.icon className="size-6" aria-hidden="true" />
+                  </span>
+                  <span
+                    className={cn(
+                      "text-center text-[11px] leading-4",
+                      form.avatar_character === character.key
+                        ? "character-name"
+                        : "font-display font-bold text-muted-foreground",
+                    )}
+                  >
+                    {character.label}
+                  </span>
                 </button>
               ))}
             </div>
+
           </div>
 
           <form
