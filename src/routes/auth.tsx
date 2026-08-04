@@ -146,12 +146,19 @@ function AuthPage() {
 
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-secondary/50 px-5 py-14">
-      <Link to="/" className="mb-8 flex items-center gap-2">
-        <span className="flex size-10 items-center justify-center rounded-md bg-ink text-primary">
-          <ShieldCheck className="size-5" aria-hidden="true" />
+      <Link to="/" className="mb-8 flex flex-col items-center gap-2">
+        <span className="flex items-center justify-center rounded-2xl border border-safe/30 bg-safe/10 p-3 shadow-soft">
+          <img
+            src={logoAsset.url}
+            alt="لوگوی OHS Plus"
+            width={254}
+            height={129}
+            className="h-14 w-auto object-contain"
+          />
         </span>
-        <span className="font-display text-lg font-extrabold">OHS Plus</span>
+        <span className="font-display text-lg font-extrabold text-safe">OHS Plus</span>
       </Link>
+
 
       <div className="w-full max-w-md rounded-xl border bg-card p-6 shadow-soft sm:p-8">
         <h1 className="text-center text-xl font-extrabold">ورود به حساب کاربری</h1>
