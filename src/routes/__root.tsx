@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { InteractiveGrid } from "@/components/layout/interactive-grid";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/hooks/use-auth";
 import appCss from "../styles.css?url";
@@ -104,13 +105,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
+        rel: "preload",
+        as: "style",
+        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap",
+      },
+      {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap",
       },
       { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png?v=3" },
+
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/favicon-192.png?v=3" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=3" },
     ],
+
     scripts: [
       {
         type: "application/ld+json",
@@ -194,6 +202,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <InteractiveGrid />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <Toaster position="top-center" richColors closeButton />

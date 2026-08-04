@@ -242,7 +242,7 @@ function HomePage() {
                   className="block h-full"
                 >
                   <Card className="h-full border-border/70 shadow-none transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-soft">
-                    <CardContent className="flex items-start gap-4">
+                    <CardContent className="flex h-full items-center gap-4 py-6">
                       <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-secondary text-accent">
                         <cat.icon className="size-5" aria-hidden="true" />
                       </span>
@@ -356,12 +356,12 @@ function HomePage() {
                   params={{ slug: article.slug }}
                   className="group block h-full"
                 >
-                  <article className="flex h-full flex-col rounded-lg border border-border/70 bg-card p-6 transition-colors hover:border-primary">
+                  <article className="flex h-full flex-col justify-center rounded-lg border border-border/70 bg-card p-6 transition-colors hover:border-primary">
                     <span className="text-xs font-bold text-accent">{article.category}</span>
                     <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
                       {article.title}
                     </h3>
-                    <p className="mt-auto pt-6 text-xs text-muted-foreground">{article.read}</p>
+                    <p className="mt-4 text-xs text-muted-foreground">{article.read}</p>
                   </article>
                 </Link>
               </li>
