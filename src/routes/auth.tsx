@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { ArrowLeft, Loader2, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+
+import logoAsset from "@/assets/ohs-plus-logo.png.asset.json";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
