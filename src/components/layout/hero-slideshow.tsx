@@ -45,14 +45,15 @@ export function HeroSlideshow() {
             decoding="async"
             fetchPriority={index === 0 ? "high" : "low"}
             loading={index === 0 ? "eager" : "lazy"}
-            className={`absolute inset-0 size-full object-cover object-left transition-opacity duration-[1500ms] ease-in-out ${
+            sizes="100vw"
+            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-[1500ms] ease-in-out sm:object-[70%_center] lg:object-left ${
               index === active ? "opacity-60" : "opacity-0"
             }`}
           />
         ) : null,
       )}
       <div
-        className="absolute inset-0 bg-gradient-to-l from-ink via-ink/85 to-ink/20"
+        className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/80 to-ink/70 md:bg-gradient-to-l md:from-ink md:via-ink/85 md:to-ink/20"
         aria-hidden="true"
       />
     </div>
