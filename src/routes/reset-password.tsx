@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -72,10 +72,8 @@ function ResetPasswordPage() {
         <div className="mt-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="new-password">رمز عبور جدید</Label>
-            <Input
+            <PasswordInput
               id="new-password"
-              type="password"
-              dir="ltr"
               autoComplete="new-password"
               required
               value={password}
@@ -84,10 +82,8 @@ function ResetPasswordPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="confirm-password">تکرار رمز عبور</Label>
-            <Input
+            <PasswordInput
               id="confirm-password"
-              type="password"
-              dir="ltr"
               autoComplete="new-password"
               required
               value={confirm}

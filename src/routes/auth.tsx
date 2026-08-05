@@ -8,6 +8,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/use-auth";
@@ -42,6 +43,25 @@ const passwordSchema = z
   .string()
   .min(8, { message: "رمز عبور باید حداقل ۸ کاراکتر باشد" })
   .max(72);
+
+type AuthErrorLike = { message: string; code?: string; status?: number };
+
+/** Maps Supabase auth errors to Persian copy, falling back to the raw message. */
+function describeAuthError(error: AuthErrorLike, fallback: string) {
+  const code = error.code ?? "";
+  const message = error.message ?? "";
+  if (code === "weak_password" || /weak|pwned/i.test(message))
+    return "این رمز عبور ضعیف یا لو رفته است؛ رمز قوی‌تری انتخاب کنید (ترکیب حروف بزرگ و کوچک، عدد و نماد).";
+  if (code === "user_already_exists" || /already registered|already been registered/i.test(message))
+    return "این ایمیل قبلاً ثبت شده است.";
+  if (code === "invalid_credentials") return "ایمیل یا رمز عبور نادرست است.";
+  if (code === "email_address_invalid" || /invalid.*email/i.test(message))
+    return "آدرس ایمیل معتبر نیست.";
+  if (code === "over_email_send_rate_limit" || error.status === 429)
+    return "تعداد درخواست‌ها زیاد است؛ کمی بعد دوباره تلاش کنید.";
+  if (code === "email_not_confirmed") return "ایمیل شما هنوز تأیید نشده است.";
+  return message ? `${fallback} (${message})` : fallback;
+}
 
 function sanitizeRedirect(value?: string) {
   if (!value || !value.startsWith("/") || value.startsWith("//")) return "/dashboard";
@@ -85,7 +105,8 @@ function AuthPage() {
     const { error } = await supabase.auth.signInWithPassword(values);
     setBusy(false);
     if (error) {
-      toast.error("ایمیل یا رمز عبور نادرست است.");
+      console.error("[auth] signInWithPassword failed", error);
+      toast.error(describeAuthError(error, "ورود انجام نشد."));
       return;
     }
     toast.success("خوش آمدید!");
@@ -97,7 +118,7 @@ function AuthPage() {
     const values = validate();
     if (!values) return;
     setBusy(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       ...values,
       options: {
         emailRedirectTo: `${window.location.origin}${destination}`,
@@ -106,14 +127,26 @@ function AuthPage() {
     });
     setBusy(false);
     if (error) {
-      toast.error(
-        error.message.includes("already registered")
-          ? "این ایمیل قبلاً ثبت شده است."
-          : "ثبت‌نام انجام نشد، دوباره تلاش کنید.",
-      );
+      console.error("[auth] signUp failed", {
+        status: error.status,
+        code: error.code,
+        message: error.message,
+      });
+      toast.error(describeAuthError(error, "ثبت‌نام انجام نشد."), {
+        description: `${error.code ?? error.status ?? ""} ${error.message}`.trim(),
+        duration: 10000,
+      });
       return;
     }
-    toast.success("حساب ساخته شد. در صورت نیاز ایمیل تأیید را بررسی کنید.");
+    if (!data.user) {
+      toast.error("ثبت‌نام انجام نشد؛ پاسخی از سرور دریافت نشد.");
+      return;
+    }
+    toast.success(
+      data.session
+        ? "حساب ساخته شد و وارد شدید."
+        : "حساب ساخته شد. برای فعال‌سازی، ایمیل تأیید را بررسی کنید.",
+    );
   };
 
   const handleGoogle = async () => {
@@ -140,7 +173,8 @@ function AuthPage() {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) {
-      toast.error("ارسال ایمیل بازیابی انجام نشد.");
+      console.error("[auth] resetPasswordForEmail failed", error);
+      toast.error(describeAuthError(error, "ارسال ایمیل بازیابی انجام نشد."));
       return;
     }
     toast.success("لینک بازیابی رمز عبور ارسال شد.");
@@ -190,10 +224,8 @@ function AuthPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signin-password">رمز عبور</Label>
-                <Input
+                <PasswordInput
                   id="signin-password"
-                  type="password"
-                  dir="ltr"
                   autoComplete="current-password"
                   required
                   value={password}
@@ -241,10 +273,8 @@ function AuthPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-password">رمز عبور</Label>
-                <Input
+                <PasswordInput
                   id="signup-password"
-                  type="password"
-                  dir="ltr"
                   autoComplete="new-password"
                   required
                   value={password}
