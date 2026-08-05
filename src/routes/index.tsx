@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { HeroSlideshow } from "@/components/layout/hero-slideshow";
+import { SearchConsole } from "@/components/layout/search-console";
 import { SiteFooter } from "@/components/layout/site-footer";
 
 import { SiteHeader } from "@/components/layout/site-header";
@@ -23,6 +24,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
+import { toFa } from "@/lib/catalog";
+import { siteStatsQuery } from "@/lib/site-stats";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -107,12 +110,9 @@ const PRODUCTS = [
   },
 ];
 
-const STATS = [
-  { value: "۴۲۰+", label: "منبع تخصصی" },
-  { value: "۱۸٬۰۰۰+", label: "دانلود موفق" },
-  { value: "۹۶٪", label: "رضایت کاربران" },
-  { value: "۲۴/۷", label: "دسترسی آنی" },
-];
+function faCount(value: number) {
+  return `${toFa(value.toLocaleString("en-US").replace(/,/g, "٬"))}+`;
+}
 
 const ARTICLES = [
   {
@@ -153,6 +153,14 @@ function useProductIds(slugs: string[]) {
 
 function HomePage() {
   const { data: productIds } = useProductIds(PRODUCTS.map((p) => p.slug));
+  const { data: stats } = useQuery(siteStatsQuery());
+
+  const statItems = [
+    { value: stats ? faCount(stats.resources) : "—", label: "منبع تخصصی" },
+    { value: stats ? faCount(stats.downloads) : "—", label: "دانلود موفق" },
+    { value: stats ? faCount(stats.articles) : "—", label: "مقاله تخصصی" },
+    { value: "۲۴/۷", label: "دسترسی آنی" },
+  ];
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -191,6 +199,8 @@ function HomePage() {
                 مستندات، چک‌لیست‌ها و ابزارهای محاسباتی آماده برای کارشناسان بهداشت حرفه‌ای، ایمنی و
                 ارگونومی. دانلود فوری، به‌روزرسانی دائمی، قابل استفاده در ممیزی و بازرسی.
               </p>
+              <SearchConsole />
+
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" className="gap-2 font-bold" asChild>
                   <Link to="/products" search={{ q: "", category: "", sort: "newest" }}>
@@ -201,7 +211,7 @@ function HomePage() {
               </div>
 
               <dl className="mt-12 grid max-w-lg grid-cols-2 gap-6 sm:grid-cols-4">
-                {STATS.map((stat) => (
+                {statItems.map((stat) => (
                   <div key={stat.label} className="flex flex-col">
                     <dd className="font-display text-2xl font-extrabold text-primary">
                       {stat.value}
