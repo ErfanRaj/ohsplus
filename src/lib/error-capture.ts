@@ -6,6 +6,7 @@ const TTL_MS = 5_000;
 
 function record(error: unknown) {
   lastCapturedError = { error, at: Date.now() };
+  void import("./sentry").then((m) => m.captureError(error));
 }
 
 // h3's HTTPError serializes to {"status":500,"unhandled":true,"message":"HTTPError"} —
