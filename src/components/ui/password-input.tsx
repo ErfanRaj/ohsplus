@@ -15,14 +15,14 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
         {...props}
         type={visible ? "text" : "password"}
         dir="ltr"
-        className={cn("pe-10", className)}
+        className={cn("ps-10", className)}
       />
       <button
         type="button"
         onClick={() => setVisible((prev) => !prev)}
         aria-label={visible ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}
         aria-pressed={visible}
-        className="absolute inset-y-0 end-0 flex w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="absolute inset-y-0 start-0 flex w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {visible ? (
           <EyeOff className="size-4" aria-hidden="true" />
