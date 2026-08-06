@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, Send } from "lucide-react";
+import { Clock, Mail, MapPin, Send, Smile } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -40,9 +40,14 @@ const schema = z.object({
 
 const CONTACT_EMAIL = "erfann.rag@gmail.com";
 
+const EMOJIS = [
+  "🙂","👍","🙏","✅","⚠️","🦺","⛑️","🔧",
+  "📄","📊","🔥","🧯","💡","❓","📌","🚧",
+] as const;
+
 const CHANNELS = [
   { icon: Mail, label: "ایمیل", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: Clock, label: "ساعات پاسخ‌گویی", value: "شنبه تا چهارشنبه، ۹ تا ۱۷" },
+  { icon: Clock, label: "ساعات پاسخ‌گویی", value: "شنبه تا پنجشنبه، ۸ تا ۲۲" },
   { icon: MapPin, label: "نشانی", value: "تهران، ایران" },
 ];
 
@@ -50,11 +55,7 @@ function ContactPage() {
   const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
-
-  const mailtoHref = (data: z.infer<typeof schema>) =>
-    `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      data.subject,
-    )}&body=${encodeURIComponent(`${data.message}\n\n${data.name} — ${data.email}`)}`;
+  const [emojiOpen, setEmojiOpen] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -131,7 +132,39 @@ function ContactPage() {
                 />
               </div>
               <div className="mt-4 space-y-2">
-                <Label htmlFor="contact-message">متن پیام</Label>
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="contact-message">متن پیام</Label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setEmojiOpen((open) => !open)}
+                      aria-expanded={emojiOpen}
+                      aria-label="افزودن ایموجی به متن پیام"
+                      className="flex items-center gap-1 rounded-lg border border-border bg-background px-2 py-1 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                    >
+                      <Smile className="size-4" aria-hidden="true" />
+                      ایموجی
+                    </button>
+                    {emojiOpen ? (
+                      <div className="absolute z-20 mt-2 grid w-56 grid-cols-8 gap-1 rounded-xl border border-border bg-popover p-2 shadow-soft">
+                        {EMOJIS.map((emoji) => (
+                          <button
+                            key={emoji}
+                            type="button"
+                            onClick={() => {
+                              setValues((v) => ({ ...v, message: `${v.message}${emoji}` }));
+                              setEmojiOpen(false);
+                            }}
+                            className="rounded-md p-1 text-lg leading-none transition-colors hover:bg-muted"
+                            aria-label={`افزودن ${emoji}`}
+                          >
+                            {emoji}
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
                 <Textarea
                   id="contact-message"
                   required
@@ -145,18 +178,6 @@ function ContactPage() {
                 <Button type="submit" className="gap-2 font-bold" disabled={busy}>
                   <Send className="size-4" aria-hidden="true" />
                   {busy ? "در حال ارسال…" : "ارسال پیام"}
-                </Button>
-                <Button asChild variant="outline" className="gap-2 font-semibold">
-                  <a
-                    href={
-                      schema.safeParse(values).success
-                        ? mailtoHref(schema.parse(values))
-                        : `mailto:${CONTACT_EMAIL}`
-                    }
-                  >
-                    <Mail className="size-4" aria-hidden="true" />
-                    ارسال مستقیم با ایمیل
-                  </a>
                 </Button>
               </div>
               {sent ? (
