@@ -83,19 +83,23 @@ function AdminUsers() {
               <TableHead className="text-right">سازمان</TableHead>
               <TableHead className="text-right">سمت</TableHead>
               <TableHead className="text-right">نقش‌ها</TableHead>
+              {isAdmin ? <TableHead className="text-right">تغییر نقش</TableHead> : null}
               <TableHead className="text-right">تاریخ عضویت</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-10 text-center">
+                <TableCell colSpan={isAdmin ? 6 : 5} className="py-10 text-center">
                   <Loader2 className="mx-auto size-5 animate-spin text-muted-foreground" />
                 </TableCell>
               </TableRow>
             ) : (profiles ?? []).length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                <TableCell
+                  colSpan={isAdmin ? 6 : 5}
+                  className="py-10 text-center text-sm text-muted-foreground"
+                >
                   کاربری یافت نشد.
                 </TableCell>
               </TableRow>
@@ -118,10 +122,37 @@ function AdminUsers() {
                       )}
                     </div>
                   </TableCell>
+                  {isAdmin ? (
+                    <TableCell>
+                      <Select
+                        dir="rtl"
+                        value={rolesFor(row.id)[0] ?? "customer"}
+                        onValueChange={(value) =>
+                          mutation.mutate({
+                            userId: String(row.id),
+                            role: value as AssignableRole,
+                          })
+                        }
+                        disabled={mutation.isPending}
+                      >
+                        <SelectTrigger className="w-40">
+                          <SelectValue placeholder="انتخاب نقش" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {ASSIGNABLE_ROLES.map((role) => (
+                            <SelectItem key={role.value} value={role.value}>
+                              {role.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                  ) : null}
                   <TableCell>{formatDateFa(String(row.created_at ?? ""))}</TableCell>
                 </TableRow>
               ))
             )}
+
           </TableBody>
         </Table>
       </div>
