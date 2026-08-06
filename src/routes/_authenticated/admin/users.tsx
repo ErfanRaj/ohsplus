@@ -1,9 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -12,7 +20,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { adminListQuery, ROLE_LABELS } from "@/lib/admin";
+import {
+  adminListQuery,
+  ASSIGNABLE_ROLES,
+  isAdminQuery,
+  ROLE_LABELS,
+  setUserRole,
+  type AssignableRole,
+} from "@/lib/admin";
 import { formatDateFa } from "@/lib/catalog";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
@@ -31,10 +46,25 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
 });
 
 function AdminUsers() {
+  const { user } = Route.useRouteContext();
+  const queryClient = useQueryClient();
   const { data: profiles, isLoading } = useQuery(
     adminListQuery("profiles", "id,full_name,phone,company,job_title,created_at"),
   );
   const { data: roles } = useQuery(adminListQuery("user_roles", "user_id,role"));
+  const { data: isAdmin } = useQuery(isAdminQuery(user.id));
+
+  const mutation = useMutation({
+    mutationFn: ({ userId, role }: { userId: string; role: AssignableRole }) =>
+      setUserRole(userId, role),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["admin", "user_roles"] });
+      await queryClient.invalidateQueries();
+      toast.success("نقش کاربر به‌روزرسانی شد.");
+    },
+    onError: () =>
+      toast.error("تغییر نقش انجام نشد؛ شما اجازه تغییر نقش این کاربر را ندارید."),
+  });
 
   const rolesFor = (userId: unknown) =>
     (roles ?? []).filter((r) => r.user_id === userId).map((r) => String(r.role));
@@ -42,8 +72,9 @@ function AdminUsers() {
   return (
     <AdminShell
       title="کاربران"
-      description="فهرست کاربران و نقش‌های آن‌ها. تغییر نقش‌ها از سمت سرور و توسط مدیر ارشد انجام می‌شود."
+      description="فهرست کاربران و سطح دسترسی آن‌ها. مدیر ارشد می‌تواند هر نقشی را تغییر دهد؛ مدیر میانی نمی‌تواند نقش مدیر ارشد را تغییر دهد."
     >
+
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <Table>
           <TableHeader>
