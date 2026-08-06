@@ -96,7 +96,7 @@ function ArticlesPage() {
             <li>
               <Link
                 to="/articles"
-                search={(prev: ArticleSearch) => ({ ...prev, category: "" })}
+                search={(prev: Partial<ArticleSearch>) => ({ q: prev.q ?? "", category: "" })}
                 className={`rounded-full border border-border/70 px-3 py-1.5 text-xs transition-colors hover:bg-muted ${
                   search.category === "" ? "border-primary bg-primary/10 font-bold text-primary" : ""
                 }`}
@@ -108,7 +108,7 @@ function ArticlesPage() {
               <li key={cat.id}>
                 <Link
                   to="/articles"
-                  search={(prev: ArticleSearch) => ({ ...prev, category: cat.slug })}
+                  search={(prev: Partial<ArticleSearch>) => ({ q: prev.q ?? "", category: cat.slug })}
                   className={`rounded-full border border-border/70 px-3 py-1.5 text-xs transition-colors hover:bg-muted ${
                     search.category === cat.slug
                       ? "border-primary bg-primary/10 font-bold text-primary"

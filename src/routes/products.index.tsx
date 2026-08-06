@@ -98,7 +98,7 @@ function ProductsPage() {
               <li>
                 <Link
                   to="/products"
-                  search={(prev: ProductSearch) => ({ ...prev, category: "" })}
+                  search={(prev: Partial<ProductSearch>) => ({ q: prev.q ?? "", sort: prev.sort ?? "newest", category: "" })}
                   className={`block rounded-md px-3 py-2 transition-colors hover:bg-muted ${
                     search.category === "" ? "bg-primary/10 font-bold text-primary" : ""
                   }`}
@@ -110,7 +110,7 @@ function ProductsPage() {
                 <li key={cat.id}>
                   <Link
                     to="/products"
-                    search={(prev: ProductSearch) => ({ ...prev, category: cat.slug })}
+                    search={(prev: Partial<ProductSearch>) => ({ q: prev.q ?? "", sort: prev.sort ?? "newest", category: cat.slug })}
                     className={`block rounded-md px-3 py-2 transition-colors hover:bg-muted ${
                       search.category === cat.slug ? "bg-primary/10 font-bold text-primary" : ""
                     }`}
