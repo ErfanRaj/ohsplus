@@ -54,7 +54,7 @@ export const Route = createFileRoute("/products/$slug")({
   notFoundComponent: () => (
     <div className="container-page py-24 text-center">
       <p className="text-lg font-bold">این محصول پیدا نشد.</p>
-      <Link to="/products" className="mt-4 inline-block text-accent underline-offset-4 hover:underline">
+      <Link to="/products" search={{ q: "", category: "", sort: "newest" }} className="mt-4 inline-block text-accent underline-offset-4 hover:underline">
         بازگشت به فروشگاه
       </Link>
     </div>
