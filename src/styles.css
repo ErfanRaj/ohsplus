@@ -448,3 +448,26 @@
     28px 28px,
     28px 28px;
 }
+
+/* Justified body copy across the site (utilities and centered blocks still win). */
+main p,
+main li {
+  text-align: justify;
+  text-justify: inter-word;
+  text-wrap: pretty;
+}
+
+main .text-center p,
+main .text-center li,
+main p.text-center,
+main p.text-right,
+main p.text-left,
+main .prose-center p {
+  text-align: revert-layer;
+}
+
+main .text-center p,
+main .text-center li,
+main p.text-center {
+  text-align: center;
+}

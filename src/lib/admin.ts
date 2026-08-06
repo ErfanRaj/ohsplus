@@ -143,8 +143,35 @@ export const STATUS_LABELS: Record<string, string> = {
 
 export const ROLE_LABELS: Record<string, string> = {
   customer: "کاربر",
-  editor: "نویسنده",
+  editor: "ادمین",
   support: "پشتیبانی",
-  admin: "مدیر",
+  admin: "مدیر میانی",
   super_admin: "مدیر ارشد",
 };
+
+/** Roles that can be assigned from the admin panel, highest power first. */
+export const ASSIGNABLE_ROLES = [
+  { value: "super_admin", label: "مدیر ارشد", hint: "بالاترین سطح دسترسی؛ کنترل کامل سایت" },
+  { value: "admin", label: "مدیر میانی", hint: "مانند مدیر ارشد، اما نمی‌تواند نقش مدیر ارشد را تغییر دهد" },
+  { value: "editor", label: "ادمین", hint: "افزودن و مدیریت فایل‌ها و محتوای سایت" },
+  { value: "customer", label: "کاربر", hint: "نقش پیش‌فرض همه کاربران" },
+] as const;
+
+export type AssignableRole = (typeof ASSIGNABLE_ROLES)[number]["value"];
+
+/** Replaces a user's roles with a single role. RLS decides whether the caller may do it. */
+export async function setUserRole(userId: string, role: AssignableRole) {
+  const { error: insertError } = await supabase
+    .from("user_roles")
+    .insert({ user_id: userId, role })
+    .select()
+    .maybeSingle();
+  if (insertError && insertError.code !== "23505") throw insertError;
+
+  const { error: deleteError } = await supabase
+    .from("user_roles")
+    .delete()
+    .eq("user_id", userId)
+    .neq("role", role);
+  if (deleteError) throw deleteError;
+}

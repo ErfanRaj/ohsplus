@@ -92,7 +92,7 @@ function AboutPage() {
                 <Link to="/contact">تماس با ما</Link>
               </Button>
               <Button asChild variant="outline" className="font-semibold">
-                <Link to="/products">مشاهده فروشگاه</Link>
+                <Link to="/products" search={{ q: "", category: "", sort: "newest" }}>مشاهده فروشگاه</Link>
               </Button>
             </div>
           </section>

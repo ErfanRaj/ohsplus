@@ -39,7 +39,7 @@ export const Route = createFileRoute("/articles/$slug")({
   notFoundComponent: () => (
     <div className="container-page py-24 text-center">
       <p className="text-lg font-bold">این مقاله پیدا نشد.</p>
-      <Link to="/articles" className="mt-4 inline-block text-accent underline-offset-4 hover:underline">
+      <Link to="/articles" search={{ q: "", category: "" }} className="mt-4 inline-block text-accent underline-offset-4 hover:underline">
         بازگشت به دانشنامه
       </Link>
     </div>
