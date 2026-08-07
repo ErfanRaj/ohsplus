@@ -6,6 +6,8 @@ import { PageBreadcrumb } from "@/components/layout/page-breadcrumb";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { articleQuery, formatDateFa, toFa } from "@/lib/catalog";
+import { CommentList } from "@/components/comments/CommentList";
+import { CommentForm } from "@/components/comments/CommentForm";
 
 export const Route = createFileRoute("/articles/$slug")({
   loader: async ({ context, params }) => {
@@ -104,6 +106,12 @@ function ArticleDetailPage() {
               )}
           </div>
         </article>
+
+        <section aria-labelledby="comments-heading" className="container-page max-w-3xl py-10 space-y-4">
+          <h2 id="comments-heading" className="text-lg font-extrabold">نظرات</h2>
+          <CommentList resourceType="article" resourceSlug={slug} />
+          <CommentForm resourceType="article" resourceSlug={slug} />
+        </section>
       </main>
       <SiteFooter />
     </div>
