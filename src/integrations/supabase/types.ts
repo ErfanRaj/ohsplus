@@ -14,16 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      article_polls: {
+        Row: {
+          article_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          options: Json
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          options?: Json
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          options?: Json
+          question?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_polls_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       articles: {
         Row: {
           author_id: string | null
           category_id: string | null
           content: string | null
+          content_html: string | null
           cover_image_url: string | null
           created_at: string
           deleted_at: string | null
           excerpt: string | null
           id: string
+          key_takeaways: Json
           published_at: string | null
           reading_minutes: number
           seo_description: string | null
@@ -37,11 +77,13 @@ export type Database = {
           author_id?: string | null
           category_id?: string | null
           content?: string | null
+          content_html?: string | null
           cover_image_url?: string | null
           created_at?: string
           deleted_at?: string | null
           excerpt?: string | null
           id?: string
+          key_takeaways?: Json
           published_at?: string | null
           reading_minutes?: number
           seo_description?: string | null
@@ -55,11 +97,13 @@ export type Database = {
           author_id?: string | null
           category_id?: string | null
           content?: string | null
+          content_html?: string | null
           cover_image_url?: string | null
           created_at?: string
           deleted_at?: string | null
           excerpt?: string | null
           id?: string
+          key_takeaways?: Json
           published_at?: string | null
           reading_minutes?: number
           seo_description?: string | null
@@ -109,12 +153,48 @@ export type Database = {
         }
         Relationships: []
       }
+      cart_items: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          quantity: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          quantity?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          quantity?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       categories: {
         Row: {
           created_at: string
           deleted_at: string | null
           description: string | null
           icon: string | null
+          icon_url: string | null
           id: string
           is_active: boolean
           name: string
@@ -130,6 +210,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           icon?: string | null
+          icon_url?: string | null
           id?: string
           is_active?: boolean
           name: string
@@ -145,6 +226,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           icon?: string | null
+          icon_url?: string | null
           id?: string
           is_active?: boolean
           name?: string
@@ -161,6 +243,66 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          article_id: string | null
+          author_name: string | null
+          body: string
+          created_at: string
+          id: string
+          moderated_at: string | null
+          moderated_by: string | null
+          product_id: string | null
+          rating: number | null
+          status: Database["public"]["Enums"]["comment_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id?: string | null
+          author_name?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          product_id?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["comment_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string | null
+          author_name?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          product_id?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["comment_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
@@ -226,6 +368,134 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_id: string | null
+          quantity: number
+          title: string
+          unit_price_toman: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_id?: string | null
+          quantity?: number
+          title: string
+          unit_price_toman?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string | null
+          quantity?: number
+          title?: string
+          unit_price_toman?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          notes: string | null
+          payment_provider: string | null
+          payment_reference: string | null
+          phone: string
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal_toman: number
+          terms_accepted: boolean
+          total_toman: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          notes?: string | null
+          payment_provider?: string | null
+          payment_reference?: string | null
+          phone: string
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal_toman?: number
+          terms_accepted?: boolean
+          total_toman?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          notes?: string | null
+          payment_provider?: string | null
+          payment_reference?: string | null
+          phone?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal_toman?: number
+          terms_accepted?: boolean
+          total_toman?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: string
+          option_index: number
+          poll_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_index: number
+          poll_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_index?: number
+          poll_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "article_polls"
             referencedColumns: ["id"]
           },
         ]
@@ -581,10 +851,19 @@ export type Database = {
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
       is_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      poll_results: {
+        Args: { _poll_id: string }
+        Returns: {
+          option_index: number
+          votes: number
+        }[]
+      }
     }
     Enums: {
       app_role: "customer" | "editor" | "support" | "admin" | "super_admin"
+      comment_status: "pending" | "approved" | "rejected"
       content_status: "draft" | "published" | "archived"
+      order_status: "pending_payment" | "paid" | "cancelled" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -600,12 +879,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -629,11 +908,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -654,11 +933,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -679,11 +958,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -696,11 +975,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -713,7 +992,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["customer", "editor", "support", "admin", "super_admin"],
+      comment_status: ["pending", "approved", "rejected"],
       content_status: ["draft", "published", "archived"],
+      order_status: ["pending_payment", "paid", "cancelled", "failed"],
     },
   },
 } as const
