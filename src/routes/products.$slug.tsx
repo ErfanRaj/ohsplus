@@ -1,7 +1,9 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Download, FileSpreadsheet, ShieldCheck, ShoppingCart, Star } from "lucide-react";
+import { Download, FileSpreadsheet, ShieldCheck, Star } from "lucide-react";
 
+import { AddToCartButton } from "@/components/catalog/add-to-cart-button";
+import { CommentSection } from "@/components/catalog/comment-section";
 import { ProductCard } from "@/components/catalog/product-card";
 import { PageBreadcrumb } from "@/components/layout/page-breadcrumb";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -177,6 +179,10 @@ function ProductDetailPage() {
                 </ul>
               )}
             </section>
+
+            <Separator />
+
+            <CommentSection target={{ productId: product.id }} />
           </article>
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
@@ -190,9 +196,9 @@ function ProductDetailPage() {
                     {formatToman(product.compare_at_toman, false)}
                   </p>
                 ) : null}
-                <Button size="lg" className="w-full gap-2 font-bold">
-                  <ShoppingCart className="size-4" aria-hidden="true" />
-                  افزودن به سبد خرید
+                <AddToCartButton productId={product.id} className="w-full" />
+                <Button asChild variant="outline" size="lg" className="w-full font-semibold">
+                  <Link to="/cart">مشاهده سبد خرید</Link>
                 </Button>
                 <ul className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex items-center gap-2">

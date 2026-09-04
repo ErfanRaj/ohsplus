@@ -3,7 +3,15 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { isStaffQuery } from "@/lib/admin";
 
-import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, ShieldCheck, User } from "lucide-react";
+import {
+  ChevronDown,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  ShoppingCart,
+  User,
+} from "lucide-react";
 import { lazy, Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -43,12 +51,15 @@ const SearchDialog = lazy(() =>
 
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/hooks/use-cart";
+import { toFa } from "@/lib/catalog";
 import { NAVIGATION } from "@/lib/navigation";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, loading } = useAuth();
+  const { count: cartCount } = useCart();
   const { data: isStaff } = useQuery({
     ...isStaffQuery(user?.id ?? ""),
     enabled: Boolean(user?.id),
@@ -198,14 +209,17 @@ export function SiteHeader() {
         </NavigationMenu>
 
         <div className="ms-auto flex shrink-0 items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="جستجو در منابع"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Search className="size-5" aria-hidden="true" />
+          <Button variant="ghost" size="icon" className="relative" asChild>
+            <Link to="/cart" aria-label={`سبد خرید (${toFa(cartCount)} مورد)`}>
+              <ShoppingCart className="size-5" aria-hidden="true" />
+              {cartCount > 0 ? (
+                <span className="absolute -top-0.5 -left-0.5 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] leading-4 font-bold text-primary-foreground">
+                  {toFa(cartCount)}
+                </span>
+              ) : null}
+            </Link>
           </Button>
+
 
           {loading ? (
             <div className="h-9 w-24 animate-pulse rounded-md bg-muted" aria-hidden="true" />
