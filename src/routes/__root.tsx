@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { InteractiveGrid } from "@/components/layout/interactive-grid";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/hooks/use-auth";
+import { CartProvider } from "@/hooks/use-cart";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
