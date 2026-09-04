@@ -198,14 +198,17 @@ export function SiteHeader() {
         </NavigationMenu>
 
         <div className="ms-auto flex shrink-0 items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="جستجو در منابع"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Search className="size-5" aria-hidden="true" />
+          <Button variant="ghost" size="icon" className="relative" asChild>
+            <Link to="/cart" aria-label={`سبد خرید (${toFa(cartCount)} مورد)`}>
+              <ShoppingCart className="size-5" aria-hidden="true" />
+              {cartCount > 0 ? (
+                <span className="absolute -top-0.5 -left-0.5 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] leading-4 font-bold text-primary-foreground">
+                  {toFa(cartCount)}
+                </span>
+              ) : null}
+            </Link>
           </Button>
+
 
           {loading ? (
             <div className="h-9 w-24 animate-pulse rounded-md bg-muted" aria-hidden="true" />
