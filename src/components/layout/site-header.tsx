@@ -3,7 +3,15 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { isStaffQuery } from "@/lib/admin";
 
-import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, ShieldCheck, User } from "lucide-react";
+import {
+  ChevronDown,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  ShoppingCart,
+  User,
+} from "lucide-react";
 import { lazy, Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -43,12 +51,15 @@ const SearchDialog = lazy(() =>
 
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/hooks/use-cart";
+import { toFa } from "@/lib/catalog";
 import { NAVIGATION } from "@/lib/navigation";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, loading } = useAuth();
+  const { count: cartCount } = useCart();
   const { data: isStaff } = useQuery({
     ...isStaffQuery(user?.id ?? ""),
     enabled: Boolean(user?.id),
