@@ -68,7 +68,13 @@ function AdminProducts() {
         { name: "is_free", label: "رایگان است", type: "switch" },
         { name: "file_format", label: "فرمت فایل", type: "text", placeholder: "PDF / XLSX" },
         { name: "badge", label: "برچسب ویژه", type: "text" },
-        { name: "cover_image_url", label: "تصویر شاخص (URL)", type: "text" },
+        {
+          name: "cover_image_url",
+          label: "تصویر شاخص",
+          type: "image",
+          imageFolder: "products",
+          full: true,
+        },
         {
           name: "status",
           label: "وضعیت",
@@ -89,7 +95,7 @@ function AdminProducts() {
         is_free: false,
         file_format: "",
         badge: "",
-        cover_image_url: "",
+        cover_image_url: null,
         status: "draft",
         description: "",
         seo_title: "",

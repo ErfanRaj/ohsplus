@@ -28,7 +28,7 @@ function AdminCategories() {
       table="categories"
       title="دسته‌بندی"
       description="مدیریت دسته‌بندی‌های اصلی و زیرشاخه‌ها."
-      select="id,name,slug,description,icon,sort_order,is_active,parent_id,seo_title,seo_description,created_at"
+      select="id,name,slug,description,icon,icon_url,sort_order,is_active,parent_id,seo_title,seo_description,created_at"
       searchKeys={["name", "slug"]}
       columns={[
         { name: "name", label: "نام" },
@@ -54,7 +54,15 @@ function AdminCategories() {
         { name: "name", label: "نام", type: "text" },
         { name: "slug", label: "نشانی (slug)", type: "text", slugFrom: "name" },
         { name: "parent_id", label: "دسته والد", type: "select" },
-        { name: "icon", label: "آیکون", type: "text", placeholder: "shield" },
+        { name: "icon", label: "آیکون (نام آیکون)", type: "text", placeholder: "shield" },
+        {
+          name: "icon_url",
+          label: "تصویر آیکون",
+          type: "image",
+          imageFolder: "categories",
+          imageRounded: true,
+          full: true,
+        },
         { name: "sort_order", label: "ترتیب نمایش", type: "number" },
         { name: "is_active", label: "فعال باشد", type: "switch" },
         { name: "description", label: "توضیحات", type: "textarea" },
@@ -66,6 +74,7 @@ function AdminCategories() {
         slug: "",
         parent_id: null,
         icon: "",
+        icon_url: null,
         sort_order: 0,
         is_active: true,
         description: "",
