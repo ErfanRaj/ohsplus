@@ -272,6 +272,13 @@ export function CrudPage({
                       placeholder={field.placeholder}
                       onChange={(event) => setValue(field, event.target.value)}
                     />
+                  ) : field.type === "image" ? (
+                    <ImageField
+                      value={value ? String(value) : null}
+                      folder={field.imageFolder ?? "misc"}
+                      rounded={field.imageRounded}
+                      onChange={(url) => setValue(field, url)}
+                    />
                   ) : field.type === "switch" ? (
                     <Switch
                       id={`field-${field.name}`}
