@@ -89,20 +89,38 @@ function ArticleDetailPage() {
             </p>
           ) : null}
 
-          <div className="mt-8 space-y-5 text-sm leading-9 text-foreground/90">
-            {(article.content ?? "متن این مقاله به‌زودی منتشر می‌شود.")
-              .split("\n")
-              .filter((line) => line.trim())
-              .map((line, index) =>
-                line.trim().startsWith("#") ? (
-                  <h2 key={index} className="pt-4 text-lg font-extrabold">
-                    {line.replace(/^#+\s*/, "")}
-                  </h2>
-                ) : (
-                  <p key={index}>{line}</p>
-                ),
-              )}
+          {Array.isArray(article.key_takeaways) && article.key_takeaways.length > 0 ? (
+            <div className="mt-8">
+              <KeyTakeaways items={article.key_takeaways as string[]} />
+            </div>
+          ) : null}
+
+          <div className="mt-8">
+            {article.content_html ? (
+              <ArticleContent html={article.content_html} />
+            ) : (
+              <div className="space-y-5 text-sm leading-9 text-foreground/90">
+                {(article.content ?? "متن این مقاله به‌زودی منتشر می‌شود.")
+                  .split("\n")
+                  .filter((line) => line.trim())
+                  .map((line, index) =>
+                    line.trim().startsWith("#") ? (
+                      <h2 key={index} className="pt-4 text-lg font-extrabold">
+                        {line.replace(/^#+\s*/, "")}
+                      </h2>
+                    ) : (
+                      <p key={index}>{line}</p>
+                    ),
+                  )}
+              </div>
+            )}
           </div>
+
+          <div className="mt-10 space-y-8">
+            <ArticlePoll articleId={article.id} />
+            <CommentSection target={{ articleId: article.id }} />
+          </div>
+
         </article>
       </main>
       <SiteFooter />
