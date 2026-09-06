@@ -37,9 +37,13 @@ import { adminListQuery, deleteRow, slugify, upsertRow, type AdminTable } from "
 export type CrudField = {
   name: string;
   label: string;
-  type: "text" | "textarea" | "number" | "switch" | "select";
+  type: "text" | "textarea" | "number" | "switch" | "select" | "image";
   options?: { value: string; label: string }[];
   placeholder?: string;
+  /** Storage folder for `image` fields. */
+  imageFolder?: string;
+  /** Render `image` previews as circles (category icons). */
+  imageRounded?: boolean;
   slugFrom?: string;
   full?: boolean;
 };
