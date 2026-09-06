@@ -46,7 +46,7 @@ export const categoriesQuery = () =>
     queryFn: async () => {
       const { data, error } = await supabase
         .from("categories")
-        .select("id, slug, name, description, icon, sort_order")
+        .select("id, slug, name, description, icon, icon_url, sort_order")
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return data ?? [];
@@ -60,7 +60,7 @@ export const categoryQuery = (slug: string) =>
     queryFn: async () => {
       const { data, error } = await supabase
         .from("categories")
-        .select("id, slug, name, description, icon, seo_title, seo_description")
+        .select("id, slug, name, description, icon, icon_url, seo_title, seo_description")
         .eq("slug", slug)
         .maybeSingle();
       if (error) throw error;

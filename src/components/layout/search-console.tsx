@@ -22,7 +22,7 @@ export function SearchConsole() {
   };
 
   return (
-    <div className="search-console relative mt-10 max-w-xl rounded-xl border border-primary/30 bg-ink/55 p-4 shadow-soft backdrop-blur-md sm:p-5">
+    <div className="search-console relative mt-10 w-full max-w-3xl rounded-xl border border-primary/30 bg-ink/55 p-4 shadow-soft backdrop-blur-md sm:p-5">
       {/* CAD corner accents */}
       <span className="pointer-events-none absolute -top-px -start-px size-4 border-s-2 border-t-2 border-primary" aria-hidden="true" />
       <span className="pointer-events-none absolute -top-px -end-px size-4 border-e-2 border-t-2 border-primary" aria-hidden="true" />
@@ -39,7 +39,7 @@ export function SearchConsole() {
       <form onSubmit={submit} className="mt-3 flex flex-col gap-2 sm:flex-row">
         <div className="relative flex-1">
           <Search
-            className="pointer-events-none absolute inset-y-0 start-3 my-auto size-4 text-primary"
+            className="pointer-events-none absolute inset-y-0 start-4 my-auto size-5 text-primary"
             aria-hidden="true"
           />
           <input
@@ -48,10 +48,10 @@ export function SearchConsole() {
             onChange={(event) => setTerm(event.target.value)}
             aria-label="جستجوی منابع تخصصی ایمنی و بهداشت حرفه‌ای"
             placeholder="جستجوی چک‌لیست، فرم ارزیابی ریسک، فایل اکسل…"
-            className="h-12 w-full rounded-lg border border-ink-muted/25 bg-ink/60 ps-9 pe-3 text-sm text-ink-foreground placeholder:text-ink-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            className="h-14 w-full rounded-lg border border-ink-muted/25 bg-ink/60 ps-11 pe-3 text-sm sm:text-base text-ink-foreground placeholder:text-ink-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
           />
         </div>
-        <Button type="submit" size="lg" className="h-12 gap-2 font-bold">
+        <Button type="submit" size="lg" className="h-14 gap-2 px-8 font-bold">
           <Search className="size-4" aria-hidden="true" />
           جستجو
         </Button>
