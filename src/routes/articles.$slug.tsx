@@ -2,7 +2,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Clock } from "lucide-react";
 
+import { ArticleContent, KeyTakeaways } from "@/components/catalog/article-content";
+import { ArticlePoll } from "@/components/catalog/article-poll";
+import { CommentSection } from "@/components/catalog/comment-section";
 import { PageBreadcrumb } from "@/components/layout/page-breadcrumb";
+
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { articleQuery, formatDateFa, toFa } from "@/lib/catalog";
