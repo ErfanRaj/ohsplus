@@ -61,7 +61,16 @@ function CategoriesPage() {
               >
                 <Card className="h-full border-border/70 shadow-none transition-all hover:-translate-y-0.5 hover:border-primary/60">
                   <CardContent className="space-y-2 p-5">
+                    {cat.icon_url ? (
+                      <img
+                        src={cat.icon_url}
+                        alt=""
+                        loading="lazy"
+                        className="size-12 rounded-full border border-border/70 object-cover"
+                      />
+                    ) : null}
                     <h2 className="text-base font-bold">{cat.name}</h2>
+
                     <p className="text-sm leading-7 text-muted-foreground">{cat.description}</p>
                     <span className="inline-flex items-center gap-1 pt-2 text-xs font-semibold text-accent">
                       مشاهده منابع

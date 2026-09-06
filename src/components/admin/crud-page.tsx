@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminShell } from "@/components/admin/admin-shell";
+import { ImageField } from "@/components/admin/image-field";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -37,9 +38,13 @@ import { adminListQuery, deleteRow, slugify, upsertRow, type AdminTable } from "
 export type CrudField = {
   name: string;
   label: string;
-  type: "text" | "textarea" | "number" | "switch" | "select";
+  type: "text" | "textarea" | "number" | "switch" | "select" | "image";
   options?: { value: string; label: string }[];
   placeholder?: string;
+  /** Storage folder for `image` fields. */
+  imageFolder?: string;
+  /** Render `image` previews as circles (category icons). */
+  imageRounded?: boolean;
   slugFrom?: string;
   full?: boolean;
 };
@@ -267,6 +272,13 @@ export function CrudPage({
                       value={String(value ?? "")}
                       placeholder={field.placeholder}
                       onChange={(event) => setValue(field, event.target.value)}
+                    />
+                  ) : field.type === "image" ? (
+                    <ImageField
+                      value={value ? String(value) : null}
+                      folder={field.imageFolder ?? "misc"}
+                      rounded={field.imageRounded}
+                      onChange={(url) => setValue(field, url)}
                     />
                   ) : field.type === "switch" ? (
                     <Switch
