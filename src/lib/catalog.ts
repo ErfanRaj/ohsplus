@@ -216,7 +216,7 @@ export const articleQuery = (slug: string) =>
     queryFn: async () => {
       const { data, error } = await supabase
         .from("articles")
-        .select(`${ARTICLE_FIELDS}, content, seo_title, seo_description`)
+        .select(`${ARTICLE_FIELDS}, content, content_html, key_takeaways, seo_title, seo_description`)
         .eq("slug", slug)
         .eq("status", "published")
         .is("deleted_at", null)
@@ -224,11 +224,14 @@ export const articleQuery = (slug: string) =>
       if (error) throw error;
       return (data as unknown as (ArticleRow & {
         content: string | null;
+        content_html: string | null;
+        key_takeaways: unknown;
         seo_title: string | null;
         seo_description: string | null;
       }) | null);
     },
   });
+
 
 export function formatDateFa(value: string | null) {
   if (!value) return "";
