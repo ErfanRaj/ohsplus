@@ -83,77 +83,20 @@ const CATEGORIES = [
   },
 ];
 
-const PRODUCTS = [
-  {
-    title: "پکیج کامل ارزیابی ریسک به روش William Fine",
-    format: "Excel + PDF",
-    price: "۲۹۰٬۰۰۰",
-    rating: "۴٫۹",
-    badge: "پرفروش",
-    slug: "william-fine-risk-package",
-  },
-  {
-    title: "مجموعه چک‌لیست‌های بازرسی ایمنی کارگاه",
-    format: "۴۸ چک‌لیست Word",
-    price: "۱۹۰٬۰۰۰",
-    rating: "۴٫۸",
-    badge: "به‌روزرسانی ۱۴۰۴",
-    slug: "safety-inspection-checklists",
-  },
-  {
-    title: "نرم‌افزار اکسل محاسبات ارگونومی REBA و RULA",
-    format: "Excel خودکار",
-    price: "۲۴۰٬۰۰۰",
-    rating: "۵٫۰",
-    badge: "جدید",
-    slug: "reba-rula-excel-tool",
-  },
-];
-
 function faCount(value: number) {
   return `${toFa(value.toLocaleString("en-US").replace(/,/g, "٬"))}+`;
 }
 
-const ARTICLES = [
-  {
-    title: "راهنمای گام‌به‌گام تدوین برنامه ارزیابی ریسک در صنایع فرآیندی",
-    category: "ارزیابی ریسک",
-    read: "۹ دقیقه مطالعه",
-    slug: "risk-assessment-program-guide",
-  },
-  {
-    title: "حدود مجاز مواجهه شغلی؛ آنچه هر کارشناس بهداشت حرفه‌ای باید بداند",
-    category: "بهداشت حرفه‌ای",
-    read: "۷ دقیقه مطالعه",
-    slug: "oel-guide",
-  },
-  {
-    title: "کاهش اختلالات اسکلتی-عضلانی با مداخلات ارگونومیک کم‌هزینه",
-    category: "ارگونومی",
-    read: "۶ دقیقه مطالعه",
-    slug: "msd-low-cost-interventions",
-  },
-];
-
-
-function useProductIds(slugs: string[]) {
-  return useQuery({
-    queryKey: ["home-product-ids", slugs],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("products").select("id, slug").in("slug", slugs);
-      if (error) throw error;
-      return Object.fromEntries((data ?? []).map((row) => [row.slug, row.id])) as Record<
-        string,
-        string
-      >;
-    },
-    staleTime: 5 * 60_000,
-  });
-}
-
 function HomePage() {
-  const { data: productIds } = useProductIds(PRODUCTS.map((p) => p.slug));
   const { data: stats } = useQuery(siteStatsQuery());
+  const { data: products } = useQuery(
+    productsQuery({ q: "", category: "", sort: "popular" }),
+  );
+  const { data: articles } = useQuery(articlesQuery({ q: "", category: "" }));
+
+  const featuredProducts = (products ?? []).slice(0, 3);
+  const featuredArticles = (articles ?? []).slice(0, 3);
+
 
   const statItems = [
     { value: stats ? faCount(stats.resources) : "—", label: "منبع تخصصی" },
