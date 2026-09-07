@@ -290,51 +290,63 @@ function HomePage() {
             </div>
 
             <ul className="mt-10 grid gap-6 md:grid-cols-3">
-              {PRODUCTS.map((product) => (
-                <li key={product.title}>
-                  <Card className="h-full overflow-hidden border-border/70 shadow-soft">
-                    <div className="mx-6 flex h-32 items-center justify-center rounded-md bg-ink">
-                      <FileSpreadsheet className="size-10 text-primary" aria-hidden="true" />
-                    </div>
-                    <CardContent className="flex h-full flex-col">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="font-semibold">
-                            {product.badge}
-                          </Badge>
-                          {productIds?.[product.slug] ? (
-                            <FavoriteButton productId={productIds[product.slug]} />
-                          ) : null}
-                        </div>
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Star
-                            className="size-3.5 fill-primary text-primary"
-                            aria-hidden="true"
+              {featuredProducts.map((product) => {
+                const cover = resolveImageUrl(product.cover_image_url);
+                return (
+                  <li key={product.id}>
+                    <Card className="h-full overflow-hidden border-border/70 shadow-soft">
+                      <div className="mx-6 flex h-32 items-center justify-center overflow-hidden rounded-md bg-ink">
+                        {cover ? (
+                          <img
+                            src={cover}
+                            alt={product.title}
+                            loading="lazy"
+                            className="size-full object-cover"
                           />
-                          {product.rating}
-                        </span>
+                        ) : (
+                          <FileSpreadsheet className="size-10 text-primary" aria-hidden="true" />
+                        )}
                       </div>
-                      <h3 className="mt-3 text-base leading-7 font-bold">{product.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{product.format}</p>
-                      <div className="mt-6 flex items-center justify-between gap-3">
-                        <span className="font-display text-lg font-extrabold">
-                          {product.price}
-                          <span className="ms-1 text-xs font-medium text-muted-foreground">
-                            تومان
+                      <CardContent className="flex h-full flex-col">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            {product.badge ? (
+                              <Badge variant="secondary" className="font-semibold">
+                                {product.badge}
+                              </Badge>
+                            ) : null}
+                            <FavoriteButton productId={product.id} />
+                          </div>
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Star
+                              className="size-3.5 fill-primary text-primary"
+                              aria-hidden="true"
+                            />
+                            {toFa(product.rating_avg.toFixed(1).replace(".", "٫"))}
                           </span>
-                        </span>
-                        <Button size="sm" className="gap-1.5 font-bold" asChild>
-                          <Link to="/products/$slug" params={{ slug: product.slug }}>
-                            <Download className="size-4" aria-hidden="true" />
-                            خرید و دانلود
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </li>
-              ))}
+                        </div>
+                        <h3 className="mt-3 text-base leading-7 font-bold">{product.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {product.file_format ?? product.categories?.name ?? "فایل دیجیتال"}
+                        </p>
+                        <div className="mt-6 flex items-center justify-between gap-3">
+                          <span className="font-display text-lg font-extrabold">
+                            {formatToman(product.price_toman, product.is_free)}
+                          </span>
+                          <Button size="sm" className="gap-1.5 font-bold" asChild>
+                            <Link to="/products/$slug" params={{ slug: product.slug }}>
+                              <Download className="size-4" aria-hidden="true" />
+                              خرید و دانلود
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </li>
+                );
+              })}
             </ul>
+
           </div>
         </section>
 
