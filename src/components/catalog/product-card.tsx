@@ -5,6 +5,7 @@ import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatToman, toFa, type ProductRow } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
 
 export function ProductCard({ product }: { product: ProductRow }) {
   return (
@@ -14,7 +15,7 @@ export function ProductCard({ product }: { product: ProductRow }) {
           <span className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary">
             {product.cover_image_url ? (
               <img
-                src={product.cover_image_url}
+                src={resolveImageUrl(product.cover_image_url)!}
                 alt=""
                 loading="lazy"
                 className="size-full object-cover"

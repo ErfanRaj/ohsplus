@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { categoriesQuery } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
 
 export const Route = createFileRoute("/categories/")({
   loader: ({ context }) => {
@@ -63,7 +64,7 @@ function CategoriesPage() {
                   <CardContent className="space-y-2 p-5">
                     {cat.icon_url ? (
                       <img
-                        src={cat.icon_url}
+                        src={resolveImageUrl(cat.icon_url as string)!}
                         alt=""
                         loading="lazy"
                         className="size-12 rounded-full border border-border/70 object-cover"

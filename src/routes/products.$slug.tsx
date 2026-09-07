@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
+import { resolveImageUrl } from "@/lib/uploads";
   formatDateFa,
   formatToman,
   productQuery,
@@ -129,7 +130,7 @@ function ProductDetailPage() {
                 {data!.images.map((image) => (
                   <li key={image.id}>
                     <img
-                      src={image.url}
+                      src={resolveImageUrl(image.url)!}
                       alt={image.alt ?? product.title}
                       loading="lazy"
                       className="w-full rounded-lg border border-border/70 object-cover"

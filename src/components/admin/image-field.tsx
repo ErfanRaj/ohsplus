@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ACCEPTED_IMAGE_TYPES, removeImageByUrl, uploadImage } from "@/lib/uploads";
+import { ACCEPTED_IMAGE_TYPES, removeImageByUrl, resolveImageUrl, uploadImage } from "@/lib/uploads";
 
 /**
  * Upload / replace / delete a single image and expose its URL to the parent form.
@@ -61,7 +61,7 @@ export function ImageField({
           }`}
         >
           {value ? (
-            <img src={value} alt={label} className="size-full object-cover" loading="lazy" />
+            <img src={resolveImageUrl(value)!} alt={label} className="size-full object-cover" loading="lazy" />
           ) : (
             <ImagePlus className="size-6 text-muted-foreground" aria-hidden="true" />
           )}
