@@ -371,24 +371,42 @@ function HomePage() {
           </div>
 
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {ARTICLES.map((article) => (
-              <li key={article.title}>
-                <Link
-                  to="/articles/$slug"
-                  params={{ slug: article.slug }}
-                  className="group block h-full"
-                >
-                  <article className="flex h-full flex-col justify-center rounded-lg border border-border/70 bg-card p-6 transition-colors hover:border-primary">
-                    <span className="text-xs font-bold text-accent">{article.category}</span>
-                    <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
-                      {article.title}
-                    </h3>
-                    <p className="mt-4 text-xs text-muted-foreground">{article.read}</p>
-                  </article>
-                </Link>
-              </li>
-            ))}
+            {featuredArticles.map((article) => {
+              const cover = resolveImageUrl(article.cover_image_url);
+              return (
+                <li key={article.id}>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: article.slug }}
+                    className="group block h-full"
+                  >
+                    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border/70 bg-card transition-colors hover:border-primary">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={article.title}
+                          loading="lazy"
+                          className="h-40 w-full object-cover"
+                        />
+                      ) : null}
+                      <div className="flex h-full flex-col justify-center p-6">
+                        <span className="text-xs font-bold text-accent">
+                          {article.categories?.name ?? "دانشنامه"}
+                        </span>
+                        <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
+                          {article.title}
+                        </h3>
+                        <p className="mt-4 text-xs text-muted-foreground">
+                          {toFa(article.reading_minutes)} دقیقه مطالعه
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
+
         </section>
 
         {/* CTA */}
