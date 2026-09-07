@@ -1,16 +1,22 @@
 import DOMPurify from "dompurify";
 import { useMemo } from "react";
 
+import { IMAGE_BUCKET, resolveImageUrl } from "@/lib/uploads";
+
 /** Renders admin-authored article HTML after sanitising it. */
 export function ArticleContent({ html }: { html: string }) {
-  const clean = useMemo(
-    () =>
-      DOMPurify.sanitize(html, {
-        USE_PROFILES: { html: true },
-        ADD_ATTR: ["target", "rel", "colspan", "rowspan", "style"],
-      }),
-    [html],
-  );
+  const clean = useMemo(() => {
+    const sanitized = DOMPurify.sanitize(html, {
+      USE_PROFILES: { html: true },
+      ADD_ATTR: ["target", "rel", "colspan", "rowspan", "style"],
+    });
+    // Rewrite stored bucket links (including expired signed URLs) onto the media route.
+    return sanitized.replace(
+      new RegExp(`https?://[^"'\\s]*/${IMAGE_BUCKET}/[^"'\\s]+`, "g"),
+      (match) => resolveImageUrl(match) ?? match,
+    );
+  }, [html]);
+
 
   return (
     <div
