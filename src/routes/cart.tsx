@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { MAX_QUANTITY, useCart } from "@/hooks/use-cart";
 import { formatToman, toFa } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -69,7 +70,7 @@ function CartPage() {
                       <div className="size-20 shrink-0 overflow-hidden rounded-lg border border-border/70 bg-muted/50">
                         {item.product?.cover_image_url ? (
                           <img
-                            src={item.product.cover_image_url}
+                            src={resolveImageUrl(item.product.cover_image_url)!}
                             alt={item.product.title}
                             loading="lazy"
                             className="size-full object-cover"

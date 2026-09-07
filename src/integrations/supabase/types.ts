@@ -504,39 +504,42 @@ export type Database = {
         Row: {
           created_at: string
           deleted_at: string | null
+          download_url: string | null
           id: string
           is_demo: boolean
           label: string
           product_id: string
           release_notes: string | null
           size_bytes: number | null
-          storage_path: string
+          storage_path: string | null
           updated_at: string
           version: string
         }
         Insert: {
           created_at?: string
           deleted_at?: string | null
+          download_url?: string | null
           id?: string
           is_demo?: boolean
           label: string
           product_id: string
           release_notes?: string | null
           size_bytes?: number | null
-          storage_path: string
+          storage_path?: string | null
           updated_at?: string
           version?: string
         }
         Update: {
           created_at?: string
           deleted_at?: string | null
+          download_url?: string | null
           id?: string
           is_demo?: boolean
           label?: string
           product_id?: string
           release_notes?: string | null
           size_bytes?: number | null
-          storage_path?: string
+          storage_path?: string | null
           updated_at?: string
           version?: string
         }

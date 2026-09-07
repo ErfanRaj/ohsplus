@@ -23,9 +23,10 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
-import { toFa } from "@/lib/catalog";
+import { articlesQuery, formatToman, productsQuery, toFa } from "@/lib/catalog";
 import { siteStatsQuery } from "@/lib/site-stats";
+import { resolveImageUrl } from "@/lib/uploads";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -83,77 +84,20 @@ const CATEGORIES = [
   },
 ];
 
-const PRODUCTS = [
-  {
-    title: "پکیج کامل ارزیابی ریسک به روش William Fine",
-    format: "Excel + PDF",
-    price: "۲۹۰٬۰۰۰",
-    rating: "۴٫۹",
-    badge: "پرفروش",
-    slug: "william-fine-risk-package",
-  },
-  {
-    title: "مجموعه چک‌لیست‌های بازرسی ایمنی کارگاه",
-    format: "۴۸ چک‌لیست Word",
-    price: "۱۹۰٬۰۰۰",
-    rating: "۴٫۸",
-    badge: "به‌روزرسانی ۱۴۰۴",
-    slug: "safety-inspection-checklists",
-  },
-  {
-    title: "نرم‌افزار اکسل محاسبات ارگونومی REBA و RULA",
-    format: "Excel خودکار",
-    price: "۲۴۰٬۰۰۰",
-    rating: "۵٫۰",
-    badge: "جدید",
-    slug: "reba-rula-excel-tool",
-  },
-];
-
 function faCount(value: number) {
   return `${toFa(value.toLocaleString("en-US").replace(/,/g, "٬"))}+`;
 }
 
-const ARTICLES = [
-  {
-    title: "راهنمای گام‌به‌گام تدوین برنامه ارزیابی ریسک در صنایع فرآیندی",
-    category: "ارزیابی ریسک",
-    read: "۹ دقیقه مطالعه",
-    slug: "risk-assessment-program-guide",
-  },
-  {
-    title: "حدود مجاز مواجهه شغلی؛ آنچه هر کارشناس بهداشت حرفه‌ای باید بداند",
-    category: "بهداشت حرفه‌ای",
-    read: "۷ دقیقه مطالعه",
-    slug: "oel-guide",
-  },
-  {
-    title: "کاهش اختلالات اسکلتی-عضلانی با مداخلات ارگونومیک کم‌هزینه",
-    category: "ارگونومی",
-    read: "۶ دقیقه مطالعه",
-    slug: "msd-low-cost-interventions",
-  },
-];
-
-
-function useProductIds(slugs: string[]) {
-  return useQuery({
-    queryKey: ["home-product-ids", slugs],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("products").select("id, slug").in("slug", slugs);
-      if (error) throw error;
-      return Object.fromEntries((data ?? []).map((row) => [row.slug, row.id])) as Record<
-        string,
-        string
-      >;
-    },
-    staleTime: 5 * 60_000,
-  });
-}
-
 function HomePage() {
-  const { data: productIds } = useProductIds(PRODUCTS.map((p) => p.slug));
   const { data: stats } = useQuery(siteStatsQuery());
+  const { data: products } = useQuery(
+    productsQuery({ q: "", category: "", sort: "popular" }),
+  );
+  const { data: articles } = useQuery(articlesQuery({ q: "", category: "" }));
+
+  const featuredProducts = (products ?? []).slice(0, 3);
+  const featuredArticles = (articles ?? []).slice(0, 3);
+
 
   const statItems = [
     { value: stats ? faCount(stats.resources) : "—", label: "منبع تخصصی" },
@@ -290,51 +234,63 @@ function HomePage() {
             </div>
 
             <ul className="mt-10 grid gap-6 md:grid-cols-3">
-              {PRODUCTS.map((product) => (
-                <li key={product.title}>
-                  <Card className="h-full overflow-hidden border-border/70 shadow-soft">
-                    <div className="mx-6 flex h-32 items-center justify-center rounded-md bg-ink">
-                      <FileSpreadsheet className="size-10 text-primary" aria-hidden="true" />
-                    </div>
-                    <CardContent className="flex h-full flex-col">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="font-semibold">
-                            {product.badge}
-                          </Badge>
-                          {productIds?.[product.slug] ? (
-                            <FavoriteButton productId={productIds[product.slug]} />
-                          ) : null}
-                        </div>
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Star
-                            className="size-3.5 fill-primary text-primary"
-                            aria-hidden="true"
+              {featuredProducts.map((product) => {
+                const cover = resolveImageUrl(product.cover_image_url);
+                return (
+                  <li key={product.id}>
+                    <Card className="h-full overflow-hidden border-border/70 shadow-soft">
+                      <div className="mx-6 flex h-32 items-center justify-center overflow-hidden rounded-md bg-ink">
+                        {cover ? (
+                          <img
+                            src={cover}
+                            alt={product.title}
+                            loading="lazy"
+                            className="size-full object-cover"
                           />
-                          {product.rating}
-                        </span>
+                        ) : (
+                          <FileSpreadsheet className="size-10 text-primary" aria-hidden="true" />
+                        )}
                       </div>
-                      <h3 className="mt-3 text-base leading-7 font-bold">{product.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{product.format}</p>
-                      <div className="mt-6 flex items-center justify-between gap-3">
-                        <span className="font-display text-lg font-extrabold">
-                          {product.price}
-                          <span className="ms-1 text-xs font-medium text-muted-foreground">
-                            تومان
+                      <CardContent className="flex h-full flex-col">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            {product.badge ? (
+                              <Badge variant="secondary" className="font-semibold">
+                                {product.badge}
+                              </Badge>
+                            ) : null}
+                            <FavoriteButton productId={product.id} />
+                          </div>
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Star
+                              className="size-3.5 fill-primary text-primary"
+                              aria-hidden="true"
+                            />
+                            {toFa(product.rating_avg.toFixed(1).replace(".", "٫"))}
                           </span>
-                        </span>
-                        <Button size="sm" className="gap-1.5 font-bold" asChild>
-                          <Link to="/products/$slug" params={{ slug: product.slug }}>
-                            <Download className="size-4" aria-hidden="true" />
-                            خرید و دانلود
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </li>
-              ))}
+                        </div>
+                        <h3 className="mt-3 text-base leading-7 font-bold">{product.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {product.file_format ?? product.categories?.name ?? "فایل دیجیتال"}
+                        </p>
+                        <div className="mt-6 flex items-center justify-between gap-3">
+                          <span className="font-display text-lg font-extrabold">
+                            {formatToman(product.price_toman, product.is_free)}
+                          </span>
+                          <Button size="sm" className="gap-1.5 font-bold" asChild>
+                            <Link to="/products/$slug" params={{ slug: product.slug }}>
+                              <Download className="size-4" aria-hidden="true" />
+                              خرید و دانلود
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </li>
+                );
+              })}
             </ul>
+
           </div>
         </section>
 
@@ -359,24 +315,42 @@ function HomePage() {
           </div>
 
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {ARTICLES.map((article) => (
-              <li key={article.title}>
-                <Link
-                  to="/articles/$slug"
-                  params={{ slug: article.slug }}
-                  className="group block h-full"
-                >
-                  <article className="flex h-full flex-col justify-center rounded-lg border border-border/70 bg-card p-6 transition-colors hover:border-primary">
-                    <span className="text-xs font-bold text-accent">{article.category}</span>
-                    <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
-                      {article.title}
-                    </h3>
-                    <p className="mt-4 text-xs text-muted-foreground">{article.read}</p>
-                  </article>
-                </Link>
-              </li>
-            ))}
+            {featuredArticles.map((article) => {
+              const cover = resolveImageUrl(article.cover_image_url);
+              return (
+                <li key={article.id}>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: article.slug }}
+                    className="group block h-full"
+                  >
+                    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border/70 bg-card transition-colors hover:border-primary">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={article.title}
+                          loading="lazy"
+                          className="h-40 w-full object-cover"
+                        />
+                      ) : null}
+                      <div className="flex h-full flex-col justify-center p-6">
+                        <span className="text-xs font-bold text-accent">
+                          {article.categories?.name ?? "دانشنامه"}
+                        </span>
+                        <h3 className="mt-3 text-base leading-7 font-bold group-hover:text-accent">
+                          {article.title}
+                        </h3>
+                        <p className="mt-4 text-xs text-muted-foreground">
+                          {toFa(article.reading_minutes)} دقیقه مطالعه
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
+
         </section>
 
         {/* CTA */}

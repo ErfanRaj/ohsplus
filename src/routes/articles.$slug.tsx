@@ -10,6 +10,7 @@ import { PageBreadcrumb } from "@/components/layout/page-breadcrumb";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { articleQuery, formatDateFa, toFa } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
 
 export const Route = createFileRoute("/articles/$slug")({
   loader: async ({ context, params }) => {
@@ -79,6 +80,13 @@ function ArticleDetailPage() {
             </Link>
           ) : null}
           <h1 className="mt-3 text-2xl leading-10 font-extrabold sm:text-3xl">{article.title}</h1>
+          {article.cover_image_url ? (
+            <img
+              src={resolveImageUrl(article.cover_image_url)!}
+              alt={article.title}
+              className="mt-6 max-h-[26rem] w-full rounded-xl border border-border/70 object-cover"
+            />
+          ) : null}
           <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <Clock className="size-4" aria-hidden="true" />

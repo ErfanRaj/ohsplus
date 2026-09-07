@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
+import { resolveImageUrl } from "@/lib/uploads";
   formatDateFa,
   formatToman,
   productQuery,
@@ -124,12 +125,20 @@ function ProductDetailPage() {
               </div>
             </header>
 
+            {product.cover_image_url ? (
+              <img
+                src={resolveImageUrl(product.cover_image_url)!}
+                alt={product.title}
+                className="max-h-96 w-full rounded-lg border border-border/70 object-cover"
+              />
+            ) : null}
+
             {data!.images.length > 0 ? (
               <ul className="grid gap-3 sm:grid-cols-2">
                 {data!.images.map((image) => (
                   <li key={image.id}>
                     <img
-                      src={image.url}
+                      src={resolveImageUrl(image.url)!}
                       alt={image.alt ?? product.title}
                       loading="lazy"
                       className="w-full rounded-lg border border-border/70 object-cover"
