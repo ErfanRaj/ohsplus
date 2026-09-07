@@ -23,9 +23,10 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
-import { toFa } from "@/lib/catalog";
+import { articlesQuery, formatToman, productsQuery, toFa } from "@/lib/catalog";
 import { siteStatsQuery } from "@/lib/site-stats";
+import { resolveImageUrl } from "@/lib/uploads";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
