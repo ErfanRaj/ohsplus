@@ -125,6 +125,14 @@ function ProductDetailPage() {
               </div>
             </header>
 
+            {product.cover_image_url ? (
+              <img
+                src={resolveImageUrl(product.cover_image_url)!}
+                alt={product.title}
+                className="max-h-96 w-full rounded-lg border border-border/70 object-cover"
+              />
+            ) : null}
+
             {data!.images.length > 0 ? (
               <ul className="grid gap-3 sm:grid-cols-2">
                 {data!.images.map((image) => (

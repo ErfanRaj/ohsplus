@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { articlesQuery, categoriesQuery, formatDateFa, toFa } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
 
 type ArticleSearch = { q: string; category: string };
 
@@ -130,7 +131,15 @@ function ArticlesPage() {
               {articles.map((article) => (
                 <li key={article.id}>
                   <Link to="/articles/$slug" params={{ slug: article.slug }} className="block h-full">
-                    <Card className="h-full border-border/70 shadow-none transition-all hover:-translate-y-0.5 hover:border-primary/60">
+                    <Card className="h-full overflow-hidden border-border/70 shadow-none transition-all hover:-translate-y-0.5 hover:border-primary/60">
+                      {article.cover_image_url ? (
+                        <img
+                          src={resolveImageUrl(article.cover_image_url)!}
+                          alt={article.title}
+                          loading="lazy"
+                          className="h-40 w-full object-cover"
+                        />
+                      ) : null}
                       <CardContent className="flex h-full flex-col gap-3 p-5">
                         {article.categories ? (
                           <span className="text-xs font-semibold text-accent">
