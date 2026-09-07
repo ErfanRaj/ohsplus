@@ -1,8 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const IMAGE_BUCKET = "product-images";
-/** Signed URLs are minted long-lived so stored links keep working. */
-const SIGNED_URL_TTL = 60 * 60 * 24 * 365 * 10;
 
 export const ACCEPTED_IMAGE_TYPES = [
   "image/png",
@@ -15,20 +13,42 @@ export const ACCEPTED_IMAGE_TYPES = [
 
 export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 
+/** Stable public route that streams objects out of the private bucket. */
+export const MEDIA_PREFIX = "/api/public/media/";
+
 function randomId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-/** Extracts the storage object path from a signed or public bucket URL. */
+export function mediaUrl(path: string) {
+  return `${MEDIA_PREFIX}${path.split("/").map(encodeURIComponent).join("/")}`;
+}
+
+/** Extracts the storage object path from a media, signed or public bucket URL. */
 export function storagePathFromUrl(url: string | null | undefined) {
   if (!url) return null;
+  if (url.startsWith(MEDIA_PREFIX)) {
+    return decodeURIComponent(url.slice(MEDIA_PREFIX.length).split("?")[0]);
+  }
   const marker = `/${IMAGE_BUCKET}/`;
   const index = url.indexOf(marker);
   if (index === -1) return null;
   const rest = url.slice(index + marker.length);
   const path = rest.split("?")[0];
   return path ? decodeURIComponent(path) : null;
+}
+
+/**
+ * Normalises any stored image value into a URL that always loads:
+ * old signed links (which expire) are rewritten onto the media route.
+ */
+export function resolveImageUrl(url: string | null | undefined) {
+  if (!url) return null;
+  if (url.startsWith(MEDIA_PREFIX)) return url;
+  const path = storagePathFromUrl(url);
+  if (path && url.includes(`/${IMAGE_BUCKET}/`)) return mediaUrl(path);
+  return url;
 }
 
 export async function uploadImage(file: File, folder: string) {
@@ -49,12 +69,7 @@ export async function uploadImage(file: File, folder: string) {
   });
   if (error) throw error;
 
-  const { data, error: signError } = await supabase.storage
-    .from(IMAGE_BUCKET)
-    .createSignedUrl(path, SIGNED_URL_TTL);
-  if (signError) throw signError;
-
-  return { path, url: data.signedUrl };
+  return { path, url: mediaUrl(path) };
 }
 
 /** Removes the underlying object for a stored image URL. Ignores non-bucket URLs. */
