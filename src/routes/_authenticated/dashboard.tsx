@@ -30,6 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { formatToman, toFa } from "@/lib/catalog";
 import { useFavoriteProducts, useToggleFavorite } from "@/lib/favorites";
+import { myDownloadsQuery, myOrdersQuery, ORDER_STATUS_LABELS } from "@/lib/orders";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
@@ -124,6 +125,8 @@ function DashboardPage() {
   });
 
   const favorites = useFavoriteProducts();
+  const orders = useQuery(myOrdersQuery(user.id));
+  const downloads = useQuery(myDownloadsQuery(user.id));
   const toggleFavorite = useToggleFavorite();
 
   const displayName =
@@ -181,6 +184,66 @@ function DashboardPage() {
             </article>
           ))}
         </div>
+
+        {/* Orders */}
+        <section
+          className="mt-8 rounded-xl border bg-card p-6 shadow-soft"
+          aria-labelledby="orders-heading"
+        >
+          <h2 id="orders-heading" className="text-base font-extrabold">
+            سفارش‌های من
+          </h2>
+          {orders.isLoading ? (
+            <Loader2 className="mt-4 size-5 animate-spin text-muted-foreground" aria-hidden="true" />
+          ) : orders.data?.length ? (
+            <ul className="mt-4 space-y-3">
+              {orders.data.map((order) => (
+                <li key={order.id} className="rounded-lg border border-border/70 p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <Badge variant="secondary">
+                      {ORDER_STATUS_LABELS[order.status] ?? order.status}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(order.created_at).toLocaleDateString("fa-IR")}
+                    </span>
+                  </div>
+                  <ul className="mt-3 space-y-2 text-sm">
+                    {order.order_items.map((item) => {
+                      const file = downloads.data?.find((row) => row.product_id === item.product_id);
+                      return (
+                        <li key={item.id} className="flex flex-wrap items-center gap-2">
+                          <span className="font-semibold">{item.title}</span>
+                          <span className="text-xs text-muted-foreground">
+                            × {toFa(item.quantity)}
+                          </span>
+                          {order.status === "paid" && file?.download_url ? (
+                            <a
+                              href={file.download_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs font-bold text-primary underline"
+                            >
+                              دریافت فایل
+                            </a>
+                          ) : order.status === "paid" ? (
+                            <span className="text-xs text-muted-foreground">
+                              لینک دانلود به‌زودی ثبت می‌شود
+                            </span>
+                          ) : null}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p className="mt-3 text-sm font-extrabold">
+                    مبلغ کل: {formatToman(order.total_toman, false)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 text-sm text-muted-foreground">هنوز سفارشی ثبت نکرده‌اید.</p>
+          )}
+        </section>
 
         {/* Favorites */}
         <section className="mt-8 rounded-xl border bg-card p-6 shadow-soft" aria-labelledby="fav-heading">
