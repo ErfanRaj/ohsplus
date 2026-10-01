@@ -36,9 +36,9 @@ export const Route = createFileRoute("/articles/$slug")({
       ],
     };
   },
-  errorComponent: ({ error }: { error: Error }) => (
+  errorComponent: ({ error }: { error: unknown }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
-      خطا در بارگذاری مقاله: {error.message}
+      خطا در بارگذاری مقاله: {error instanceof Error ? error.message : ""}
     </div>
   ),
   notFoundComponent: () => (

@@ -27,9 +27,9 @@ export const Route = createFileRoute("/categories/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  errorComponent: ({ error }: { error: Error }) => (
+  errorComponent: ({ error }: { error: unknown }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
-      خطا در بارگذاری دسته‌بندی‌ها: {error.message}
+      خطا در بارگذاری دسته‌بندی‌ها: {error instanceof Error ? error.message : ""}
     </div>
   ),
   notFoundComponent: () => (
