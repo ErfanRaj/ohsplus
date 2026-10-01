@@ -40,7 +40,7 @@ export const Route = createFileRoute("/articles/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: { error: Error }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
       خطا در بارگذاری مقالات: {error.message}
     </div>

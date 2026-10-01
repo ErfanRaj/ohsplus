@@ -48,7 +48,7 @@ export const Route = createFileRoute("/products/")({
     ],
     links: [{ rel: "canonical", href: "/products" }],
   }),
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: { error: Error }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
       خطا در بارگذاری محصولات: {error.message}
     </div>

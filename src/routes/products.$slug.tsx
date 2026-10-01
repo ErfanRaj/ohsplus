@@ -50,7 +50,7 @@ export const Route = createFileRoute("/products/$slug")({
       ],
     };
   },
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: { error: Error }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
       خطا در بارگذاری محصول: {error.message}
     </div>
