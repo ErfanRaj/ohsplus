@@ -6,7 +6,10 @@ import { cn } from "@/lib/utils";
 const ADMIN_NAV = [
   { href: "/admin", label: "نمای کلی" },
   { href: "/admin/products", label: "محصولات" },
+  { href: "/admin/files", label: "لینک دانلود" },
+  { href: "/admin/orders", label: "سفارش‌ها" },
   { href: "/admin/articles", label: "مقالات" },
+
   { href: "/admin/categories", label: "دسته‌بندی‌ها" },
   { href: "/admin/tags", label: "برچسب‌ها" },
   { href: "/admin/reviews", label: "دیدگاه‌ها" },
