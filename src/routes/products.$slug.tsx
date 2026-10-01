@@ -14,13 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
-import { resolveImageUrl } from "@/lib/uploads";
   formatDateFa,
   formatToman,
   productQuery,
   relatedProductsQuery,
   toFa,
 } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
+
 
 export const Route = createFileRoute("/products/$slug")({
   loader: async ({ context, params }) => {
@@ -49,9 +50,9 @@ export const Route = createFileRoute("/products/$slug")({
       ],
     };
   },
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: { error: unknown }) => (
     <div role="alert" className="container-page py-24 text-center text-destructive">
-      خطا در بارگذاری محصول: {error.message}
+      خطا در بارگذاری محصول: {error instanceof Error ? error.message : ""}
     </div>
   ),
   notFoundComponent: () => (
