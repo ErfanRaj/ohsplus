@@ -14,13 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
-import { resolveImageUrl } from "@/lib/uploads";
   formatDateFa,
   formatToman,
   productQuery,
   relatedProductsQuery,
   toFa,
 } from "@/lib/catalog";
+import { resolveImageUrl } from "@/lib/uploads";
+
 
 export const Route = createFileRoute("/products/$slug")({
   loader: async ({ context, params }) => {
