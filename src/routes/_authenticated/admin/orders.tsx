@@ -37,7 +37,7 @@ export const Route = createFileRoute("/_authenticated/admin/orders")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminOrders;
+  component: AdminOrders,
 });
 
 function AdminOrders() {
