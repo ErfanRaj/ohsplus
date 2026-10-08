@@ -216,7 +216,21 @@ function DashboardPage() {
                           <span className="text-xs text-muted-foreground">
                             × {toFa(item.quantity)}
                           </span>
-                          {order.status === "paid" && file?.download_url ? (
+                          {order.status === "paid" && file?.storage_path ? (
+                            <button
+                              type="button"
+                              className="text-xs font-bold text-primary underline"
+                              onClick={async () => {
+                                const { data, error } = await supabase.storage
+                                  .from("product-files")
+                                  .createSignedUrl(file.storage_path as string, 300, { download: true });
+                                if (error || !data) return toast.error("دریافت فایل ممکن نشد");
+                                window.location.href = data.signedUrl;
+                              }}
+                            >
+                              دریافت فایل
+                            </button>
+                          ) : order.status === "paid" && file?.download_url ? (
                             <a
                               href={file.download_url}
                               target="_blank"
