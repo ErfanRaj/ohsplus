@@ -68,6 +68,7 @@ export function CrudPage({
   softDelete = true,
   searchKeys = ["title", "name"],
   extraOptions,
+  renderFormExtra,
 }: {
   table: AdminTable;
   title: string;
@@ -80,6 +81,8 @@ export function CrudPage({
   searchKeys?: string[];
   /** Dynamic options resolved at render time, keyed by field name. */
   extraOptions?: Record<string, { value: string; label: string }[]>;
+  /** Extra content rendered at the bottom of the edit dialog (null row = creating). */
+  renderFormExtra?: (editing: Row | null) => React.ReactNode;
 }) {
   const queryClient = useQueryClient();
   const listQuery = adminListQuery(table, select);
@@ -321,6 +324,8 @@ export function CrudPage({
               );
             })}
           </div>
+
+          {renderFormExtra ? renderFormExtra(editing) : null}
 
           <DialogFooter className="gap-2">
             <Button variant="outline" onClick={() => setOpen(false)}>
