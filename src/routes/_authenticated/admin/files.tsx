@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { FileCheck2, Loader2, Save, Trash2, Upload } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminShell } from "@/components/admin/admin-shell";
+import { ProductFileUploader } from "@/components/admin/product-file-uploader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,9 +35,6 @@ type ProductFile = {
   size_bytes: number | null;
 };
 
-const MAX_FILE_BYTES = 50 * 1024 * 1024;
-const ACCEPT = ".pdf,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.dwg,.jpg,.png";
-const fmtSize = (b: number | null) => (b ? `${(b / 1024 / 1024).toLocaleString("fa-IR", { maximumFractionDigits: 1 })} مگابایت` : "");
 
 const filesQuery = {
   queryKey: ["admin", "product-files"],
@@ -100,59 +98,6 @@ function AdminFiles() {
     },
     onError: (error: Error) => toast.error(error.message),
   });
-
-  const [uploading, setUploading] = useState<Record<string, number>>({});
-
-  async function upsertFile(productId: string, patch: { storage_path?: string | null; size_bytes?: number | null; label?: string }) {
-    const existing = data?.files.find((file) => file.product_id === productId);
-    const { error } = existing
-      ? await supabase.from("product_files").update(patch).eq("id", existing.id)
-      : await supabase
-          .from("product_files")
-          .insert({ product_id: productId, label: "فایل محصول", version: "1", ...patch });
-    if (error) throw error;
-  }
-
-  async function handleUpload(productId: string, file: File) {
-    if (file.size > MAX_FILE_BYTES) return toast.error("حجم فایل باید کمتر از ۵۰ مگابایت باشد.");
-    const existing = data?.files.find((f) => f.product_id === productId);
-    const ext = (file.name.split(".").pop() ?? "bin").toLowerCase().replace(/[^a-z0-9]/g, "") || "bin";
-    const path = `${productId}/${crypto.randomUUID()}.${ext}`;
-    setUploading((p) => ({ ...p, [productId]: 0 }));
-    const timer = setInterval(
-      () => setUploading((p) => ({ ...p, [productId]: Math.min(90, (p[productId] ?? 0) + 7) })),
-      300,
-    );
-    try {
-      const { error } = await supabase.storage
-        .from("product-files")
-        .upload(path, file, { contentType: file.type || "application/octet-stream", upsert: false });
-      if (error) throw error;
-      await upsertFile(productId, { storage_path: path, size_bytes: file.size, label: file.name.slice(0, 120) });
-      if (existing?.storage_path) await supabase.storage.from("product-files").remove([existing.storage_path]);
-      setUploading((p) => ({ ...p, [productId]: 100 }));
-      toast.success("فایل با موفقیت بارگذاری شد");
-      queryClient.invalidateQueries({ queryKey: ["admin", "product-files"] });
-    } catch {
-      toast.error("بارگذاری فایل انجام نشد. دوباره تلاش کنید.");
-    } finally {
-      clearInterval(timer);
-      setTimeout(() => setUploading((p) => { const n = { ...p }; delete n[productId]; return n; }), 600);
-    }
-  }
-
-  async function handleRemove(productId: string) {
-    const existing = data?.files.find((f) => f.product_id === productId);
-    if (!existing?.storage_path) return;
-    try {
-      await supabase.storage.from("product-files").remove([existing.storage_path]);
-      await upsertFile(productId, { storage_path: null, size_bytes: null });
-      toast.success("فایل حذف شد");
-      queryClient.invalidateQueries({ queryKey: ["admin", "product-files"] });
-    } catch {
-      toast.error("حذف فایل انجام نشد");
-    }
-  }
 
   return (
     <AdminShell
