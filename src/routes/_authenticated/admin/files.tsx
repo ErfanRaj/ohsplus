@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Loader2, Save } from "lucide-react";
+import { FileCheck2, Loader2, Save, Trash2, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -30,7 +30,13 @@ type ProductFile = {
   label: string;
   version: string;
   download_url: string | null;
+  storage_path: string | null;
+  size_bytes: number | null;
 };
+
+const MAX_FILE_BYTES = 50 * 1024 * 1024;
+const ACCEPT = ".pdf,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.dwg,.jpg,.png";
+const fmtSize = (b: number | null) => (b ? `${(b / 1024 / 1024).toLocaleString("fa-IR", { maximumFractionDigits: 1 })} مگابایت` : "");
 
 const filesQuery = {
   queryKey: ["admin", "product-files"],
@@ -44,7 +50,7 @@ const filesQuery = {
         .limit(200),
       supabase
         .from("product_files")
-        .select("id, product_id, label, version, download_url")
+        .select("id, product_id, label, version, download_url, storage_path, size_bytes")
         .is("deleted_at", null),
     ]);
     if (products.error) throw products.error;
@@ -95,10 +101,63 @@ function AdminFiles() {
     onError: (error: Error) => toast.error(error.message),
   });
 
+  const [uploading, setUploading] = useState<Record<string, number>>({});
+
+  async function upsertFile(productId: string, patch: Record<string, unknown>) {
+    const existing = data?.files.find((file) => file.product_id === productId);
+    const { error } = existing
+      ? await supabase.from("product_files").update(patch).eq("id", existing.id)
+      : await supabase
+          .from("product_files")
+          .insert({ product_id: productId, label: "فایل محصول", version: "1", ...patch });
+    if (error) throw error;
+  }
+
+  async function handleUpload(productId: string, file: File) {
+    if (file.size > MAX_FILE_BYTES) return toast.error("حجم فایل باید کمتر از ۵۰ مگابایت باشد.");
+    const existing = data?.files.find((f) => f.product_id === productId);
+    const ext = (file.name.split(".").pop() ?? "bin").toLowerCase().replace(/[^a-z0-9]/g, "") || "bin";
+    const path = `${productId}/${crypto.randomUUID()}.${ext}`;
+    setUploading((p) => ({ ...p, [productId]: 0 }));
+    const timer = setInterval(
+      () => setUploading((p) => ({ ...p, [productId]: Math.min(90, (p[productId] ?? 0) + 7) })),
+      300,
+    );
+    try {
+      const { error } = await supabase.storage
+        .from("product-files")
+        .upload(path, file, { contentType: file.type || "application/octet-stream", upsert: false });
+      if (error) throw error;
+      await upsertFile(productId, { storage_path: path, size_bytes: file.size, label: file.name.slice(0, 120) });
+      if (existing?.storage_path) await supabase.storage.from("product-files").remove([existing.storage_path]);
+      setUploading((p) => ({ ...p, [productId]: 100 }));
+      toast.success("فایل با موفقیت بارگذاری شد");
+      queryClient.invalidateQueries({ queryKey: ["admin", "product-files"] });
+    } catch {
+      toast.error("بارگذاری فایل انجام نشد. دوباره تلاش کنید.");
+    } finally {
+      clearInterval(timer);
+      setTimeout(() => setUploading((p) => { const n = { ...p }; delete n[productId]; return n; }), 600);
+    }
+  }
+
+  async function handleRemove(productId: string) {
+    const existing = data?.files.find((f) => f.product_id === productId);
+    if (!existing?.storage_path) return;
+    try {
+      await supabase.storage.from("product-files").remove([existing.storage_path]);
+      await upsertFile(productId, { storage_path: null, size_bytes: null });
+      toast.success("فایل حذف شد");
+      queryClient.invalidateQueries({ queryKey: ["admin", "product-files"] });
+    } catch {
+      toast.error("حذف فایل انجام نشد");
+    }
+  }
+
   return (
     <AdminShell
       title="لینک دانلود محصولات"
-      description="برای هر محصول نشانی فایل را وارد کنید. این لینک فقط پس از پرداخت موفق به خریدار نشان داده می‌شود."
+      description="برای هر محصول فایل را مستقیم بارگذاری کنید (حداکثر ۵۰ مگابایت) یا لینک خارجی وارد کنید. فایل فقط پس از پرداخت موفق در دسترس خریدار است."
     >
       {isLoading ? (
         <Loader2 className="mx-auto size-5 animate-spin text-muted-foreground" aria-hidden="true" />
@@ -111,6 +170,46 @@ function AdminFiles() {
             >
               <div className="min-w-0 flex-1 space-y-2">
                 <p className="truncate text-sm font-bold">{String(product.title)}</p>
+                {(() => {
+                  const pid = String(product.id);
+                  const f = data?.files.find((x) => x.product_id === pid);
+                  const progress = uploading[pid];
+                  return (
+                    <div className="space-y-2">
+                      {f?.storage_path ? (
+                        <div className="flex items-center gap-2 rounded-lg bg-muted px-3 py-2 text-xs">
+                          <FileCheck2 className="size-4 text-primary" aria-hidden="true" />
+                          <span className="min-w-0 flex-1 truncate" dir="ltr">{f.label}</span>
+                          <span className="text-muted-foreground">{fmtSize(f.size_bytes)}</span>
+                          <Button type="button" size="icon" variant="ghost" className="size-7" aria-label="حذف فایل" onClick={() => handleRemove(pid)}>
+                            <Trash2 className="size-4" aria-hidden="true" />
+                          </Button>
+                        </div>
+                      ) : null}
+                      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border px-3 py-3 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary hover:text-foreground">
+                        <Upload className="size-4" aria-hidden="true" />
+                        {f?.storage_path ? "جایگزینی فایل" : "بارگذاری فایل (PDF، ZIP، Word، Excel…)"}
+                        <input
+                          type="file"
+                          accept={ACCEPT}
+                          className="sr-only"
+                          disabled={progress !== undefined}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            e.target.value = "";
+                            if (file) handleUpload(pid, file);
+                          }}
+                        />
+                      </label>
+                      {progress !== undefined ? (
+                        <div className="h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+                          <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                        </div>
+                      ) : null}
+                      <p className="text-xs text-muted-foreground">یا لینک خارجی:</p>
+                    </div>
+                  );
+                })()}
                 <Input
                   dir="ltr"
                   placeholder="https://…"
