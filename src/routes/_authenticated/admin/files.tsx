@@ -103,7 +103,7 @@ function AdminFiles() {
 
   const [uploading, setUploading] = useState<Record<string, number>>({});
 
-  async function upsertFile(productId: string, patch: Record<string, unknown>) {
+  async function upsertFile(productId: string, patch: { storage_path?: string | null; size_bytes?: number | null; label?: string }) {
     const existing = data?.files.find((file) => file.product_id === productId);
     const { error } = existing
       ? await supabase.from("product_files").update(patch).eq("id", existing.id)
