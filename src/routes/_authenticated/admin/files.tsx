@@ -170,46 +170,8 @@ function AdminFiles() {
             >
               <div className="min-w-0 flex-1 space-y-2">
                 <p className="truncate text-sm font-bold">{String(product.title)}</p>
-                {(() => {
-                  const pid = String(product.id);
-                  const f = data?.files.find((x) => x.product_id === pid);
-                  const progress = uploading[pid];
-                  return (
-                    <div className="space-y-2">
-                      {f?.storage_path ? (
-                        <div className="flex items-center gap-2 rounded-lg bg-muted px-3 py-2 text-xs">
-                          <FileCheck2 className="size-4 text-primary" aria-hidden="true" />
-                          <span className="min-w-0 flex-1 truncate" dir="ltr">{f.label}</span>
-                          <span className="text-muted-foreground">{fmtSize(f.size_bytes)}</span>
-                          <Button type="button" size="icon" variant="ghost" className="size-7" aria-label="حذف فایل" onClick={() => handleRemove(pid)}>
-                            <Trash2 className="size-4" aria-hidden="true" />
-                          </Button>
-                        </div>
-                      ) : null}
-                      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border px-3 py-3 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary hover:text-foreground">
-                        <Upload className="size-4" aria-hidden="true" />
-                        {f?.storage_path ? "جایگزینی فایل" : "بارگذاری فایل (PDF، ZIP، Word، Excel…)"}
-                        <input
-                          type="file"
-                          accept={ACCEPT}
-                          className="sr-only"
-                          disabled={progress !== undefined}
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            e.target.value = "";
-                            if (file) handleUpload(pid, file);
-                          }}
-                        />
-                      </label>
-                      {progress !== undefined ? (
-                        <div className="h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-                          <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
-                        </div>
-                      ) : null}
-                      <p className="text-xs text-muted-foreground">یا لینک خارجی:</p>
-                    </div>
-                  );
-                })()}
+                <ProductFileUploader productId={String(product.id)} />
+                <p className="text-xs text-muted-foreground">یا لینک خارجی:</p>
                 <Input
                   dir="ltr"
                   placeholder="https://…"

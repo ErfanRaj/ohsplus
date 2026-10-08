@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CrudPage } from "@/components/admin/crud-page";
+import { ProductFileUploader } from "@/components/admin/product-file-uploader";
 import { adminListQuery, STATUS_LABELS } from "@/lib/admin";
 import { formatToman, toFa } from "@/lib/catalog";
 
@@ -52,6 +53,18 @@ function AdminProducts() {
               : "—",
         },
       ]}
+      renderFormExtra={(editing) => (
+        <section className="space-y-2 rounded-xl border border-border bg-muted/30 p-4">
+          <h3 className="text-sm font-bold">فایل دانلودی محصول</h3>
+          {editing ? (
+            <ProductFileUploader productId={String(editing.id)} />
+          ) : (
+            <p className="text-xs text-muted-foreground">
+              ابتدا محصول را ذخیره کنید، سپس با زدن دکمه ویرایش، فایل را آپلود کنید.
+            </p>
+          )}
+        </section>
+      )}
       extraOptions={{
         category_id: (categories ?? []).map((c) => ({
           value: String(c.id),
