@@ -63,6 +63,7 @@ export type Database = {
           deleted_at: string | null
           excerpt: string | null
           id: string
+          is_iso: boolean
           key_takeaways: Json
           published_at: string | null
           reading_minutes: number
@@ -83,6 +84,7 @@ export type Database = {
           deleted_at?: string | null
           excerpt?: string | null
           id?: string
+          is_iso?: boolean
           key_takeaways?: Json
           published_at?: string | null
           reading_minutes?: number
@@ -103,6 +105,7 @@ export type Database = {
           deleted_at?: string | null
           excerpt?: string | null
           id?: string
+          is_iso?: boolean
           key_takeaways?: Json
           published_at?: string | null
           reading_minutes?: number
@@ -632,6 +635,7 @@ export type Database = {
           file_format: string | null
           id: string
           is_free: boolean
+          is_iso: boolean
           price_toman: number
           published_at: string | null
           rating_avg: number
@@ -657,6 +661,7 @@ export type Database = {
           file_format?: string | null
           id?: string
           is_free?: boolean
+          is_iso?: boolean
           price_toman?: number
           published_at?: string | null
           rating_avg?: number
@@ -682,6 +687,7 @@ export type Database = {
           file_format?: string | null
           id?: string
           is_free?: boolean
+          is_iso?: boolean
           price_toman?: number
           published_at?: string | null
           rating_avg?: number
