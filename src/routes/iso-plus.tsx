@@ -111,10 +111,10 @@ function IsoPlusPage() {
           {isLoading ? (
             <p className="mt-6 text-iso-navy/70">در حال بارگذاری…</p>
           ) : products.length ? (
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-8 grid gap-8 sm:grid-cols-2">
               {products.map((p) => (
                 <li key={p.id}>
-                  <ProductCard product={p} />
+                  <ProductCard product={p} large />
                 </li>
               ))}
             </ul>
@@ -130,7 +130,7 @@ function IsoPlusPage() {
             <BookOpen className="size-6 text-iso-green" /> مقالات و آموزش‌های ISO
           </h2>
           {articles.length ? (
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-8 grid gap-8 sm:grid-cols-2">
               {articles.map((a) => {
                 const cover = resolveImageUrl(a.cover_image_url);
                 return (
@@ -141,9 +141,9 @@ function IsoPlusPage() {
                       className="group block h-full overflow-hidden rounded-xl border border-iso-navy/15 bg-background transition-all hover:-translate-y-1 hover:border-iso-green hover:shadow-[0_12px_30px_-12px_var(--iso-green)]"
                     >
                       {cover ? (
-                        <img src={cover} alt={a.title} loading="lazy" className="aspect-video w-full object-cover" />
+                        <img src={cover} alt={a.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
                       ) : (
-                        <div className="aspect-video w-full bg-iso-navy" />
+                        <div className="aspect-[4/3] w-full bg-iso-navy" />
                       )}
                       <div className="p-5">
                         <h3 className="font-bold leading-7 group-hover:text-iso-navy">{a.title}</h3>

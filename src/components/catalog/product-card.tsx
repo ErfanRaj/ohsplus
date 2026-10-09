@@ -7,12 +7,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { formatToman, toFa, type ProductRow } from "@/lib/catalog";
 import { resolveImageUrl } from "@/lib/uploads";
 
-export function ProductCard({ product }: { product: ProductRow }) {
+export function ProductCard({ product, large = false }: { product: ProductRow; large?: boolean }) {
   return (
     <Card className="group relative h-full overflow-hidden border-border/70 shadow-none transition-all focus-within:border-primary/60 hover:-translate-y-0.5 hover:border-primary/60">
+      {large ? (
+        product.cover_image_url ? (
+          <img
+            src={resolveImageUrl(product.cover_image_url)!}
+            alt=""
+            loading="lazy"
+            className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex aspect-[4/3] w-full items-center justify-center bg-iso-navy text-iso-green">
+            <FileSpreadsheet className="size-12" aria-hidden="true" />
+          </div>
+        )
+      ) : null}
       <CardContent className="flex h-full flex-col gap-4 p-5">
         <div className="flex items-start justify-between gap-3">
-          <span className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary">
+          <span className={`${large ? "hidden" : "flex"} size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary`}>
             {product.cover_image_url ? (
               <img
                 src={resolveImageUrl(product.cover_image_url)!}
