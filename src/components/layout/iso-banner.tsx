@@ -1,0 +1,65 @@
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+import { useRef, useState } from "react";
+
+import isoBanner from "@/assets/iso-plus-banner.jpg.asset.json";
+
+export function IsoBanner() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [pos, setPos] = useState({ x: 50, y: 50, rx: 0, ry: 0, active: false });
+
+  const onMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    setPos({ x, y, rx: (50 - y) / 10, ry: (x - 50) / 14, active: true });
+  };
+
+  return (
+    <section className="container-page pt-16 md:pt-24" aria-label="ISO+">
+      <div style={{ perspective: "1200px" }}>
+        <Link
+          ref={ref}
+          to="/iso-plus"
+          onMouseMove={onMove}
+          onMouseLeave={() => setPos({ x: 50, y: 50, rx: 0, ry: 0, active: false })}
+          aria-label="ورود به بخش ISO+"
+          className="group relative block overflow-hidden rounded-2xl border border-border shadow-soft outline-none transition-[transform,box-shadow] duration-300 ease-out hover:shadow-[0_25px_60px_-15px_var(--iso-green)] focus-visible:ring-2 focus-visible:ring-ring"
+          style={{
+            transform: `rotateX(${pos.rx}deg) rotateY(${pos.ry}deg) scale(${pos.active ? 1.015 : 1})`,
+          }}
+        >
+          <img
+            src={isoBanner.url}
+            alt="ISO+ — استانداردهای ایزو"
+            loading="lazy"
+            className="aspect-[16/6] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          {/* cursor spotlight */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-0 mix-blend-screen transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              background: `radial-gradient(320px circle at ${pos.x}% ${pos.y}%, color-mix(in oklab, var(--iso-green) 55%, transparent), transparent 65%)`,
+            }}
+          />
+          {/* light sweep */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-background/50 to-transparent opacity-0 group-hover:iso-sweep group-hover:opacity-100"
+          />
+          {/* glowing border */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-iso-green/0 transition-all duration-300 group-hover:ring-iso-green/80"
+          />
+          <span className="absolute bottom-3 left-3 flex translate-y-3 items-center gap-1.5 rounded-full bg-iso-navy px-4 py-2 text-xs font-bold text-iso-concrete opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:bottom-5 sm:left-5 sm:text-sm">
+            ورود به دنیای استانداردها
+            <ArrowLeft className="size-4" aria-hidden="true" />
+          </span>
+        </Link>
+      </div>
+    </section>
+  );
+}

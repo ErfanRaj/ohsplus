@@ -241,3 +241,32 @@ export function formatDateFa(value: string | null) {
     return "";
   }
 }
+
+export const isoContentQuery = () =>
+  queryOptions({
+    queryKey: ["iso-content"],
+    queryFn: async () => {
+      const [products, articles] = await Promise.all([
+        supabase
+          .from("products")
+          .select(PRODUCT_FIELDS)
+          .eq("is_iso", true)
+          .eq("status", "published")
+          .is("deleted_at", null)
+          .order("published_at", { ascending: false, nullsFirst: false }),
+        supabase
+          .from("articles")
+          .select(ARTICLE_FIELDS)
+          .eq("is_iso", true)
+          .eq("status", "published")
+          .is("deleted_at", null)
+          .order("published_at", { ascending: false, nullsFirst: false }),
+      ]);
+      if (products.error) throw products.error;
+      if (articles.error) throw articles.error;
+      return {
+        products: (products.data ?? []) as unknown as ProductRow[],
+        articles: (articles.data ?? []) as unknown as ArticleRow[],
+      };
+    },
+  });

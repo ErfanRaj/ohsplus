@@ -29,7 +29,7 @@ function AdminProducts() {
       table="products"
       title="محصول"
       description="مدیریت فایل‌ها، قیمت و وضعیت انتشار محصولات."
-      select="id,title,slug,price_toman,is_free,status,category_id,subtitle,description,file_format,compare_at_toman,cover_image_url,badge,seo_title,seo_description,created_at"
+      select="id,title,slug,price_toman,is_free,status,category_id,subtitle,description,file_format,compare_at_toman,cover_image_url,badge,is_iso,seo_title,seo_description,created_at"
       searchKeys={["title", "slug"]}
       columns={[
         { name: "title", label: "عنوان" },
@@ -79,6 +79,7 @@ function AdminProducts() {
         { name: "price_toman", label: `قیمت (تومان) ${toFa("")}`.trim(), type: "number" },
         { name: "compare_at_toman", label: "قیمت قبل از تخفیف", type: "number" },
         { name: "is_free", label: "رایگان است", type: "switch" },
+        { name: "is_iso", label: "نمایش در بخش ISO+", type: "switch" },
         { name: "file_format", label: "فرمت فایل", type: "text", placeholder: "PDF / XLSX" },
         { name: "badge", label: "برچسب ویژه", type: "text" },
         {

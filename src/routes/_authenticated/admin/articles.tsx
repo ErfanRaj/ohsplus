@@ -59,7 +59,7 @@ export const Route = createFileRoute("/_authenticated/admin/articles")({
 type Row = Record<string, unknown>;
 
 const SELECT =
-  "id,title,slug,status,category_id,excerpt,content,content_html,key_takeaways,cover_image_url,reading_minutes,seo_title,seo_description,published_at,created_at";
+  "id,title,slug,status,category_id,excerpt,content,content_html,key_takeaways,cover_image_url,reading_minutes,is_iso,seo_title,seo_description,published_at,created_at";
 
 const EMPTY = {
   title: "",
@@ -68,6 +68,7 @@ const EMPTY = {
   reading_minutes: 5,
   cover_image_url: null as string | null,
   status: "draft",
+  is_iso: false,
   excerpt: "",
   content_html: "",
   seo_title: "",
@@ -112,6 +113,7 @@ function AdminArticles() {
       reading_minutes: Number(row.reading_minutes ?? 5),
       cover_image_url: (row.cover_image_url as string | null) ?? null,
       status: String(row.status ?? "draft"),
+      is_iso: Boolean(row.is_iso),
       excerpt: String(row.excerpt ?? ""),
       content_html: String(row.content_html ?? row.content ?? ""),
       seo_title: String(row.seo_title ?? ""),
@@ -150,6 +152,7 @@ function AdminArticles() {
         reading_minutes: Number(form.reading_minutes) || 1,
         cover_image_url: form.cover_image_url,
         status: form.status,
+        is_iso: form.is_iso,
         excerpt: form.excerpt.trim() || null,
         content_html: form.content_html,
         content: form.content_html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
@@ -383,6 +386,14 @@ function AdminArticles() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="flex items-center justify-between gap-3 rounded-lg border border-border p-3 sm:col-span-2">
+                <Label htmlFor="is_iso">نمایش در بخش ISO+</Label>
+                <Switch
+                  id="is_iso"
+                  checked={form.is_iso}
+                  onCheckedChange={(checked) => setForm((prev) => ({ ...prev, is_iso: checked }))}
+                />
               </div>
               <div className="sm:col-span-2">
                 <Label className="mb-2 block">تصویر شاخص</Label>
