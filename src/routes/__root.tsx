@@ -109,11 +109,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "preload",
         as: "style",
-        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800;900&family=Orbitron:wght@800;900&display=swap",
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800;900&family=Orbitron:wght@800;900&display=swap",
       },
       { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png?v=3" },
 
