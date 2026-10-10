@@ -4,6 +4,7 @@ import { BookOpen, FileCheck2, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import isoBanner from "@/assets/iso-plus-banner.jpg.asset.json";
+import { InteractiveGrid } from "@/components/layout/interactive-grid";
 import { ProductCard } from "@/components/catalog/product-card";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -56,7 +57,8 @@ function IsoPlusPage() {
   );
 
   return (
-    <div className="min-h-screen bg-iso-concrete iso-circuit text-iso-navy">
+    <div className="min-h-screen relative isolate bg-iso-concrete text-iso-navy">
+      <InteractiveGrid variant="iso" />
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden">
@@ -104,6 +106,18 @@ function IsoPlusPage() {
           </div>
         </section>
 
+        <section className="container-page pt-14">
+          <div className="rounded-2xl border border-iso-navy/15 border-r-4 border-r-iso-green bg-background/80 p-6 backdrop-blur md:p-8">
+            <h2 className="text-xl font-extrabold">ISO+ چیست؟</h2>
+            <p className="mt-3 leading-8 text-iso-navy/85">
+              ISO+ جایی است که استانداردها از قاب روی دیوار پایین می‌آیند و وارد کارگاه می‌شوند. اینجا
+              روش‌های اجرایی، فرم‌ها، چک‌لیست‌های ممیزی و مقالات کاربردی استانداردهای ISO 45001، ISO 14001،
+              ISO 9001 و سیستم مدیریت یکپارچه (IMS) را پیدا می‌کنید؛ همه با زبانی ساده، تست‌شده در صنعت و
+              آماده استفاده، تا پیاده‌سازی و ممیزی را بدون کاغذبازی اضافه و با خیال راحت پشت سر بگذارید.
+            </p>
+          </div>
+        </section>
+
         <section className="container-page py-14">
           <h2 className="flex items-center gap-2 text-2xl font-extrabold">
             <FileCheck2 className="size-6 text-iso-green" /> فایل‌ها و مستندات ISO
@@ -111,10 +125,10 @@ function IsoPlusPage() {
           {isLoading ? (
             <p className="mt-6 text-iso-navy/70">در حال بارگذاری…</p>
           ) : products.length ? (
-            <ul className="mt-8 grid gap-8 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
               {products.map((p) => (
                 <li key={p.id}>
-                  <ProductCard product={p} large />
+                  <ProductCard product={p} />
                 </li>
               ))}
             </ul>
@@ -130,7 +144,7 @@ function IsoPlusPage() {
             <BookOpen className="size-6 text-iso-green" /> مقالات و آموزش‌های ISO
           </h2>
           {articles.length ? (
-            <ul className="mt-8 grid gap-8 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
               {articles.map((a) => {
                 const cover = resolveImageUrl(a.cover_image_url);
                 return (
@@ -141,9 +155,9 @@ function IsoPlusPage() {
                       className="group block h-full overflow-hidden rounded-xl border border-iso-navy/15 bg-background transition-all hover:-translate-y-1 hover:border-iso-green hover:shadow-[0_12px_30px_-12px_var(--iso-green)]"
                     >
                       {cover ? (
-                        <img src={cover} alt={a.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+                        <img src={cover} alt={a.title} loading="lazy" className="h-32 w-full object-cover" />
                       ) : (
-                        <div className="aspect-[4/3] w-full bg-iso-navy" />
+                        <div className="h-32 w-full bg-iso-navy" />
                       )}
                       <div className="p-5">
                         <h3 className="font-bold leading-7 group-hover:text-iso-navy">{a.title}</h3>

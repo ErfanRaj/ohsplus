@@ -241,7 +241,7 @@ function HomePage() {
                 const cover = resolveImageUrl(product.cover_image_url);
                 return (
                   <li key={product.id}>
-                    <Card className="h-full overflow-hidden border-border/70 shadow-soft">
+                    <Card className="group relative h-full cursor-pointer overflow-hidden border-border/70 shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary active:scale-[0.99]">
                       <div className="mx-6 flex h-32 items-center justify-center overflow-hidden rounded-md bg-ink">
                         {cover ? (
                           <img
@@ -256,7 +256,7 @@ function HomePage() {
                       </div>
                       <CardContent className="flex h-full flex-col">
                         <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
+                          <div className="relative z-20 flex items-center gap-2">
                             {product.badge ? (
                               <Badge variant="secondary" className="font-semibold">
                                 {product.badge}
@@ -272,7 +272,15 @@ function HomePage() {
                             {toFa(product.rating_avg.toFixed(1).replace(".", "٫"))}
                           </span>
                         </div>
-                        <h3 className="mt-3 text-base leading-7 font-bold">{product.title}</h3>
+                        <h3 className="mt-3 text-base leading-7 font-bold">
+                          <Link
+                            to="/products/$slug"
+                            params={{ slug: product.slug }}
+                            className="outline-none after:absolute after:inset-0 after:z-10 after:content-[''] focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            {product.title}
+                          </Link>
+                        </h3>
                         <p className="mt-2 text-sm text-muted-foreground">
                           {product.file_format ?? product.categories?.name ?? "فایل دیجیتال"}
                         </p>
@@ -280,7 +288,7 @@ function HomePage() {
                           <span className="font-display text-lg font-extrabold">
                             {formatToman(product.price_toman, product.is_free)}
                           </span>
-                          <Button size="sm" className="gap-1.5 font-bold" asChild>
+                          <Button size="sm" className="relative z-20 gap-1.5 font-bold" asChild>
                             <Link to="/products/$slug" params={{ slug: product.slug }}>
                               <Download className="size-4" aria-hidden="true" />
                               خرید و دانلود
