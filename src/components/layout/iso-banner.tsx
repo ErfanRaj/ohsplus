@@ -41,8 +41,8 @@ export function IsoBanner() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-iso-navy/70 via-iso-navy/30 to-transparent"
           />
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex w-1/2 flex-col justify-center gap-1 pr-6 text-right sm:gap-3 sm:pr-14 md:pr-20">
-            <span className="relative inline-block self-start text-sm font-extrabold text-iso-concrete/90 [text-shadow:0_2px_10px_rgb(0_0_0/0.5)] sm:text-2xl md:text-4xl">
+          <div className="pointer-events-none absolute inset-y-0 right-[6%] flex w-[44%] flex-col items-center justify-center gap-1 text-center sm:gap-3">
+            <span className="relative inline-block text-sm font-extrabold text-iso-concrete/90 [text-shadow:0_2px_10px_rgb(0_0_0/0.5)] sm:text-2xl md:text-4xl">
               پیچیده‌اش نکن،
               <svg
                 viewBox="0 0 100 40"
