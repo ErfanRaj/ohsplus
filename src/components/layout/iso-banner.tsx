@@ -36,6 +36,34 @@ export function IsoBanner() {
             loading="lazy"
             className="aspect-[16/6] w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
+          {/* right-side tagline */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-iso-navy/70 via-iso-navy/30 to-transparent"
+          />
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex w-1/2 flex-col justify-center gap-1 pe-4 text-right sm:gap-3 sm:pe-10 md:pe-14">
+            <span className="relative inline-block self-start text-sm font-extrabold text-iso-concrete/90 [text-shadow:0_2px_10px_rgb(0_0_0/0.5)] sm:text-2xl md:text-4xl">
+              پیچیده‌اش نکن،
+              <svg
+                viewBox="0 0 100 40"
+                preserveAspectRatio="none"
+                className="absolute -inset-x-2 -inset-y-1 h-[calc(100%+0.5rem)] w-[calc(100%+1rem)] -rotate-3 overflow-visible"
+                aria-hidden="true"
+              >
+                <path d="M4 6 Q50 22 96 36" className="iso-strike" stroke="#ef2b2b" strokeWidth="5" strokeLinecap="round" fill="none" />
+                <path d="M96 4 Q52 20 5 37" className="iso-strike iso-strike-2" stroke="#ef2b2b" strokeWidth="5" strokeLinecap="round" fill="none" />
+              </svg>
+            </span>
+            <span className="text-base font-black leading-tight text-iso-concrete [text-shadow:0_2px_12px_rgb(0_0_0/0.6)] sm:text-3xl md:text-5xl">
+              <span
+                dir="ltr"
+                className="font-[Orbitron] tracking-wider text-iso-green [text-shadow:0_0_18px_var(--iso-green),0_0_4px_var(--iso-green)]"
+              >
+                ISO
+              </span>{" "}
+              به همین راحتی
+            </span>
+          </div>
           {/* cursor spotlight */}
           <span
             aria-hidden="true"
