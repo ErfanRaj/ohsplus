@@ -502,12 +502,14 @@ main p.text-center {
 :root {
   --iso-navy: oklch(0.27 0.07 262);
   --iso-green: oklch(0.78 0.2 145);
+  --iso-cyan: oklch(0.82 0.14 200);
   --iso-concrete: oklch(0.93 0.008 140);
   --iso-copper: oklch(0.72 0.14 55);
 }
 @theme inline {
   --color-iso-navy: var(--iso-navy);
   --color-iso-green: var(--iso-green);
+  --color-iso-cyan: var(--iso-cyan);
   --color-iso-concrete: var(--iso-concrete);
   --color-iso-copper: var(--iso-copper);
 }
@@ -537,14 +539,14 @@ main p.text-center {
 /* ISO+ variant of the interactive grid: navy lines, neon-green glow */
 .interactive-grid--iso .interactive-grid-base {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--iso-navy) 10%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--iso-navy) 10%, transparent) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.8;
+    linear-gradient(to right, color-mix(in oklab, var(--iso-cyan) 28%, transparent) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--iso-cyan) 28%, transparent) 1.5px, transparent 1.5px);
+  background-size: 64px 64px;
+  opacity: 1;
 }
 .interactive-grid--iso .interactive-grid-glow {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--iso-green) 85%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--iso-green) 85%, transparent) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, var(--iso-cyan) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, var(--iso-cyan) 1.5px, transparent 1.5px);
+  background-size: 64px 64px;
 }
