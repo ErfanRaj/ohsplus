@@ -107,13 +107,22 @@ function IsoPlusPage() {
         </section>
 
         <section className="container-page pt-14">
-          <div className="rounded-2xl border border-iso-navy/15 border-r-4 border-r-iso-green bg-background/80 p-6 backdrop-blur md:p-8">
-            <h2 className="text-xl font-extrabold">ISO+ چیست؟</h2>
-            <p className="mt-3 leading-8 text-iso-navy/85">
-              ISO+ جایی است که استانداردها از قاب روی دیوار پایین می‌آیند و وارد کارگاه می‌شوند. اینجا
-              روش‌های اجرایی، فرم‌ها، چک‌لیست‌های ممیزی و مقالات کاربردی استانداردهای ISO 45001، ISO 14001،
-              ISO 9001 و سیستم مدیریت یکپارچه (IMS) را پیدا می‌کنید؛ همه با زبانی ساده، تست‌شده در صنعت و
-              آماده استفاده، تا پیاده‌سازی و ممیزی را بدون کاغذبازی اضافه و با خیال راحت پشت سر بگذارید.
+          <div className="rounded-2xl border border-iso-navy/15 bg-background/80 p-6 backdrop-blur md:p-10">
+            <h2 className="text-center text-2xl font-black tracking-tight sm:text-3xl">
+              <span dir="ltr" className="font-[Orbitron] tracking-wide text-iso-navy">
+                ISO<sup className="text-iso-green drop-shadow-[0_0_14px_var(--iso-green)]">+</sup>
+              </span>{" "}
+              چیست؟
+            </h2>
+            <span
+              aria-hidden="true"
+              className="mx-auto mt-4 block h-1 w-16 rounded-full bg-iso-green shadow-[0_0_14px_var(--iso-green)]"
+            />
+            <p className="mt-5 text-justify leading-9 text-iso-navy/85">
+              بخش ISO+ با هدف عبور از فرآیندهای سنتی و کاغذبازی‌های خسته‌کننده شکل گرفته است؛ جایی که
+              دسترسی مستقیم مدیران، ممیزان و کارشناسان HSE به کاربردی‌ترین روش‌های اجرایی، چک‌لیست‌های
+              میدانی و الزامات سیستم‌های مدیریت یکپارچه (ISO 45001، ISO 14001 و ISO 9001) با بالاترین
+              انطباق و در ساده‌ترین شکل ممکن فراهم شده است.
             </p>
           </div>
         </section>
@@ -128,7 +137,7 @@ function IsoPlusPage() {
             <ul className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
               {products.map((p) => (
                 <li key={p.id}>
-                  <ProductCard product={p} />
+                  <ProductCard product={p} size="cover" />
                 </li>
               ))}
             </ul>
@@ -155,9 +164,16 @@ function IsoPlusPage() {
                       className="group block h-full overflow-hidden rounded-xl border border-iso-navy/15 bg-background transition-all hover:-translate-y-1 hover:border-iso-green hover:shadow-[0_12px_30px_-12px_var(--iso-green)]"
                     >
                       {cover ? (
-                        <img src={cover} alt={a.title} loading="lazy" className="h-32 w-full object-cover" />
+                        <img
+                          src={cover}
+                          alt={a.title}
+                          loading="lazy"
+                          className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
                       ) : (
-                        <div className="h-32 w-full bg-iso-navy" />
+                        <div className="flex aspect-[16/10] w-full items-center justify-center bg-iso-navy text-iso-green">
+                          <BookOpen className="size-10" aria-hidden="true" />
+                        </div>
                       )}
                       <div className="p-5">
                         <h3 className="font-bold leading-7 group-hover:text-iso-navy">{a.title}</h3>
