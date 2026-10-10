@@ -57,7 +57,7 @@ export function IsoBanner() {
             <span className="text-base font-black leading-tight text-iso-concrete [text-shadow:0_2px_12px_rgb(0_0_0/0.6)] sm:text-3xl md:text-5xl">
               <span
                 dir="ltr"
-                className="font-[Orbitron] tracking-wider text-iso-green [text-shadow:0_0_18px_var(--iso-green),0_0_4px_var(--iso-green)]"
+                className="font-[Orbitron] tracking-wider text-iso-cyan [text-shadow:0_0_18px_var(--iso-cyan),0_0_4px_var(--iso-cyan)]"
               >
                 ISO
               </span>{" "}
