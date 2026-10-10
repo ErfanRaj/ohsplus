@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
  * Fixed, non-interactive-looking grid backdrop that reacts to pointer movement:
  * a soft spotlight follows the cursor and brightens the grid lines beneath it.
  */
-export function InteractiveGrid() {
+export function InteractiveGrid({ variant }: { variant?: "iso" } = {}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function InteractiveGrid() {
   }, []);
 
   return (
-    <div ref={ref} className="interactive-grid" aria-hidden="true">
+    <div ref={ref} className={variant === "iso" ? "interactive-grid interactive-grid--iso" : "interactive-grid"} aria-hidden="true">
       <div className="interactive-grid-base" />
       <div className="interactive-grid-glow" />
     </div>
