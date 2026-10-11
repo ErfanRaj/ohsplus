@@ -62,9 +62,20 @@ function IsoPlusPage() {
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden">
-          <img src={isoBanner.url} alt="" className="absolute inset-0 size-full object-cover opacity-90" />
-          <div className="absolute inset-0 bg-gradient-to-l from-iso-concrete via-iso-concrete/70 to-transparent" />
-          <div className="container-page relative py-20 md:py-28">
+          {/* desktop: the artwork sits behind the copy */}
+          <img
+            src={isoBanner.url}
+            alt=""
+            className="absolute inset-0 hidden size-full object-cover opacity-90 md:block"
+          />
+          <div className="absolute inset-0 hidden bg-gradient-to-l from-iso-concrete via-iso-concrete/70 to-transparent md:block" />
+          {/* mobile: the artwork is a band above the copy so the ISO mark is never cropped */}
+          <img
+            src={isoBanner.url}
+            alt=""
+            className="h-36 w-full object-cover object-[18%_center] sm:h-44 md:hidden"
+          />
+          <div className="container-page relative py-10 md:py-28">
             <div className="mr-auto max-w-xl md:mr-0">
               <p className="text-sm font-bold tracking-widest text-iso-green">STANDARDS HUB</p>
               <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">
