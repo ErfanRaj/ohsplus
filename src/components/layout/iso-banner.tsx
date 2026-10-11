@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useRef, useState } from "react";
 
-import isoBanner from "@/assets/iso-plus-banner.jpg.asset.json";
+import isoBanner from "@/assets/iso-home-banner.jpg.asset.json";
 
 export function IsoBanner() {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -39,10 +39,10 @@ export function IsoBanner() {
           {/* right-side tagline */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-iso-navy/70 via-iso-navy/30 to-transparent"
+            className="pointer-events-none absolute inset-y-0 right-0 w-4/5 bg-gradient-to-l from-iso-navy/70 via-iso-navy/30 to-transparent sm:w-3/5"
           />
-          <div className="pointer-events-none absolute inset-y-0 right-[6%] flex w-[44%] flex-col items-center justify-center gap-1 text-center sm:gap-3">
-            <span className="relative inline-block text-sm font-extrabold text-iso-concrete/90 [text-shadow:0_2px_10px_rgb(0_0_0/0.5)] sm:text-2xl md:text-4xl">
+          <div className="pointer-events-none absolute inset-y-0 right-[5%] flex w-[70%] flex-col items-center justify-center gap-1 text-center sm:right-[6%] sm:w-[44%] sm:gap-3">
+            <span className="relative inline-block max-w-full text-sm font-extrabold text-iso-concrete/90 [text-shadow:0_2px_10px_rgb(0_0_0/0.5)] sm:text-2xl md:text-4xl">
               پیچیده‌اش نکن،
               <svg
                 viewBox="0 0 100 40"
@@ -54,10 +54,10 @@ export function IsoBanner() {
                 <path d="M96 4 Q52 20 5 37" className="iso-strike iso-strike-2" stroke="#ef2b2b" strokeWidth="5" strokeLinecap="round" fill="none" />
               </svg>
             </span>
-            <span className="text-base font-black leading-tight text-iso-concrete [text-shadow:0_2px_12px_rgb(0_0_0/0.6)] sm:text-3xl md:text-5xl">
+            <span className="max-w-full text-base font-black leading-tight text-iso-concrete [text-shadow:0_2px_12px_rgb(0_0_0/0.6)] sm:text-3xl md:text-5xl">
               <span
                 dir="ltr"
-                className="font-[Orbitron] tracking-wider text-iso-cyan [text-shadow:0_0_18px_var(--iso-cyan),0_0_4px_var(--iso-cyan)]"
+                className="font-[Orbitron] tracking-wider text-iso-green [text-shadow:0_0_18px_var(--iso-green),0_0_4px_var(--iso-green)]"
               >
                 ISO
               </span>{" "}
