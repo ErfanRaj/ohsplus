@@ -796,6 +796,54 @@ export type Database = {
           },
         ]
       }
+      site_banners: {
+        Row: {
+          badge_text: string | null
+          created_at: string
+          cta_label: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          is_external: boolean
+          link_url: string
+          placement: string
+          sort_order: number
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_external?: boolean
+          link_url?: string
+          placement?: string
+          sort_order?: number
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_external?: boolean
+          link_url?: string
+          placement?: string
+          sort_order?: number
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           created_at: string
