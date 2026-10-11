@@ -10,7 +10,8 @@ export type AdminTable =
   | "reviews"
   | "profiles"
   | "user_roles"
-  | "contact_messages";
+  | "contact_messages"
+  | "site_banners";
 
 export function slugify(value: string) {
   return value
