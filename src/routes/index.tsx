@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FavoriteButton } from "@/components/catalog/favorite-button";
 import { HeroSlideshow } from "@/components/layout/hero-slideshow";
 import { IsoBanner } from "@/components/layout/iso-banner";
+import { PromoBanner } from "@/components/layout/promo-banner";
 import { SearchConsole } from "@/components/layout/search-console";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -304,6 +305,8 @@ function HomePage() {
 
           </div>
         </section>
+
+        <PromoBanner />
 
         {/* Articles */}
         <section className="container-page py-16 md:py-24" aria-labelledby="articles-heading">
