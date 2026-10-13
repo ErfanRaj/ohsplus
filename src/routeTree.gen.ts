@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IsoPlusRouteImport } from './routes/iso-plus'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as VentilationPlusRouteImport } from './routes/ventilation-plus'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
@@ -93,6 +94,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VentilationPlusRoute = VentilationPlusRouteImport.update({
+  id: '/ventilation-plus',
+  path: '/ventilation-plus',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
@@ -215,6 +221,7 @@ export interface FileRoutesByFullPath {
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/ventilation-plus': typeof VentilationPlusRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/articles/$slug': typeof ArticlesSlugRoute
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/ventilation-plus': typeof VentilationPlusRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/articles/$slug': typeof ArticlesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/ventilation-plus': typeof VentilationPlusRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/articles/$slug': typeof ArticlesSlugRoute
@@ -314,6 +323,7 @@ export interface FileRouteTypes {
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
+    | '/ventilation-plus'
     | '/admin'
     | '/dashboard'
     | '/articles/$slug'
@@ -346,6 +356,7 @@ export interface FileRouteTypes {
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
+    | '/ventilation-plus'
     | '/dashboard'
     | '/articles/$slug'
     | '/products/$slug'
@@ -378,6 +389,7 @@ export interface FileRouteTypes {
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
+    | '/ventilation-plus'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/articles/$slug'
@@ -412,6 +424,7 @@ export interface RootRouteChildren {
   IsoPlusRoute: typeof IsoPlusRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
+  VentilationPlusRoute: typeof VentilationPlusRoute
   ArticlesSlugRoute: typeof ArticlesSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ArticlesIndexRoute: typeof ArticlesIndexRoute
@@ -497,6 +510,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ventilation-plus': {
+      id: '/ventilation-plus'
+      path: '/ventilation-plus'
+      fullPath: '/ventilation-plus'
+      preLoaderRoute: typeof VentilationPlusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -703,6 +723,7 @@ const rootRouteChildren: RootRouteChildren = {
   IsoPlusRoute: IsoPlusRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
+  VentilationPlusRoute: VentilationPlusRoute,
   ArticlesSlugRoute: ArticlesSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ArticlesIndexRoute: ArticlesIndexRoute,
