@@ -550,3 +550,12 @@ main p.text-center {
     linear-gradient(to bottom, var(--iso-cyan) 1.5px, transparent 1.5px);
   background-size: 64px 64px;
 }
+
+/* Ventilation+ airflow streaks */
+.vent-flow {
+  background-image: repeating-linear-gradient(100deg, transparent 0 60px, color-mix(in oklab, var(--iso-cyan) 22%, transparent) 60px 62px, transparent 62px 140px);
+  background-size: 400px 100%;
+  animation: vent-flow 6s linear infinite;
+}
+@keyframes vent-flow { to { background-position: -400px 0; } }
+@media (prefers-reduced-motion: reduce) { .vent-flow { animation: none; } }
