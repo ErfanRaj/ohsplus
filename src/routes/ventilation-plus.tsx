@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  AlertTriangle, ArrowLeft, ArrowRight, Download, Fan, Gauge, MapPin, Plus, Printer, RotateCcw,
+  AlertTriangle, ArrowLeft, ArrowRight, Download, Fan, FileSpreadsheet, Gauge, Mail, MapPin, Plus, RotateCcw,
   Trash2, Wind,
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -11,6 +11,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ventBg from "@/assets/vent-contact-bg.jpg";
 import {
   calculate, MANDATORY_WARNINGS, newHood, SAMPLE_INPUT, TRANSPORT_EXAMPLES,
   type HoodInput, type VentInput,
@@ -38,37 +40,84 @@ const STEPS = [
   { title: "هودها و شاخه‌ها", icon: Wind },
   { title: "کانال اصلی و غبارگیر", icon: Gauge },
   { title: "فن و هوای جبرانی", icon: Fan },
-  { title: "گزارش نهایی", icon: Printer },
+  { title: "گزارش نهایی", icon: FileSpreadsheet },
 ];
 
 const fa = (n: number, d = 0) =>
-  Number.isFinite(n) ? n.toLocaleString("fa-IR", { maximumFractionDigits: d, minimumFractionDigits: d }) : "—";
+  Number.isFinite(n) ? n.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d }) : "—";
+
+type Opt = { v: number; label: string };
 
 function Field({
-  label, unit, value, onChange, step = "any", hint,
-}: { label: string; unit?: string; value: number; onChange: (v: number) => void; step?: string; hint?: string }) {
+  label, unit, value, onChange, step = "any", hint, options,
+}: { label: string; unit?: string; value: number; onChange: (v: number) => void; step?: string; hint?: string; options?: Opt[] }) {
+  const match = options?.find((o) => Math.abs(o.v - value) < 1e-9);
+  const [custom, setCustom] = useState(!!options && !match);
+  const showInput = !options || custom;
   return (
     <label className="block">
       <span className="text-sm font-semibold text-iso-navy/85">{label}</span>
-      <div className="relative mt-1.5">
-        <Input
-          type="number"
-          dir="ltr"
-          step={step}
-          value={Number.isFinite(value) ? value : ""}
-          onChange={(e) => onChange(e.target.value === "" ? 0 : Number(e.target.value))}
-          className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-mono focus-visible:ring-iso-cyan"
-        />
-        {unit && (
-          <span dir="ltr" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xs font-bold text-iso-navy/50">
-            {unit}
-          </span>
-        )}
-      </div>
-      {hint && <span className="mt-1 block text-xs text-iso-navy/55">{hint}</span>}
+      {options && (
+        <Select
+          value={custom ? "custom" : String(match?.v ?? "custom")}
+          onValueChange={(v) => {
+            if (v === "custom") return setCustom(true);
+            setCustom(false);
+            onChange(Number(v));
+          }}
+        >
+          <SelectTrigger className="mt-1.5 h-11 border-iso-navy/20 bg-background/90 focus:ring-iso-cyan">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {options.map((o) => (
+              <SelectItem key={o.v} value={String(o.v)}>
+                <span dir="ltr" className="font-mono font-bold tabular-nums">{o.v}{unit ? ` ${unit}` : ""}</span>
+                <span className="mr-2 text-iso-navy/60">— {o.label}</span>
+              </SelectItem>
+            ))}
+            <SelectItem value="custom">مقدار دلخواه…</SelectItem>
+          </SelectContent>
+        </Select>
+      )}
+      {showInput && (
+        <div className="relative mt-1.5">
+          <Input
+            type="number"
+            dir="ltr"
+            step={step}
+            value={Number.isFinite(value) ? value : ""}
+            onChange={(e) => onChange(e.target.value === "" ? 0 : Number(e.target.value))}
+            className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-mono tabular-nums focus-visible:ring-iso-cyan"
+          />
+          {unit && (
+            <span dir="ltr" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xs font-bold text-iso-navy/50">
+              {unit}
+            </span>
+          )}
+        </div>
+      )}
+      {hint && <span className="mt-1 block text-xs leading-5 text-iso-navy/55">💡 {hint}</span>}
     </label>
   );
 }
+
+const O = {
+  temp: [{ v: 20, label: "هوای استاندارد" }, { v: 25, label: "سالن معمولی" }, { v: 30, label: "سالن گرم" }, { v: 40, label: "نزدیک فرآیند گرم" }, { v: 60, label: "فرآیند داغ" }],
+  elev: [{ v: 0, label: "سطح دریا / بنادر جنوبی" }, { v: 1000, label: "مشهد" }, { v: 1200, label: "تهران" }, { v: 1350, label: "تبریز" }, { v: 1570, label: "اصفهان" }],
+  rough: [{ v: 0.0015, label: "پلاستیک / PVC" }, { v: 0.05, label: "فولاد ضدزنگ" }, { v: 0.15, label: "ورق گالوانیزه" }, { v: 0.9, label: "کانال بتنی / آجری" }, { v: 3, label: "کانال خرطومی (فلکسی)" }],
+  faceV: [{ v: 0.25, label: "هوای آرام، آلاینده کم‌خطر" }, { v: 0.5, label: "کابین / هود آزمایشگاهی" }, { v: 0.75, label: "جریان عرضی متوسط" }, { v: 1, label: "سنگ‌زنی و فرآیند پرانرژی" }, { v: 1.5, label: "شرایط سخت" }],
+  slotV: [{ v: 5, label: "حداقل توصیه‌شده" }, { v: 7.5, label: "متداول" }, { v: 10, label: "توزیع یکنواخت" }],
+  entryK: [{ v: 0.04, label: "ورودی شیپوری (Bell-mouth)" }, { v: 0.25, label: "هود مخروطی / کابین" }, { v: 0.49, label: "انتهای کانال با فلنج" }, { v: 0.5, label: "هود کابینی ساده" }, { v: 0.93, label: "انتهای کانال ساده بدون فلنج" }],
+  slotK: [{ v: 1.78, label: "شیار استاندارد" }, { v: 1, label: "شیار با لبه گرد" }],
+  transport: TRANSPORT_EXAMPLES.map((t) => ({ v: t.v, label: t.label })),
+  elbows: [0, 1, 2, 3, 4, 5, 6].map((n) => ({ v: n, label: n === 0 ? "بدون زانویی" : "عدد" })),
+  elbowK: [{ v: 0.19, label: "زانویی ۹۰° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی ۹۰° متداول (R/D=2)" }, { v: 0.33, label: "زانویی ۹۰° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
+  branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه ۳۰°" }, { v: 0.28, label: "ورود با زاویه ۴۵°" }],
+  cleaner: [{ v: 0, label: "بدون غبارگیر" }, { v: 500, label: "سیکلون (تقریبی)" }, { v: 1000, label: "فیلتر کیسه‌ای (تقریبی)" }, { v: 1500, label: "فیلتر کارتریجی (تقریبی)" }, { v: 2000, label: "اسکرابر تر (تقریبی)" }],
+  fanEff: [{ v: 0.6, label: "فن پره رو به جلو" }, { v: 0.65, label: "فن محوری" }, { v: 0.7, label: "متداول" }, { v: 0.75, label: "پره شعاعی" }, { v: 0.8, label: "پره رو به عقب" }],
+  motorEff: [{ v: 0.85, label: "موتور کوچک" }, { v: 0.9, label: "متداول" }, { v: 0.93, label: "IE2" }, { v: 0.95, label: "IE3 / پربازده" }],
+} satisfies Record<string, Opt[]>;
 
 function Panel({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
@@ -121,7 +170,7 @@ function VentilationPage() {
             </h1>
             <p className="mt-4 max-w-2xl leading-8 text-iso-concrete/80">
               داده‌های اولیه را وارد کنید؛ دبی هود، قطر کانال، افت فشار، بالانس شاخه‌ها و فشار و توان فن
-              به‌صورت زنده محاسبه می‌شود و در پایان گزارش و فایل اکسل فرمول‌دار تحویل می‌گیرید.
+              به‌صورت زنده محاسبه می‌شود و در پایان فایل اکسل نتایج را دریافت می‌کنید.
             </p>
           </div>
         </section>
@@ -164,9 +213,9 @@ function VentilationPage() {
                     <span className="text-sm font-semibold text-iso-navy/85">نام پروژه</span>
                     <Input value={input.projectName} onChange={(e) => set("projectName", e.target.value)} className="mt-1.5 h-11 border-iso-navy/20 bg-background/90" />
                   </label>
-                  <Field label="دمای هوا در سیستم" unit="°C" value={input.tempC} onChange={(v) => set("tempC", v)} />
-                  <Field label="ارتفاع محل از سطح دریا" unit="m" value={input.elevation} onChange={(v) => set("elevation", v)} hint="مثلاً تهران ≈ ۱۲۰۰ متر" />
-                  <Field label="زبری داخلی کانال" unit="mm" value={input.roughnessMm} onChange={(v) => set("roughnessMm", v)} hint="ورق گالوانیزه ≈ ۰٫۱۵ میلی‌متر" />
+                  <Field label="دمای هوا در سیستم" unit="°C" value={input.tempC} onChange={(v) => set("tempC", v)} options={O.temp} hint="دمای هوای عبوری از کانال‌ها" />
+                  <Field label="ارتفاع محل از سطح دریا" unit="m" value={input.elevation} onChange={(v) => set("elevation", v)} options={O.elev} hint="روی چگالی هوا و توان فن اثر دارد" />
+                  <Field label="زبری داخلی کانال" unit="mm" value={input.roughnessMm} onChange={(v) => set("roughnessMm", v)} options={O.rough} hint="جنس کانال؛ گالوانیزه رایج‌ترین است" />
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 rounded-xl bg-iso-navy p-4 text-iso-concrete">
                   <Stat label="فشار بارومتریک" value={`${fa(r.pressure / 1000, 2)} kPa`} />
@@ -203,28 +252,21 @@ function VentilationPage() {
                           <Field label="دبی طراحی هود" unit="m³/h" value={h.directFlow} onChange={(v) => setHood(h.id, { directFlow: v })} />
                         ) : (
                           <>
-                            <Field label={h.method === "slot" ? "سرعت شیار" : "سرعت دهانه / ربایش"} unit="m/s" value={h.velocity} onChange={(v) => setHood(h.id, { velocity: v })} />
+                            <Field label={h.method === "slot" ? "سرعت شیار" : "سرعت دهانه / ربایش"} unit="m/s" value={h.velocity} onChange={(v) => setHood(h.id, { velocity: v })} options={h.method === "slot" ? O.slotV : O.faceV} hint="هرچه آلاینده خطرناک‌تر یا جریان عرضی بیشتر، سرعت بالاتر" />
                             <Field label={h.method === "slot" ? "عرض شیار" : "عرض دهانه"} unit="m" value={h.width} onChange={(v) => setHood(h.id, { width: v })} />
                             <Field label={h.method === "slot" ? "طول شیار" : "ارتفاع دهانه"} unit="m" value={h.height} onChange={(v) => setHood(h.id, { height: v })} />
                           </>
                         )}
-                        <Field label="ضریب افت ورودی هود (Ke)" value={h.entryK} onChange={(v) => setHood(h.id, { entryK: v })} hint="از جدول هود مرجع" />
-                        {h.method === "slot" && <Field label="ضریب افت شیار" value={h.slotK} onChange={(v) => setHood(h.id, { slotK: v })} />}
-                        <Field label="سرعت حداقل انتقال" unit="m/s" value={h.transportVelocity} onChange={(v) => setHood(h.id, { transportVelocity: v })} />
-                      </div>
-                      <div className="mt-2 flex flex-wrap gap-1.5">
-                        {TRANSPORT_EXAMPLES.map((t) => (
-                          <button key={t.label} type="button" onClick={() => setHood(h.id, { transportVelocity: t.v })} className="rounded-md border border-iso-navy/15 bg-background/70 px-2 py-1 text-xs hover:border-iso-cyan">
-                            {t.label}: {fa(t.v, 1)}
-                          </button>
-                        ))}
+                        <Field label="ضریب افت ورودی هود (Ke)" value={h.entryK} onChange={(v) => setHood(h.id, { entryK: v })} options={O.entryK} hint="شکل محل اتصال هود به کانال" />
+                        {h.method === "slot" && <Field label="ضریب افت شیار" value={h.slotK} onChange={(v) => setHood(h.id, { slotK: v })} options={O.slotK} />}
+                        <Field label="سرعت حداقل انتقال" unit="m/s" value={h.transportVelocity} onChange={(v) => setHood(h.id, { transportVelocity: v })} options={O.transport} hint="سرعتی که ذرات در کانال ته‌نشین نشوند" />
                       </div>
                       <h4 className="mt-6 mb-3 text-sm font-extrabold text-iso-navy/70">کانال شاخه</h4>
                       <div className="grid gap-4 sm:grid-cols-3">
                         <Field label="طول کانال" unit="m" value={h.length} onChange={(v) => setHood(h.id, { length: v })} />
-                        <Field label="تعداد زانویی" value={h.elbows} step="1" onChange={(v) => setHood(h.id, { elbows: v })} />
-                        <Field label="ضریب هر زانویی" value={h.elbowK} onChange={(v) => setHood(h.id, { elbowK: v })} />
-                        <Field label="ضریب ورود به اتصال" value={h.branchEntryK} onChange={(v) => setHood(h.id, { branchEntryK: v })} />
+                        <Field label="تعداد زانویی" value={h.elbows} step="1" onChange={(v) => setHood(h.id, { elbows: v })} options={O.elbows} />
+                        <Field label="ضریب هر زانویی" value={h.elbowK} onChange={(v) => setHood(h.id, { elbowK: v })} options={O.elbowK} hint="زانویی با شعاع بزرگ‌تر افت کمتری دارد" />
+                        <Field label="ضریب ورود به اتصال" value={h.branchEntryK} onChange={(v) => setHood(h.id, { branchEntryK: v })} options={O.branchK} hint="زاویه کمتر = افت کمتر" />
                         <Field label="افت‌های دیگر" unit="Pa" value={h.otherLoss} onChange={(v) => setHood(h.id, { otherLoss: v })} />
                       </div>
                       <div className="mt-5 grid grid-cols-2 gap-3 rounded-xl bg-iso-navy p-4 text-iso-concrete sm:grid-cols-4">
@@ -246,9 +288,9 @@ function VentilationPage() {
               <Panel title="۳. کانال اصلی، تصحیح بالانس و غبارگیر">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال اصلی تا فن" unit="m" value={input.mainLength} onChange={(v) => set("mainLength", v)} />
-                  <Field label="تعداد زانویی" step="1" value={input.mainElbows} onChange={(v) => set("mainElbows", v)} />
-                  <Field label="ضریب هر زانویی" value={input.mainElbowK} onChange={(v) => set("mainElbowK", v)} />
-                  <Field label="افت فشار غبارگیر / فیلتر" unit="Pa" value={input.cleanerLoss} onChange={(v) => set("cleanerLoss", v)} hint="از کاتالوگ سازنده" />
+                  <Field label="تعداد زانویی" step="1" value={input.mainElbows} onChange={(v) => set("mainElbows", v)} options={O.elbows} />
+                  <Field label="ضریب هر زانویی" value={input.mainElbowK} onChange={(v) => set("mainElbowK", v)} options={O.elbowK} />
+                  <Field label="افت فشار غبارگیر / فیلتر" unit="Pa" value={input.cleanerLoss} onChange={(v) => set("cleanerLoss", v)} options={O.cleaner} hint="در صورت امکان عدد دقیق را از کاتالوگ سازنده وارد کنید" />
                 </div>
                 <BalanceTable r={r} />
               </Panel>
@@ -259,8 +301,8 @@ function VentilationPage() {
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال خروجی / دودکش" unit="m" value={input.outletLength} onChange={(v) => set("outletLength", v)} />
                   <Field label="افت‌های دیگر خروجی" unit="Pa" value={input.outletOtherLoss} onChange={(v) => set("outletOtherLoss", v)} />
-                  <Field label="راندمان فن" value={input.fanEfficiency} onChange={(v) => set("fanEfficiency", v)} hint="بین ۰ و ۱" />
-                  <Field label="راندمان موتور" value={input.motorEfficiency} onChange={(v) => set("motorEfficiency", v)} />
+                  <Field label="راندمان فن" value={input.fanEfficiency} onChange={(v) => set("fanEfficiency", v)} options={O.fanEff} hint="از کاتالوگ فن؛ بین 0 و 1" />
+                  <Field label="راندمان موتور" value={input.motorEfficiency} onChange={(v) => set("motorEfficiency", v)} options={O.motorEff} />
                   <Field label="هوای جبرانی موجود" unit="m³/h" value={input.supplyAir} onChange={(v) => set("supplyAir", v)} />
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 rounded-xl bg-iso-navy p-4 text-iso-concrete sm:grid-cols-3">
@@ -275,6 +317,7 @@ function VentilationPage() {
             )}
 
             {step === 4 && <Report input={input} r={r} onExcel={exportXlsx} />}
+            {step === 4 && <ContactBanner />}
 
             <div className="flex justify-between gap-3 print:hidden">
               <Button type="button" variant="outline" disabled={step === 0} onClick={() => setStep((s) => s - 1)} className="bg-background/80">
@@ -346,7 +389,7 @@ const STATUS: Record<string, string> = {
 function BalanceTable({ r }: { r: ReturnType<typeof calculate> }) {
   return (
     <div className="mt-6 overflow-x-auto">
-      <table className="w-full min-w-[520px] text-sm">
+      <table className="w-full min-w-[520px] text-sm tabular-nums">
         <thead>
           <tr className="border-b border-iso-navy/15 text-right text-xs text-iso-navy/60">
             <th className="py-2">هود</th><th>فشار شاخه (Pa)</th><th>اختلاف</th><th>دبی اصلاح‌شده (m³/h)</th><th>وضعیت</th>
@@ -389,15 +432,14 @@ function Report({ input, r, onExcel }: { input: VentInput; r: ReturnType<typeof 
           <h3 className="mt-1 text-xl font-extrabold">{input.projectName}</h3>
         </div>
         <div className="flex gap-2 print:hidden">
-          <Button type="button" variant="outline" onClick={() => window.print()}><Printer className="size-4" /> چاپ / PDF</Button>
-          <Button type="button" onClick={onExcel} className="bg-iso-navy text-iso-concrete hover:bg-iso-navy/90"><Download className="size-4" /> اکسل</Button>
+          <Button type="button" onClick={onExcel} className="bg-iso-navy text-iso-concrete hover:bg-iso-navy/90"><Download className="size-4" /> دانلود اکسل</Button>
         </div>
       </div>
       <dl className="mt-6 divide-y divide-iso-navy/10">
         {rows.map(([k, v]) => (
           <div key={k} className="flex flex-wrap justify-between gap-2 py-2.5 text-sm">
             <dt className="text-iso-navy/70">{k}</dt>
-            <dd dir="ltr" className="font-mono font-bold">{v}</dd>
+            <dd dir="ltr" className="font-mono font-bold tabular-nums">{v}</dd>
           </div>
         ))}
       </dl>
@@ -409,9 +451,35 @@ function Report({ input, r, onExcel }: { input: VentInput; r: ReturnType<typeof 
           {[...r.warnings, ...MANDATORY_WARNINGS].map((w) => <li key={w}>• {w}</li>)}
         </ul>
         <p className="mt-3 text-iso-navy/60">
-          مبنا: ACGIH Industrial Ventilation (ویرایش ۲۳، ۱۹۹۸) و فصل ۸ Handbook of Ventilation for Contaminant Control؛ اصطکاک کانال با روش دارسی–وایسباخ (SI).
+          مبنا: ACGIH Industrial Ventilation (ویرایش 23، 1998) و فصل 8 Handbook of Ventilation for Contaminant Control؛ اصطکاک کانال با روش دارسی–وایسباخ (SI).
         </p>
       </div>
     </Panel>
+  );
+}
+
+
+function ContactBanner() {
+  return (
+    <a
+      href="mailto:erfann.rag@gmail.com?subject=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D8%AA%D9%87%D9%88%DB%8C%D9%87%20%D9%85%D9%88%D8%B6%D8%B9%DB%8C"
+      className="group relative block overflow-hidden rounded-2xl border border-iso-cyan/40 bg-iso-navy text-iso-concrete shadow-[0_20px_50px_-20px_var(--iso-cyan)]"
+    >
+      <img src={ventBg} alt="" loading="lazy" width={1600} height={704} className="absolute inset-0 size-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105" />
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-l from-iso-navy via-iso-navy/85 to-iso-navy/30" />
+      <div className="relative p-6 sm:p-10 md:max-w-[65%]">
+        <p className="text-xs font-bold tracking-widest text-iso-cyan">PROFESSIONAL LEV DESIGN</p>
+        <h3 className="mt-2 text-2xl leading-10 font-extrabold sm:text-3xl">
+          برای طراحی دقیق‌تر و حرفه‌ای‌تر با ما در ارتباط باشید
+        </h3>
+        <p className="mt-3 leading-7 text-iso-concrete/80">
+          بازدید میدانی، محاسبه کامل شبکه کانال، انتخاب فن و غبارگیر و ارائه نقشه اجرایی توسط کارشناسان OHS Plus.
+        </p>
+        <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-iso-cyan bg-iso-navy/70 px-5 py-2.5 font-bold shadow-[0_0_14px_var(--iso-cyan)] transition-colors group-hover:bg-iso-cyan group-hover:text-iso-navy">
+          <Mail className="size-4" />
+          <span dir="ltr" className="font-mono">erfann.rag@gmail.com</span>
+        </span>
+      </div>
+    </a>
   );
 }
