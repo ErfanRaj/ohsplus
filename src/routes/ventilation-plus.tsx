@@ -112,8 +112,8 @@ const O = {
   slotK: [{ v: 1.78, label: "شیار استاندارد" }, { v: 1, label: "شیار با لبه گرد" }],
   transport: TRANSPORT_EXAMPLES.map((t) => ({ v: t.v, label: t.label })),
   elbows: [0, 1, 2, 3, 4, 5, 6].map((n) => ({ v: n, label: n === 0 ? "بدون زانویی" : "عدد" })),
-  elbowK: [{ v: 0.19, label: "زانویی ۹۰° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی ۹۰° متداول (R/D=2)" }, { v: 0.33, label: "زانویی ۹۰° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
-  branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه ۳۰°" }, { v: 0.28, label: "ورود با زاویه ۴۵°" }],
+  elbowK: [{ v: 0.19, label: "زانویی 90° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی 90° متداول (R/D=2)" }, { v: 0.33, label: "زانویی 90° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
+  branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه 30°" }, { v: 0.28, label: "ورود با زاویه 45°" }],
   cleaner: [{ v: 0, label: "بدون غبارگیر" }, { v: 500, label: "سیکلون (تقریبی)" }, { v: 1000, label: "فیلتر کیسه‌ای (تقریبی)" }, { v: 1500, label: "فیلتر کارتریجی (تقریبی)" }, { v: 2000, label: "اسکرابر تر (تقریبی)" }],
   fanEff: [{ v: 0.6, label: "فن پره رو به جلو" }, { v: 0.65, label: "فن محوری" }, { v: 0.7, label: "متداول" }, { v: 0.75, label: "پره شعاعی" }, { v: 0.8, label: "پره رو به عقب" }],
   motorEff: [{ v: 0.85, label: "موتور کوچک" }, { v: 0.9, label: "متداول" }, { v: 0.93, label: "IE2" }, { v: 0.95, label: "IE3 / پربازده" }],
@@ -207,7 +207,7 @@ function VentilationPage() {
         <section className="container-page grid gap-6 py-8 lg:grid-cols-[1fr_340px]">
           <div className="space-y-6">
             {step === 0 && (
-              <Panel title="۱. مشخصات پروژه و شرایط محیطی">
+              <Panel title="1. مشخصات پروژه و شرایط محیطی">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block sm:col-span-2">
                     <span className="text-sm font-semibold text-iso-navy/85">نام پروژه</span>
@@ -285,7 +285,7 @@ function VentilationPage() {
             )}
 
             {step === 2 && (
-              <Panel title="۳. کانال اصلی، تصحیح بالانس و غبارگیر">
+              <Panel title="3. کانال اصلی، تصحیح بالانس و غبارگیر">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال اصلی تا فن" unit="m" value={input.mainLength} onChange={(v) => set("mainLength", v)} />
                   <Field label="تعداد زانویی" step="1" value={input.mainElbows} onChange={(v) => set("mainElbows", v)} options={O.elbows} />
@@ -297,7 +297,7 @@ function VentilationPage() {
             )}
 
             {step === 3 && (
-              <Panel title="۴. فن، دودکش و هوای جبرانی">
+              <Panel title="4. فن، دودکش و هوای جبرانی">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال خروجی / دودکش" unit="m" value={input.outletLength} onChange={(v) => set("outletLength", v)} />
                   <Field label="افت‌های دیگر خروجی" unit="Pa" value={input.outletOtherLoss} onChange={(v) => set("outletOtherLoss", v)} />
