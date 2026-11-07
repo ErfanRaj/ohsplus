@@ -1,18 +1,18 @@
 import { MANDATORY_WARNINGS, type VentInput, type VentResult } from "./ventilation";
 
 /** Two-sheet workbook: all inputs/outputs in one table, plus a plain-language guide. */
-export async function downloadVentWorkbook(input: VentInput, r: VentResult) {
+export async function createVentWorkbook(input: VentInput, r: VentResult) {
   const ExcelJS = (await import("exceljs")).default;
   const wb = new ExcelJS.Workbook();
   wb.creator = "OHS Plus — Ventilation+";
-  const head = { bold: true, color: { argb: "FFFFFFFF" } };
+  const head = { name: "B Zar", bold: true, color: { argb: "FFFFFFFF" } };
   const fill = (argb: string) => ({ type: "pattern" as const, pattern: "solid" as const, fgColor: { argb } });
   const r2 = (n: number, d = 2) => (Number.isFinite(n) ? Number(n.toFixed(d)) : null);
 
-  const s1 = wb.addWorksheet("ورودی‌ها و نتایج", { views: [{ rightToLeft: true }] });
+  const s1 = wb.addWorksheet("ورودی‌ها و نتایج", { views: [{ rightToLeft: false }] });
   s1.columns = [{ width: 12 }, { width: 22 }, { width: 46 }, { width: 18 }, { width: 14 }];
   const t = s1.addRow(["OHS Plus — Ventilation+ : " + input.projectName]);
-  t.font = { bold: true, size: 14 };
+  t.font = { name: "B Titr", bold: true, size: 14 };
   s1.mergeCells(1, 1, 1, 5);
   s1.addRow([]);
   const h = s1.addRow(["نوع", "بخش", "پارامتر", "مقدار", "واحد"]);
@@ -89,7 +89,7 @@ export async function downloadVentWorkbook(input: VentInput, r: VentResult) {
   add("خروجی", f, "توان ورودی موتور", r2(r.motorKw), "kW");
   add("خروجی", f, "تراز هوای جبرانی (تأمین − تخلیه)", r2(r.makeupBalance, 0), "m³/h");
 
-  const s2 = wb.addWorksheet("راهنمای استفاده", { views: [{ rightToLeft: true }] });
+  const s2 = wb.addWorksheet("راهنمای استفاده", { views: [{ rightToLeft: false }] });
   s2.columns = [{ width: 110 }];
   const lines = [
     "راهنمای ساده استفاده از نتایج Ventilation+",
@@ -109,10 +109,37 @@ export async function downloadVentWorkbook(input: VentInput, r: VentResult) {
   ];
   lines.forEach((l, i) => {
     const row = s2.addRow([l]);
-    row.alignment = { wrapText: true };
-    if (i === 0) row.font = { bold: true, size: 14 };
+    if (i === 0) row.font = { name: "B Titr", bold: true, size: 14 };
+    else if (l === "هشدارها:") row.font = { name: "B Zar", bold: true, size: 12 };
   });
 
+  for (const sheet of wb.worksheets) {
+    sheet.eachRow((row) => {
+      row.eachCell({ includeEmpty: true }, (cell) => {
+        cell.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
+        if (cell.font?.name) return;
+        cell.font = { name: "B Mitra", size: 12 };
+        if (sheet === s1 && cell.col === 2 && row.number > 3) {
+          cell.font = { name: "B Zar", size: 12, bold: true };
+        } else if (typeof cell.value === "number") {
+          cell.font = { name: "Times New Roman", size: 12 };
+        } else if (typeof cell.value === "string") {
+          // Mixed-language cells retain Persian typography while Latin text and SI units use Times.
+          const parts = cell.value.split(/([A-Za-z0-9][A-Za-z0-9\s+_.@/°³²−%()–—:-]*)/g).filter(Boolean);
+          cell.value = { richText: parts.map((text) => ({
+            text,
+            font: { name: /[A-Za-z0-9]/.test(text) ? "Times New Roman" : "B Mitra", size: 12 },
+          })) };
+        }
+      });
+      row.height = sheet === s2 ? 48 : row.number === 1 ? 36 : 30;
+    });
+  }
+  return wb;
+}
+
+export async function downloadVentWorkbook(input: VentInput, r: VentResult) {
+  const wb = await createVentWorkbook(input, r);
   const buf = await wb.xlsx.writeBuffer();
   const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
   const a = document.createElement("a");
