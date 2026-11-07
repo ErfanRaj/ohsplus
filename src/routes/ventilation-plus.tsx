@@ -67,12 +67,16 @@ function Field({
           }}
         >
           <SelectTrigger className="mt-1.5 h-11 border-iso-navy/20 bg-background/90 focus:ring-iso-cyan">
-            <SelectValue />
+            <SelectValue>
+              {custom || !match ? "مقدار دلخواه…" : (
+                <span><span dir="ltr" className="font-bold tabular-nums">{match.v}{unit ? ` ${unit}` : ""}</span> <span className="text-iso-navy/60">— {match.label}</span></span>
+              )}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {options.map((o) => (
               <SelectItem key={o.v} value={String(o.v)}>
-                <span dir="ltr" className="font-mono font-bold tabular-nums">{o.v}{unit ? ` ${unit}` : ""}</span>
+                <span dir="ltr" className="font-bold tabular-nums">{o.v}{unit ? ` ${unit}` : ""}</span>
                 <span className="mr-2 text-iso-navy/60">— {o.label}</span>
               </SelectItem>
             ))}
@@ -88,7 +92,7 @@ function Field({
             step={step}
             value={Number.isFinite(value) ? value : ""}
             onChange={(e) => onChange(e.target.value === "" ? 0 : Number(e.target.value))}
-            className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-mono tabular-nums focus-visible:ring-iso-cyan"
+            className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-semibold tabular-nums focus-visible:ring-iso-cyan"
           />
           {unit && (
             <span dir="ltr" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xs font-bold text-iso-navy/50">
@@ -372,7 +376,7 @@ function Stat({ label, value, unit, big }: { label: string; value: string; unit?
   return (
     <div>
       <p className="text-[11px] text-iso-concrete/60">{label}</p>
-      <p dir="ltr" className={`text-right font-[Orbitron] font-bold text-iso-cyan ${big ? "text-xl" : "text-sm"}`}>
+      <p dir="ltr" className={`text-right font-extrabold tabular-nums text-iso-cyan ${big ? "text-xl" : "text-sm"}`}>
         {value} {unit && <span className="text-[10px] text-iso-concrete/60">{unit}</span>}
       </p>
     </div>
@@ -439,7 +443,7 @@ function Report({ input, r, onExcel }: { input: VentInput; r: ReturnType<typeof 
         {rows.map(([k, v]) => (
           <div key={k} className="flex flex-wrap justify-between gap-2 py-2.5 text-sm">
             <dt className="text-iso-navy/70">{k}</dt>
-            <dd dir="ltr" className="font-mono font-bold tabular-nums">{v}</dd>
+            <dd dir="ltr" className="font-bold tabular-nums">{v}</dd>
           </div>
         ))}
       </dl>
