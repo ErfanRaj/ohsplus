@@ -404,7 +404,7 @@ function BalanceTable({ r }: { r: ReturnType<typeof calculate> }) {
             <tr key={h.id} className="border-b border-iso-navy/10">
               <td className="py-2 font-bold">{h.name}</td>
               <td>{fa(h.sp)}</td>
-              <td>{fa(h.diffPct, 1)}٪</td>
+              <td>{fa(h.diffPct, 1)}%</td>
               <td>{fa(h.correctedFlow * 3600)}</td>
               <td className={h.status === "redesign" ? "font-bold text-destructive" : ""}>{STATUS[h.status]}</td>
             </tr>

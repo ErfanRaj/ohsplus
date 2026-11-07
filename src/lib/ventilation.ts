@@ -198,7 +198,7 @@ export function calculate(input: VentInput): VentResult {
       status = "redesign";
       correctedFlow = seg.flow * Math.sqrt(governingSp / sp);
       warnings.push(
-        `هود «${h.name}»: اختلاف فشار ${diffPct.toFixed(1)}٪ (بیش از ۲۰٪) — قطر کانال شاخه را بازطراحی کنید یا از دمپر استفاده کنید.`,
+        `هود «${h.name}»: اختلاف فشار ${diffPct.toFixed(1)}% (بیش از 20%) — قطر کانال شاخه را بازطراحی کنید یا از دمپر استفاده کنید.`,
       );
     } else if (diffPct > 5) {
       status = "corrected";
@@ -233,7 +233,7 @@ export function calculate(input: VentInput): VentResult {
   if (!input.cleanerLoss) warnings.push("افت فشار غبارگیر/تصفیه‌کننده صفر وارد شده است.");
   if (makeupBalance < 0)
     warnings.push(
-      `کمبود هوای جبرانی: حدود ${Math.round(-makeupBalance).toLocaleString("fa-IR")} m³/h هوای تازه باید تأمین شود.`,
+      `کمبود هوای جبرانی: حدود ${Math.round(-makeupBalance).toLocaleString("en-US")} m³/h هوای تازه باید تأمین شود.`,
     );
 
   return {
@@ -284,7 +284,7 @@ export function newHood(partial: Partial<HoodInput> = {}): HoodInput {
 }
 
 export const SAMPLE_INPUT: VentInput = {
-  projectName: "سالن سنگ‌زنی — خط ۱",
+  projectName: "سالن سنگ‌زنی — خط 1",
   tempC: 25,
   elevation: 1200,
   roughnessMm: 0.15,
