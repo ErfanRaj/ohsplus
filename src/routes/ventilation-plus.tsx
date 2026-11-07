@@ -67,12 +67,16 @@ function Field({
           }}
         >
           <SelectTrigger className="mt-1.5 h-11 border-iso-navy/20 bg-background/90 focus:ring-iso-cyan">
-            <SelectValue />
+            <SelectValue>
+              {custom || !match ? "مقدار دلخواه…" : (
+                <span><span dir="ltr" className="font-bold tabular-nums">{match.v}{unit ? ` ${unit}` : ""}</span> <span className="text-iso-navy/60">— {match.label}</span></span>
+              )}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {options.map((o) => (
               <SelectItem key={o.v} value={String(o.v)}>
-                <span dir="ltr" className="font-mono font-bold tabular-nums">{o.v}{unit ? ` ${unit}` : ""}</span>
+                <span dir="ltr" className="font-bold tabular-nums">{o.v}{unit ? ` ${unit}` : ""}</span>
                 <span className="mr-2 text-iso-navy/60">— {o.label}</span>
               </SelectItem>
             ))}
@@ -88,7 +92,7 @@ function Field({
             step={step}
             value={Number.isFinite(value) ? value : ""}
             onChange={(e) => onChange(e.target.value === "" ? 0 : Number(e.target.value))}
-            className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-mono tabular-nums focus-visible:ring-iso-cyan"
+            className="h-11 border-iso-navy/20 bg-background/90 pl-16 text-left font-semibold tabular-nums focus-visible:ring-iso-cyan"
           />
           {unit && (
             <span dir="ltr" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xs font-bold text-iso-navy/50">
@@ -112,8 +116,8 @@ const O = {
   slotK: [{ v: 1.78, label: "شیار استاندارد" }, { v: 1, label: "شیار با لبه گرد" }],
   transport: TRANSPORT_EXAMPLES.map((t) => ({ v: t.v, label: t.label })),
   elbows: [0, 1, 2, 3, 4, 5, 6].map((n) => ({ v: n, label: n === 0 ? "بدون زانویی" : "عدد" })),
-  elbowK: [{ v: 0.19, label: "زانویی ۹۰° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی ۹۰° متداول (R/D=2)" }, { v: 0.33, label: "زانویی ۹۰° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
-  branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه ۳۰°" }, { v: 0.28, label: "ورود با زاویه ۴۵°" }],
+  elbowK: [{ v: 0.19, label: "زانویی 90° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی 90° متداول (R/D=2)" }, { v: 0.33, label: "زانویی 90° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
+  branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه 30°" }, { v: 0.28, label: "ورود با زاویه 45°" }],
   cleaner: [{ v: 0, label: "بدون غبارگیر" }, { v: 500, label: "سیکلون (تقریبی)" }, { v: 1000, label: "فیلتر کیسه‌ای (تقریبی)" }, { v: 1500, label: "فیلتر کارتریجی (تقریبی)" }, { v: 2000, label: "اسکرابر تر (تقریبی)" }],
   fanEff: [{ v: 0.6, label: "فن پره رو به جلو" }, { v: 0.65, label: "فن محوری" }, { v: 0.7, label: "متداول" }, { v: 0.75, label: "پره شعاعی" }, { v: 0.8, label: "پره رو به عقب" }],
   motorEff: [{ v: 0.85, label: "موتور کوچک" }, { v: 0.9, label: "متداول" }, { v: 0.93, label: "IE2" }, { v: 0.95, label: "IE3 / پربازده" }],
@@ -207,7 +211,7 @@ function VentilationPage() {
         <section className="container-page grid gap-6 py-8 lg:grid-cols-[1fr_340px]">
           <div className="space-y-6">
             {step === 0 && (
-              <Panel title="۱. مشخصات پروژه و شرایط محیطی">
+              <Panel title="1. مشخصات پروژه و شرایط محیطی">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block sm:col-span-2">
                     <span className="text-sm font-semibold text-iso-navy/85">نام پروژه</span>
@@ -285,7 +289,7 @@ function VentilationPage() {
             )}
 
             {step === 2 && (
-              <Panel title="۳. کانال اصلی، تصحیح بالانس و غبارگیر">
+              <Panel title="3. کانال اصلی، تصحیح بالانس و غبارگیر">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال اصلی تا فن" unit="m" value={input.mainLength} onChange={(v) => set("mainLength", v)} />
                   <Field label="تعداد زانویی" step="1" value={input.mainElbows} onChange={(v) => set("mainElbows", v)} options={O.elbows} />
@@ -297,7 +301,7 @@ function VentilationPage() {
             )}
 
             {step === 3 && (
-              <Panel title="۴. فن، دودکش و هوای جبرانی">
+              <Panel title="4. فن، دودکش و هوای جبرانی">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="طول کانال خروجی / دودکش" unit="m" value={input.outletLength} onChange={(v) => set("outletLength", v)} />
                   <Field label="افت‌های دیگر خروجی" unit="Pa" value={input.outletOtherLoss} onChange={(v) => set("outletOtherLoss", v)} />
@@ -372,7 +376,7 @@ function Stat({ label, value, unit, big }: { label: string; value: string; unit?
   return (
     <div>
       <p className="text-[11px] text-iso-concrete/60">{label}</p>
-      <p dir="ltr" className={`text-right font-[Orbitron] font-bold text-iso-cyan ${big ? "text-xl" : "text-sm"}`}>
+      <p dir="ltr" className={`text-right font-extrabold tabular-nums text-iso-cyan ${big ? "text-xl" : "text-sm"}`}>
         {value} {unit && <span className="text-[10px] text-iso-concrete/60">{unit}</span>}
       </p>
     </div>
@@ -400,7 +404,7 @@ function BalanceTable({ r }: { r: ReturnType<typeof calculate> }) {
             <tr key={h.id} className="border-b border-iso-navy/10">
               <td className="py-2 font-bold">{h.name}</td>
               <td>{fa(h.sp)}</td>
-              <td>{fa(h.diffPct, 1)}٪</td>
+              <td>{fa(h.diffPct, 1)}%</td>
               <td>{fa(h.correctedFlow * 3600)}</td>
               <td className={h.status === "redesign" ? "font-bold text-destructive" : ""}>{STATUS[h.status]}</td>
             </tr>
@@ -439,7 +443,7 @@ function Report({ input, r, onExcel }: { input: VentInput; r: ReturnType<typeof 
         {rows.map(([k, v]) => (
           <div key={k} className="flex flex-wrap justify-between gap-2 py-2.5 text-sm">
             <dt className="text-iso-navy/70">{k}</dt>
-            <dd dir="ltr" className="font-mono font-bold tabular-nums">{v}</dd>
+            <dd dir="ltr" className="font-bold tabular-nums">{v}</dd>
           </div>
         ))}
       </dl>
