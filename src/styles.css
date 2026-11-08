@@ -569,3 +569,12 @@ main p.text-center {
 .vent-pulse { animation: vent-pulse 2.4s ease-out infinite; }
 @keyframes vent-drift { from { transform: translateX(-30%); } to { transform: translateX(130%); } }
 .vent-particle { animation: vent-drift linear infinite; }
+
+/* Hazard+ */
+:root { --hz-amber: oklch(0.82 0.17 80); --hz-red: oklch(0.63 0.22 27); --hz-steel: oklch(0.22 0.01 250); }
+@theme inline { --color-hz-amber: var(--hz-amber); --color-hz-red: var(--hz-red); --color-hz-steel: var(--hz-steel); }
+.hz-stripes { background-image: repeating-linear-gradient(-45deg, var(--hz-amber) 0 14px, var(--hz-steel) 14px 28px); }
+@keyframes hz-ping { 0% { transform: scale(.6); opacity: .9 } 100% { transform: scale(2.2); opacity: 0 } }
+.hz-ping { animation: hz-ping 1.6s ease-out infinite; }
+@keyframes hz-scan { 0% { transform: translateX(-100%) } 100% { transform: translateX(400%) } }
+.hz-scan { animation: hz-scan 3.5s linear infinite; }
