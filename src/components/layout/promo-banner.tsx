@@ -36,7 +36,7 @@ export function PromoBanner() {
         rel={external ? "noopener noreferrer sponsored" : undefined}
         className="group relative block overflow-hidden rounded-3xl border border-border shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
-        <div className="relative aspect-[16/9] sm:aspect-[3/1] md:max-h-[300px] md:w-full">
+        <div className="relative min-h-[220px] w-full aspect-[16/10] sm:aspect-[3/1] sm:min-h-0 md:max-h-[300px]">
           <img
             src={img ?? fallbackImage}
             alt={banner.title}
@@ -59,7 +59,7 @@ export function PromoBanner() {
               {banner.title}
             </h2>
             {banner.subtitle && (
-              <p className="line-clamp-2 text-xs text-ink-foreground/80 sm:line-clamp-3 sm:text-sm md:text-base">
+              <p className="line-clamp-2 text-right text-xs text-ink-foreground/80 sm:line-clamp-3 sm:text-sm md:text-base">
                 {banner.subtitle}
               </p>
             )}
