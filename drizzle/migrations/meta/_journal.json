@@ -15,6 +15,13 @@
       "when": 1791719308501,
       "tag": "0001_create_site_banners",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794097522143,
+      "tag": "0002_fix_banner_public_read",
+      "breakpoints": true
     }
   ]
 }

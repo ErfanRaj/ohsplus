@@ -530,11 +530,16 @@ main p.text-center {
 .iso-strike {
   stroke-dasharray: 130;
   stroke-dashoffset: 130;
-  animation: iso-strike-draw 0.45s ease-out 0.4s forwards;
+  animation: iso-strike-loop 3.2s ease-in-out 0.4s infinite;
   filter: drop-shadow(0 0 4px rgb(239 43 43 / 0.6));
 }
-.iso-strike-2 { animation-delay: 0.85s; }
-@keyframes iso-strike-draw { to { stroke-dashoffset: 0; } }
+.iso-strike-2 { animation-delay: 0.75s; }
+@keyframes iso-strike-loop {
+  0% { stroke-dashoffset: 130; opacity: 1; }
+  25%, 65% { stroke-dashoffset: 0; opacity: 1; }
+  85% { stroke-dashoffset: -130; opacity: 0.6; }
+  100% { stroke-dashoffset: -130; opacity: 0; }
+}
 
 /* ISO+ variant of the interactive grid: navy lines, neon-green glow */
 .interactive-grid--iso .interactive-grid-base {
@@ -559,3 +564,8 @@ main p.text-center {
 }
 @keyframes vent-flow { to { background-position: -400px 0; } }
 @media (prefers-reduced-motion: reduce) { .vent-flow { animation: none; } }
+
+@keyframes vent-pulse { 0%,100% { transform: scale(1); opacity: .5 } 50% { transform: scale(1.6); opacity: 0 } }
+.vent-pulse { animation: vent-pulse 2.4s ease-out infinite; }
+@keyframes vent-drift { from { transform: translateX(-30%); } to { transform: translateX(130%); } }
+.vent-particle { animation: vent-drift linear infinite; }
