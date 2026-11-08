@@ -119,7 +119,7 @@ export async function createVentWorkbook(input: VentInput, r: VentResult) {
         cell.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
         if (cell.font?.name) return;
         cell.font = { name: "B Mitra", size: 12 };
-        if (sheet === s1 && cell.col === 2 && row.number > 3) {
+        if (sheet === s1 && Number(cell.col) === 2 && row.number > 3) {
           cell.font = { name: "B Zar", size: 12, bold: true };
         } else if (typeof cell.value === "number") {
           cell.font = { name: "Times New Roman", size: 12 };

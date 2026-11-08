@@ -46,7 +46,7 @@ const STEPS = [
 const fa = (n: number, d = 0) =>
   Number.isFinite(n) ? n.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d }) : "—";
 
-type Opt = { v: number; label: string };
+type Opt = { v: number; label: string; source?: boolean };
 
 function Field({
   label, unit, value, onChange, step = "any", hint, options,
@@ -62,6 +62,8 @@ function Field({
           value={custom ? "custom" : String(match?.v ?? "custom")}
           onValueChange={(v) => {
             if (v === "custom") return setCustom(true);
+            const selected = options.find((o) => o.v === Number(v));
+            if (selected?.source && !window.confirm(`مقدار ${selected.v} ${unit ?? ""} از نمونه‌های جدول 8-4، بخش 4.2 فایل مرجع است، نه مقدار قطعی طراحی. انتخاب آن به جنس، اندازه، رطوبت ذرات و شرایط فرآیند بستگی دارد. کاربرد این مقدار برای فرآیند خود را تأیید می‌کنید؟`)) return;
             setCustom(false);
             onChange(Number(v));
           }}
@@ -114,7 +116,7 @@ const O = {
   slotV: [{ v: 5, label: "حداقل توصیه‌شده" }, { v: 7.5, label: "متداول" }, { v: 10, label: "توزیع یکنواخت" }],
   entryK: [{ v: 0.04, label: "ورودی شیپوری (Bell-mouth)" }, { v: 0.25, label: "هود مخروطی / کابین" }, { v: 0.49, label: "انتهای کانال با فلنج" }, { v: 0.5, label: "هود کابینی ساده" }, { v: 0.93, label: "انتهای کانال ساده بدون فلنج" }],
   slotK: [{ v: 1.78, label: "شیار استاندارد" }, { v: 1, label: "شیار با لبه گرد" }],
-  transport: TRANSPORT_EXAMPLES.map((t) => ({ v: t.v, label: t.label })),
+  transport: TRANSPORT_EXAMPLES,
   elbows: [0, 1, 2, 3, 4, 5, 6].map((n) => ({ v: n, label: n === 0 ? "بدون زانویی" : "عدد" })),
   elbowK: [{ v: 0.19, label: "زانویی 90° با شعاع بزرگ (R/D=2.5)" }, { v: 0.27, label: "زانویی 90° متداول (R/D=2)" }, { v: 0.33, label: "زانویی 90° فشرده (R/D=1.5)" }, { v: 0.5, label: "زانویی تیز / گونیا" }],
   branchK: [{ v: 0, label: "شاخه اصلی / بدون اتصال" }, { v: 0.18, label: "ورود با زاویه 30°" }, { v: 0.28, label: "ورود با زاویه 45°" }],
@@ -263,7 +265,7 @@ function VentilationPage() {
                         )}
                         <Field label="ضریب افت ورودی هود (Ke)" value={h.entryK} onChange={(v) => setHood(h.id, { entryK: v })} options={O.entryK} hint="شکل محل اتصال هود به کانال" />
                         {h.method === "slot" && <Field label="ضریب افت شیار" value={h.slotK} onChange={(v) => setHood(h.id, { slotK: v })} options={O.slotK} />}
-                        <Field label="سرعت حداقل انتقال" unit="m/s" value={h.transportVelocity} onChange={(v) => setHood(h.id, { transportVelocity: v })} options={O.transport} hint="سرعتی که ذرات در کانال ته‌نشین نشوند" />
+                        <Field label="سرعت حداقل انتقال" unit="m/s" value={h.transportVelocity} onChange={(v) => setHood(h.id, { transportVelocity: v })} options={O.transport} hint="مرجع: بخش 4.2، جدول 8-4؛ جوشکاری (گردوغبار، نه دود): 5.08–15.24 و گردوغبار خشک: 15.24–17.78 m/s. نمونه‌ها نیازمند تأیید شرایط فرآیند هستند؛ برای گاز بدون ذرات، این معیار ممکن است حاکم نباشد." />
                       </div>
                       <h4 className="mt-6 mb-3 text-sm font-extrabold text-iso-navy/70">کانال شاخه</h4>
                       <div className="grid gap-4 sm:grid-cols-3">
