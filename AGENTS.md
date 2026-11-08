@@ -9,3 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 - Ventilation+ calculations run entirely in the browser (src/lib/ventilation.ts, SI units, covered by ventilation.test.ts); Excel export is built client-side with exceljs loaded on demand — deterministic engineering math must never go through AI.
+- Keep workbook creation separate from browser download so the actual exported workbook can be inspected without DOM side effects.

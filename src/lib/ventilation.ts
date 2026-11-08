@@ -303,11 +303,15 @@ export const SAMPLE_INPUT: VentInput = {
   supplyAir: 0,
 };
 
-/** Illustrative transport-velocity examples from the supplied handbook scan (Table 8-4). */
+/** Spec §4.2 / Table 8-4: range endpoints are examples, not universal defaults.
+ * Options without a source equivalent are retained as unverified convenience values.
+ */
 export const TRANSPORT_EXAMPLES = [
-  { label: "گازها، بخارات و دود", v: 10 },
-  { label: "دود جوشکاری", v: 12.7 },
-  { label: "دود لحیم‌کاری", v: 10.16 },
-  { label: "گردوغبار خشک", v: 17.8 },
-  { label: "گردوغبار سنگ‌زنی", v: 25.4 },
+  { label: "گازها، بخارات و دود — مقدار قبلی، بدون معادل عددی در فایل", v: 10 },
+  { label: "دود جوشکاری — مقدار قبلی، بدون معادل برای دود در فایل", v: 12.7 },
+  { label: "گردوغبار جوشکاری — حد پایین بازه 5.08–15.24؛ نمونه مرجع", v: 5.08, source: true },
+  { label: "حد بالای گردوغبار جوشکاری / حد پایین گردوغبار خشک؛ نمونه مرجع", v: 15.24, source: true },
+  { label: "گردوغبار خشک — حد بالای بازه 15.24–17.78؛ نمونه مرجع", v: 17.78, source: true },
+  { label: "دود لحیم‌کاری — 2000 ft/min؛ نمونه مرجع", v: 10.16, source: true },
+  { label: "گردوغبار سنگ‌زنی — 5000 ft/min؛ نمونه مرجع", v: 25.4, source: true },
 ];

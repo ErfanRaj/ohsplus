@@ -1,8 +1,27 @@
 import { describe, expect, it } from "vitest";
 
-import { airDensity, calculate, newHood, SAMPLE_INPUT, selectDiameter, velocityPressure } from "./ventilation";
+import { airDensity, calculate, newHood, SAMPLE_INPUT, selectDiameter, TRANSPORT_EXAMPLES, velocityPressure } from "./ventilation";
 
 describe("ventilation engine", () => {
+  it("dry-dust presets use the reference range of 3000–3500 ft/min", () => {
+    const dry = TRANSPORT_EXAMPLES.filter((x) => x.label.includes("گردوغبار خشک"));
+    expect(dry.map((x) => x.v)).toEqual([15.24, 17.78]);
+  });
+
+  it("welding-dust presets use 1000–3000 ft/min, not welding-fume values", () => {
+    const welding = TRANSPORT_EXAMPLES.filter((x) => x.label.includes("گردوغبار جوشکاری"));
+    expect(welding.map((x) => x.v)).toEqual([5.08, 15.24]);
+  });
+
+  it("preserves source soldering and grinding examples", () => {
+    expect(TRANSPORT_EXAMPLES.find((x) => x.label.includes("دود لحیم‌کاری"))?.v).toBe(10.16);
+    expect(TRANSPORT_EXAMPLES.find((x) => x.label.includes("گردوغبار سنگ‌زنی"))?.v).toBe(25.4);
+  });
+
+  it("retains previous values with no equivalent in the reference", () => {
+    expect(TRANSPORT_EXAMPLES.find((x) => x.label.startsWith("گازها"))?.v).toBe(10);
+    expect(TRANSPORT_EXAMPLES.find((x) => x.label.startsWith("دود جوشکاری"))?.v).toBe(12.7);
+  });
   it("air density at sea level and 20 °C is about 1.204 kg/m³", () => {
     expect(airDensity(20, 0).density).toBeCloseTo(1.204, 2);
   });
