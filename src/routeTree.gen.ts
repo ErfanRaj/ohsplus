@@ -17,6 +17,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as HazardPlusRouteImport } from './routes/hazard-plus'
 import { Route as IsoPlusRouteImport } from './routes/iso-plus'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -79,6 +80,11 @@ const ContactRoute = ContactRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HazardPlusRoute = HazardPlusRouteImport.update({
+  id: '/hazard-plus',
+  path: '/hazard-plus',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IsoPlusRoute = IsoPlusRouteImport.update({
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
@@ -251,6 +258,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
@@ -320,6 +329,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/faq'
+    | '/hazard-plus'
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
@@ -353,6 +363,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/faq'
+    | '/hazard-plus'
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
@@ -386,6 +397,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/faq'
+    | '/hazard-plus'
     | '/iso-plus'
     | '/reset-password'
     | '/terms'
@@ -421,6 +433,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  HazardPlusRoute: typeof HazardPlusRoute
   IsoPlusRoute: typeof IsoPlusRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
@@ -489,6 +502,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hazard-plus': {
+      id: '/hazard-plus'
+      path: '/hazard-plus'
+      fullPath: '/hazard-plus'
+      preLoaderRoute: typeof HazardPlusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/iso-plus': {
@@ -720,6 +740,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  HazardPlusRoute: HazardPlusRoute,
   IsoPlusRoute: IsoPlusRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
