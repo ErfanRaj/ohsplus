@@ -22,6 +22,13 @@
       "when": 1794097522143,
       "tag": "0002_fix_banner_public_read",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794274163870,
+      "tag": "0003_hazard_scenarios",
+      "breakpoints": true
     }
   ]
 }
