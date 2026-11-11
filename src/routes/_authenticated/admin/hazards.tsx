@@ -45,7 +45,7 @@ function AdminHazards() {
   const open = (row: Scenario) => { setDraft(structuredClone(row)); setSelected(row.hazards[0]?.id ?? null); setPlacing(false); };
   const save = async () => {
     if (!draft) return;
-    const parsed = scenarioSchema.safeParse(draft);
+    const parsed = scenarioSchema.safeParse({ ...draft, hazards: draft.hazards.map(h => ({ ...h, standards: h.standards.map(s => s.trim()).filter(Boolean) })) });
     if (!parsed.success) { toast.error("عنوان، تصویر، پیامد و حداقل یک روش کنترل برای هر خطر الزامی است؛ محدوده نقاط را بررسی کنید."); return; }
     setBusy(true);
     try {
