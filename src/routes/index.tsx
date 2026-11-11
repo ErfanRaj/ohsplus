@@ -48,6 +48,8 @@ export const Route = createFileRoute("/")({
           "منابع دیجیتال حرفه‌ای برای کارشناسان HSE: ارزیابی ریسک، بهداشت حرفه‌ای، ارگونومی و آموزش ایمنی.",
       },
       { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
