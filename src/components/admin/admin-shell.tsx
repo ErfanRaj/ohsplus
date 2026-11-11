@@ -13,6 +13,7 @@ const ADMIN_NAV = [
   { href: "/admin/categories", label: "دسته‌بندی‌ها" },
   { href: "/admin/tags", label: "برچسب‌ها" },
   { href: "/admin/banners", label: "بنرهای تبلیغاتی" },
+  { href: "/admin/hazards", label: "سناریوهای Hazard+" },
   { href: "/admin/reviews", label: "دیدگاه‌ها" },
   { href: "/admin/comments", label: "نظرات" },
   { href: "/admin/messages", label: "پیام‌ها" },
