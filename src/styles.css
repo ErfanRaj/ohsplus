@@ -578,3 +578,13 @@ main p.text-center {
 .hz-ping { animation: hz-ping 1.6s ease-out infinite; }
 @keyframes hz-scan { 0% { transform: translateX(-100%) } 100% { transform: translateX(400%) } }
 .hz-scan { animation: hz-scan 3.5s linear infinite; }
+
+.hz-headline {
+  text-shadow: 0 0 6px var(--hz-amber), 0 0 22px color-mix(in oklab, var(--hz-amber) 70%, transparent), 0 2px 4px rgb(0 0 0 / 0.7);
+  animation: hz-flicker 4s infinite;
+}
+@keyframes hz-flicker {
+  0%, 18%, 22%, 62%, 64%, 100% { opacity: 1; }
+  20%, 63% { opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) { .hz-headline { animation: none; } }
