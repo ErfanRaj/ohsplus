@@ -16,6 +16,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ErgoPlusRouteImport } from './routes/ergo-plus'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as HazardPlusRouteImport } from './routes/hazard-plus'
 import { Route as IsoPlusRouteImport } from './routes/iso-plus'
@@ -76,6 +77,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErgoPlusRoute = ErgoPlusRouteImport.update({
+  id: '/ergo-plus',
+  path: '/ergo-plus',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/ergo-plus': typeof ErgoPlusRoute
   '/faq': typeof FaqRoute
   '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/ergo-plus': typeof ErgoPlusRoute
   '/faq': typeof FaqRoute
   '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
@@ -301,6 +309,7 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/ergo-plus': typeof ErgoPlusRoute
   '/faq': typeof FaqRoute
   '/hazard-plus': typeof HazardPlusRoute
   '/iso-plus': typeof IsoPlusRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/ergo-plus'
     | '/faq'
     | '/hazard-plus'
     | '/iso-plus'
@@ -373,6 +383,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/ergo-plus'
     | '/faq'
     | '/hazard-plus'
     | '/iso-plus'
@@ -408,6 +419,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/ergo-plus'
     | '/faq'
     | '/hazard-plus'
     | '/iso-plus'
@@ -445,6 +457,7 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
+  ErgoPlusRoute: typeof ErgoPlusRoute
   FaqRoute: typeof FaqRoute
   HazardPlusRoute: typeof HazardPlusRoute
   IsoPlusRoute: typeof IsoPlusRoute
@@ -508,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ergo-plus': {
+      id: '/ergo-plus'
+      path: '/ergo-plus'
+      fullPath: '/ergo-plus'
+      preLoaderRoute: typeof ErgoPlusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -761,6 +781,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
+  ErgoPlusRoute: ErgoPlusRoute,
   FaqRoute: FaqRoute,
   HazardPlusRoute: HazardPlusRoute,
   IsoPlusRoute: IsoPlusRoute,

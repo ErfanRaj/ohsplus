@@ -588,3 +588,15 @@ main p.text-center {
   20%, 63% { opacity: 0.45; }
 }
 @media (prefers-reduced-motion: reduce) { .hz-headline { animation: none; } }
+
+/* Ergo+ */
+:root { --eg-bg: oklch(0.18 0.05 285); --eg-panel: oklch(0.24 0.06 285); --eg-cyan: oklch(0.8 0.14 190); --eg-pink: oklch(0.7 0.22 345); --eg-ink: oklch(0.94 0.01 285); --eg-ok: oklch(0.8 0.19 150); }
+@theme inline { --color-eg-bg: var(--eg-bg); --color-eg-panel: var(--eg-panel); --color-eg-cyan: var(--eg-cyan); --color-eg-pink: var(--eg-pink); --color-eg-ink: var(--eg-ink); --color-eg-ok: var(--eg-ok); }
+.eg-grid { background-image: linear-gradient(color-mix(in oklab, var(--eg-cyan) 14%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--eg-cyan) 14%, transparent) 1px, transparent 1px); background-size: 36px 36px; }
+.eg-num { font-family: "Times New Roman", ui-serif, serif; font-variant-numeric: tabular-nums; direction: ltr; }
+.eg-glow { text-shadow: 0 0 8px var(--eg-cyan), 0 0 26px color-mix(in oklab, var(--eg-pink) 60%, transparent); }
+@keyframes eg-pulse { 0%,100% { opacity: 1; r: 6 } 50% { opacity: .45; r: 10 } }
+.eg-pulse { animation: eg-pulse 1.2s ease-in-out infinite; }
+@keyframes eg-sway { 0%,100% { transform: rotate(-3deg) } 50% { transform: rotate(3deg) } }
+.eg-sway { animation: eg-sway 3s ease-in-out infinite; transform-origin: 50% 90%; }
+@media (prefers-reduced-motion: reduce) { .eg-pulse, .eg-sway { animation: none; } }
